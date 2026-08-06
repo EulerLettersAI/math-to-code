@@ -1,0 +1,51 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Math to Code"
+  description: "Executable lessons connecting mathematical ideas to code."
+  site-url: "https://eulerlettersai.github.io/math-to-code/"
+  repo-url: "https://github.com/EulerLettersAI/math-to-code"
+  repo-actions: [source, issue]
+  navbar:
+    logo: assets/euler-mark.svg
+    left:
+      - href: index.qmd
+        text: Home
+      - href: lessons/index.qmd
+        text: Lessons
+      - href: about.qmd
+        text: About
+    right:
+      - text: EulerLettersAI
+        href: https://eulerlettersai.github.io/
+      - icon: github
+        href: https://github.com/EulerLettersAI/math-to-code
+        aria-label: GitHub
+  page-footer:
+    left: "© EulerLettersAI"
+    center: "Mathematics you can read, run, and change."
+    right:
+      - text: "Main website"
+        href: https://eulerlettersai.github.io/
+      - text: "Source"
+        href: https://github.com/EulerLettersAI/math-to-code
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.scss]
+      dark: [darkly, styles.scss]
+    toc: true
+    code-copy: true
+    code-fold: show
+    code-overflow: wrap
+    anchor-sections: true
+    link-external-newwindow: true
+    html-math-method: mathjax
+
+execute:
+  freeze: auto
+  warning: false
+

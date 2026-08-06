@@ -1,0 +1,20 @@
+---
+title: "Lessons"
+description: "Executable mathematical lessons from EulerLettersAI."
+toc: false
+---
+
+## Machine learning
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [Classical and quantum kernel classifiers](classical-vs-quantum/index.ipynb)
+
+Learn how classical and quantum feature maps create similarity measures for a support-vector classifier.
+
+**Prerequisites:** vectors, inner products, and basic Python.
+:::
+:::
+
+More lessons will be added as independent, downloadable notebooks.
+

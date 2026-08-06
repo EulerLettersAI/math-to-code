@@ -1,0 +1,65 @@
+/*-- scss:defaults --*/
+$primary: #3157a4;
+$link-color: #3157a4;
+$font-family-sans-serif: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+$font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+/*-- scss:rules --*/
+.navbar-brand img {
+  max-height: 2rem;
+}
+
+.hero {
+  padding: clamp(2.5rem, 7vw, 6rem) 0 3rem;
+  max-width: 52rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  margin-bottom: 1.25rem;
+}
+
+.hero p {
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  max-width: 44rem;
+  color: var(--bs-secondary-color);
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.lesson-card {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 1rem;
+  padding: 1.4rem;
+  background: var(--bs-body-bg);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.lesson-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.75rem 2rem rgba(27, 39, 66, 0.1);
+}
+
+.lesson-card h3 {
+  margin-top: 0;
+}
+
+.lesson-card a {
+  text-decoration: none;
+}
+
+.callout {
+  border-radius: 0.75rem;
+}
+
+.cell-output-display img {
+  border-radius: 0.5rem;
+}
+

@@ -1,0 +1,12 @@
+---
+title: "About"
+---
+
+**Math to Code** is an open educational project from [EulerLettersAI](https://eulerlettersai.github.io/). Its lessons alternate between mathematical explanations and executable code so readers can test each idea while it is still fresh.
+
+## Reuse and contribute
+
+The source is public on [GitHub](https://github.com/EulerLettersAI/math-to-code). Suggestions, corrections, and lesson proposals are welcome through repository issues.
+
+Unless a lesson says otherwise, repository content is provided under the license in the project root.
+
