@@ -1,0 +1,29 @@
+/*-- scss:defaults --*/
+
+// Preserve Quarto's default Cosmo theme while replacing its blue accents.
+$blue: #047857;
+$primary: #047857;
+$info: #0f766e;
+$link-color: #047857;
+$link-hover-color: #065f46;
+$focus-ring-color: rgba(16, 185, 129, 0.25);
+$callout-color-note: #047857;
+$valuebox-bg-primary: #059669;
+
+/*-- scss:rules --*/
+
+.navbar {
+  --bs-navbar-active-color: #d1fae5;
+  --bs-navbar-hover-color: #ecfdf5;
+}
+
+.nav-link.active,
+.nav-link[aria-current="page"] {
+  text-decoration-color: #6ee7b7;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
+}
