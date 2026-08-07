@@ -1,32 +1,74 @@
+.navbar,
+[data-bs-theme="light"] .navbar,
+[data-bs-theme="dark"] .navbar {
+  --bs-navbar-color: #065f46;
+  --bs-navbar-hover-color: #022c22;
+  --bs-navbar-active-color: #022c22;
+  --bs-navbar-brand-color: #065f46;
+  --bs-navbar-brand-hover-color: #022c22;
+  --bs-navbar-toggler-border-color: rgba(6, 95, 70, 0.3);
+  color: #065f46;
+  background-color: #f6fffa !important;
+}
+
+.navbar .nav-link,
+.navbar .navbar-title,
+.navbar .quarto-navigation-tool,
+.navbar #quarto-search .aa-DetachedSearchButtonIcon {
+  color: #065f46 !important;
+}
+
+.navbar .nav-link {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.navbar .quarto-navigation-tool,
+.navbar #quarto-search .aa-DetachedSearchButtonIcon {
+  font-size: 1.2rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"],
+.navbar .quarto-navigation-tool:hover {
+  color: #022c22 !important;
+}
+
 .navbar-brand-logo {
-  position: relative;
-  display: block;
-  width: 3.25rem;
-  height: 3.25rem;
-  margin-right: 0.75rem;
-  padding: 0;
-  overflow: hidden;
+  display: flex;
+  width: 8rem;
+  height: 6.5rem;
+  margin-right: 1rem;
+  padding: 0.25rem 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar-brand-logo .navbar-logo {
-  position: absolute;
-  top: -0.4rem;
-  left: 50%;
-  width: 7.25rem;
-  max-width: none;
+  position: static;
+  width: 8rem;
+  max-width: 100%;
   height: auto;
-  max-height: none;
-  transform: translateX(-50%);
+  max-height: 6rem;
+  object-fit: contain;
+  transform: none;
 }
 
 @media (max-width: 575.98px) {
   .navbar-brand-logo {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 5.75rem;
+    height: 4.75rem;
+    margin-right: 0.5rem;
   }
 
   .navbar-brand-logo .navbar-logo {
-    top: -0.35rem;
-    width: 6.15rem;
+    width: 5.75rem;
+    max-height: 4.5rem;
+  }
+
+  .navbar .nav-link {
+    font-size: 1.1rem;
   }
 }
