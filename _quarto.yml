@@ -30,7 +30,7 @@ website:
 format:
   html:
     theme: 
-      light: minty
+      light: flatly
       dark: darkly
     toc: true
     code-copy: true
