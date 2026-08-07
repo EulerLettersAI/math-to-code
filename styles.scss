@@ -115,17 +115,6 @@ body {
   background: var(--euler-emerald-soft);
 }
 
-.navbar-brand img {
-  width: auto;
-  max-height: 3.75rem;
-  object-fit: contain;
-}
-
-.navbar-brand .navbar-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
 .navbar-toggler {
   color: #064e3b;
   border-color: rgba(4, 120, 87, 0.34);
@@ -141,6 +130,22 @@ body {
 
 .navbar .quarto-navbar-tools .quarto-navigation-tool:hover {
   color: var(--euler-emerald);
+}
+
+// Keep the child header quiet on the left and identify the parent-site link
+// with the full Euler Letters AI mark on the right.
+.navbar a.nav-link[href="https://eulerlettersai.github.io/"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.navbar a.nav-link[href="https://eulerlettersai.github.io/"]::before {
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: 0 0 3.5rem;
+  content: "";
+  background: url("../../assets/euler-letters-ai-logo.png") center / contain no-repeat;
 }
 
 #quarto-content {
@@ -497,5 +502,11 @@ table {
 
   .hero h1 {
     font-size: clamp(1.75rem, 9vw, 2.625rem);
+  }
+
+  .navbar a.nav-link[href="https://eulerlettersai.github.io/"]::before {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-basis: 2.75rem;
   }
 }

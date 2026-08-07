@@ -1,5 +1,4 @@
 ---
-title: "Math to Code"
 page-layout: full
 toc: false
 ---
@@ -48,4 +47,3 @@ Compare an ordinary support-vector classifier with a simulated quantum-kernel cl
 ::: {.callout-note}
 The quantum example is an educational simulation. It does not claim quantum advantage; instead, it makes the mathematical and computational differences visible.
 :::
-
