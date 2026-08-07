@@ -8,7 +8,7 @@ toc: false
 
 Short, executable lessons that connect mathematical notation to working code—one concept and one experiment at a time.
 
-[Start the first lesson](lessons/classical-vs-quantum/index.ipynb){.btn .btn-primary .btn-lg}
+<!-- [Start the first lesson](lessons/classical-vs-quantum/index.ipynb){.btn .btn-primary .btn-lg}
 [Browse the source](https://github.com/EulerLettersAI/math-to-code){.btn .btn-outline-secondary .btn-lg}
 :::
 
@@ -28,7 +28,7 @@ Execute the Python cell immediately after the mathematical concept.
 :::
 
 ::: {.lesson-card}
-### 3. Change
+### 3. Change -->
 
 Download the notebook, vary its assumptions, and investigate what happens.
 :::
@@ -37,7 +37,7 @@ Download the notebook, vary its assumptions, and investigate what happens.
 ## Latest lesson
 
 ::: {.lesson-card}
-### [Classical and quantum kernel classifiers](lessons/classical-vs-quantum/index.ipynb)
+### [Classical and quantum kernel classifiers](lessons/classical-vs-quantum/index.qmd)
 
 Compare an ordinary support-vector classifier with a simulated quantum-kernel classifier on the same two-dimensional dataset.
 

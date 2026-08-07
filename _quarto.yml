@@ -8,6 +8,7 @@ website:
   site-url: "https://eulerlettersai.github.io/math-to-code/"
   repo-url: "https://github.com/EulerLettersAI/math-to-code"
   repo-actions: [source, issue]
+  page-navigation: true
   navbar:
     title: false
     logo: assets/euler-letters-ai-logo.png
@@ -22,6 +23,22 @@ website:
       - icon: github
         href: https://github.com/EulerLettersAI/math-to-code
         aria-label: GitHub
+  sidebar:
+    - id: classical-vs-quantum
+      title: "Classical and Quantum Kernels"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "Lesson overview"
+          href: lessons/classical-vs-quantum/index.qmd
+        - section: "Notebooks"
+          contents:
+            - text: "1. Support Vector Machines"
+              href: lessons/classical-vs-quantum/1.0-svm.ipynb
+            - text: "2. Kernels in SVMs"
+              href: lessons/classical-vs-quantum/2.0-kernel.ipynb
+            - text: "3. Classical vs Quantum"
+              href: lessons/classical-vs-quantum/3.0-classical-vs-quantum.ipynb
   page-footer:
     left: "© EulerLettersAI"
     center: "Mathematics you can read, run, and change."

@@ -1,0 +1,34 @@
+---
+title: "Classical and Quantum Kernel Classifiers"
+description: "A three-part series: from the SVM margin to a side-by-side comparison of classical and quantum kernels."
+toc: false
+---
+
+This series builds from first principles to a head-to-head comparison of classical and quantum kernel classifiers.
+Each notebook follows the same pattern: mathematics first, then code.
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [1. Support Vector Machines](1.0-svm.ipynb)
+
+Derive the maximum-margin hyperplane, read the primal and dual forms of the SVM, and control the soft-margin trade-off with $C$.
+
+**Prerequisites:** vectors, inner products, and basic Python.
+:::
+
+::: {.lesson-card}
+### [2. Kernels in Support Vector Machines](2.0-kernel.ipynb)
+
+Understand feature maps, the kernel trick, and the kernel SVM decision function through polynomial and RBF examples.
+
+**Prerequisites:** [1. Support Vector Machines](1.0-svm.ipynb).
+:::
+
+::: {.lesson-card}
+### [3. Classical and Quantum Kernel Classifiers](3.0-classical-vs-quantum.ipynb)
+
+Compare a classical RBF kernel and a quantum feature-map kernel side by side on the same dataset using the same support-vector learning rule.
+
+**Prerequisites:** [2. Kernels in SVMs](2.0-kernel.ipynb).
+:::
+:::

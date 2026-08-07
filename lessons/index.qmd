@@ -8,9 +8,9 @@ toc: false
 
 ::: {.lesson-grid}
 ::: {.lesson-card}
-### [Classical and quantum kernel classifiers](classical-vs-quantum/index.ipynb)
+### [Classical and Quantum Kernel Classifiers](classical-vs-quantum/)
 
-Learn how classical and quantum feature maps create similarity measures for a support-vector classifier.
+A three-part series from the SVM margin to a side-by-side comparison of classical and quantum kernels.
 
 **Prerequisites:** vectors, inner products, and basic Python.
 :::
