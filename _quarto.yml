@@ -39,6 +39,7 @@ format:
     code-copy: true
     code-fold: show
     code-overflow: wrap
+    highlight-style: monokai
     anchor-sections: true
     link-external-newwindow: true
     html-math-method: mathjax
