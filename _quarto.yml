@@ -9,15 +9,15 @@ website:
   repo-url: "https://github.com/EulerLettersAI/math-to-code"
   repo-actions: [source, issue]
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
+    title: false
+    logo: assets/euler-letters-ai-logo.png
+    logo-alt: "Euler Letters AI"
+    logo-href: https://eulerlettersai.github.io/
     right:
-      - text: EulerLettersAI
-        href: https://eulerlettersai.github.io/
-      - icon: github
-        href: https://github.com/EulerLettersAI/math-to-code
-        aria-label: GitHub
+      - text: Home
+        href: index.qmd
+      - text: Lessons
+        href: lessons/index.qmd
   page-footer:
     left: "© EulerLettersAI"
     center: "Mathematics you can read, run, and change."

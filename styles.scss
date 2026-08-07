@@ -74,10 +74,10 @@ body {
   background: var(--euler-emerald);
 }
 
-// Match the main site's pale header and emerald navigation.
+// Match the parent site's pale header and emerald navigation.
 .navbar,
 .navbar.navbar-expand-lg {
-  min-height: 5rem;
+  min-height: 0;
   color: var(--euler-ink-dark);
   background: #f4fff9;
   border-bottom: 1px solid rgba(4, 78, 59, 0.18);
@@ -89,20 +89,40 @@ body {
 .navbar > .navbar-container,
 .navbar > .quarto-navbar-container {
   width: calc(100% - 44px);
-  max-width: 82.5rem;
+  max-width: 71.25rem;
   margin-inline: auto;
-  padding-inline: 0;
+  padding: 0.625rem 0;
+  gap: 1.5rem;
 }
 
-.navbar .navbar-brand,
+.navbar .navbar-brand {
+  min-width: 9.375rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .navbar-brand > img,
+.navbar .navbar-logo {
+  width: 9.375rem;
+  max-height: none;
+  height: auto;
+  object-fit: contain;
+}
+
+.navbar .navbar-nav {
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .navbar .nav-link {
   color: #064e3b !important;
   font-weight: 700;
+  font-size: 1.125rem;
 }
 
 .navbar .nav-link {
-  margin: 0 0.08rem;
-  padding: 0.65rem 0.75rem !important;
+  margin: 0;
+  padding: 0.625rem 0.75rem !important;
   border-radius: 0.625rem;
 }
 
@@ -130,22 +150,6 @@ body {
 
 .navbar .quarto-navbar-tools .quarto-navigation-tool:hover {
   color: var(--euler-emerald);
-}
-
-// Keep the child header quiet on the left and identify the parent-site link
-// with the full Euler Letters AI mark on the right.
-.navbar a.nav-link[href="https://eulerlettersai.github.io/"] {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.navbar a.nav-link[href="https://eulerlettersai.github.io/"]::before {
-  width: 3.5rem;
-  height: 3.5rem;
-  flex: 0 0 3.5rem;
-  content: "";
-  background: url("assets/euler-letters-ai-logo.png") center / contain no-repeat;
 }
 
 #quarto-content {
@@ -480,6 +484,11 @@ table {
     padding: 0.6rem 0;
   }
 
+  .navbar .navbar-nav {
+    align-items: stretch;
+    gap: 0.125rem;
+  }
+
   .navbar .nav-link {
     margin: 0.1rem 0;
   }
@@ -504,9 +513,8 @@ table {
     font-size: clamp(1.75rem, 9vw, 2.625rem);
   }
 
-  .navbar a.nav-link[href="https://eulerlettersai.github.io/"]::before {
-    width: 2.75rem;
-    height: 2.75rem;
-    flex-basis: 2.75rem;
+  .navbar .navbar-brand > img,
+  .navbar .navbar-logo {
+    width: min(9.375rem, 52vw);
   }
 }
