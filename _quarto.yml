@@ -9,6 +9,10 @@ website:
   repo-url: "https://github.com/EulerLettersAI/math-to-code"
   repo-actions: [source, issue]
   navbar:
+    title: false
+    logo: assets/euler-letters-ai-logo.png
+    logo-alt: "Euler Letters AI"
+    logo-href: https://eulerlettersai.github.io/
     left:
       - text: Home
         href: index.qmd
@@ -32,6 +36,7 @@ format:
     theme: 
       light: flatly
       dark: darkly
+    css: navbar.css
     toc: true
     code-copy: true
     code-fold: show
