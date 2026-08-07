@@ -34,9 +34,7 @@ website:
 
 format:
   html:
-    theme:
-      light: [cosmo, styles.scss]
-      dark: [darkly, styles.scss]
+    theme: [cosmo, styles.scss]
     toc: true
     code-copy: true
     code-fold: show
@@ -48,4 +46,3 @@ format:
 execute:
   freeze: auto
   warning: false
-

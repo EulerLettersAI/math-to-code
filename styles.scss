@@ -1,30 +1,213 @@
 /*-- scss:defaults --*/
-$primary: #3157a4;
-$link-color: #3157a4;
-$font-family-sans-serif: "Inter", "Avenir Next", "Segoe UI", sans-serif;
+// Shared EulerLettersAI palette
+$body-bg: #07110d;
+$body-color: #f2fbf7;
+$primary: #d7b56d;
+$secondary: #28c987;
+$success: #0f8f62;
+$link-color: #28c987;
+$link-hover-color: #d9f8e8;
+$border-color: rgba(242, 251, 247, 0.16);
+$code-color: #d9f8e8;
+$code-bg: #0b1d17;
+$navbar-light-color: #064e3b;
+$navbar-light-hover-color: #022c22;
+$navbar-light-active-color: #022c22;
+$navbar-light-brand-color: #04251c;
+$font-family-sans-serif: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 $font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+$border-radius: 0.75rem;
+$border-radius-lg: 1rem;
 
 /*-- scss:rules --*/
+:root {
+  --euler-bg: #07110d;
+  --euler-bg-deep: #030907;
+  --euler-surface: #0f3d2f;
+  --euler-surface-strong: #145943;
+  --euler-surface-soft: #0b1d17;
+  --euler-card: #123f31;
+  --euler-ink: #f2fbf7;
+  --euler-ink-dark: #04251c;
+  --euler-muted: rgba(242, 251, 247, 0.74);
+  --euler-line: rgba(242, 251, 247, 0.16);
+  --euler-line-soft: rgba(242, 251, 247, 0.09);
+  --euler-emerald: #0f8f62;
+  --euler-emerald-bright: #28c987;
+  --euler-emerald-soft: #d9f8e8;
+  --euler-gold: #d7b56d;
+
+  // Keep Quarto and Bootstrap-generated components on the same palette.
+  --bs-body-bg: var(--euler-bg);
+  --bs-body-color: var(--euler-ink);
+  --bs-secondary-color: var(--euler-muted);
+  --bs-secondary-bg: var(--euler-surface-soft);
+  --bs-tertiary-bg: var(--euler-card);
+  --bs-border-color: var(--euler-line);
+  --bs-link-color: var(--euler-emerald-bright);
+  --bs-link-hover-color: var(--euler-emerald-soft);
+  --bs-code-color: var(--euler-emerald-soft);
+  --bs-code-bg: var(--euler-surface-soft);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(40, 201, 135, 0.16), transparent 30%),
+    radial-gradient(circle at 88% 8%, rgba(215, 181, 109, 0.13), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.035), transparent 36%),
+    repeating-linear-gradient(90deg, rgba(242, 251, 247, 0.025) 0 1px, transparent 1px 110px),
+    repeating-linear-gradient(0deg, rgba(242, 251, 247, 0.018) 0 1px, transparent 1px 110px),
+    var(--euler-bg);
+  line-height: 1.6;
+}
+
+::selection {
+  color: #fff;
+  background: var(--euler-emerald);
+}
+
+// Match the main site's pale header and emerald navigation.
+.navbar,
+.navbar.navbar-expand-lg {
+  min-height: 4.5rem;
+  color: var(--euler-ink-dark);
+  background: #f4fff9;
+  border-bottom: 1px solid rgba(4, 78, 59, 0.18);
+  box-shadow: 0 8px 22px rgba(2, 44, 34, 0.08);
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #064e3b !important;
+  font-weight: 700;
+}
+
+.navbar .nav-link {
+  margin: 0 0.08rem;
+  padding: 0.65rem 0.75rem !important;
+  border-radius: 0.625rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"],
+.navbar .show > .nav-link {
+  color: #022c22 !important;
+  background: var(--euler-emerald-soft);
+}
+
 .navbar-brand img {
-  max-height: 2rem;
+  max-height: 2.25rem;
+}
+
+.navbar-toggler {
+  color: #064e3b;
+  border-color: rgba(4, 120, 87, 0.34);
+}
+
+.navbar-toggler-icon {
+  filter: none;
+}
+
+.navbar .quarto-navbar-tools .quarto-navigation-tool {
+  color: #064e3b;
+}
+
+.navbar .quarto-navbar-tools .quarto-navigation-tool:hover {
+  color: var(--euler-emerald);
+}
+
+#quarto-content {
+  min-height: calc(100vh - 11rem);
+}
+
+main.content {
+  padding-top: 2.25rem;
+  padding-bottom: 3.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--euler-ink);
+  letter-spacing: -0.02em;
+}
+
+h1.title {
+  font-size: clamp(2.35rem, 6vw, 4.5rem);
+  line-height: 1;
+}
+
+a {
+  text-underline-offset: 0.18em;
 }
 
 .hero {
-  padding: clamp(2.5rem, 7vw, 6rem) 0 3rem;
-  max-width: 52rem;
+  max-width: 66rem;
+  margin: 1.5rem auto 3rem;
+  padding: clamp(2rem, 5vw, 3.75rem);
+  background:
+    linear-gradient(145deg, rgba(8, 20, 15, 0.98), rgba(6, 15, 12, 0.94)),
+    linear-gradient(90deg, rgba(40, 201, 135, 0.09), rgba(215, 181, 109, 0.09));
+  border: 1px solid rgba(242, 251, 247, 0.11);
+  border-radius: 1.125rem;
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.34);
 }
 
 .hero h1 {
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  max-width: 15ch;
+  margin: 0 0 1.25rem;
+  color: var(--euler-ink);
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
   letter-spacing: -0.045em;
   line-height: 0.98;
-  margin-bottom: 1.25rem;
 }
 
 .hero p {
-  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
   max-width: 44rem;
-  color: var(--bs-secondary-color);
+  margin-bottom: 1.5rem;
+  color: var(--euler-muted);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+}
+
+.btn {
+  padding: 0.7rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 650;
+}
+
+.btn-primary {
+  color: #171005;
+  background: var(--euler-gold);
+  border-color: var(--euler-gold);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  color: #171005;
+  background: #e1c483;
+  border-color: #e1c483;
+}
+
+.btn-outline-secondary {
+  color: var(--euler-ink);
+  background: var(--euler-surface-soft);
+  border-color: var(--euler-line);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  color: var(--euler-ink);
+  background: rgba(242, 251, 247, 0.08);
+  border-color: rgba(242, 251, 247, 0.28);
 }
 
 .lesson-grid {
@@ -35,16 +218,20 @@ $font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", monospace
 }
 
 .lesson-card {
-  border: 1px solid var(--bs-border-color);
-  border-radius: 1rem;
   padding: 1.4rem;
-  background: var(--bs-body-bg);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+    var(--euler-card);
+  border: 1px solid rgba(242, 251, 247, 0.12);
+  border-radius: 1rem;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
 }
 
 .lesson-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0.75rem 2rem rgba(27, 39, 66, 0.1);
+  border-color: rgba(40, 201, 135, 0.35);
+  box-shadow: 0 0.9rem 2rem rgba(0, 0, 0, 0.28);
 }
 
 .lesson-card h3 {
@@ -55,11 +242,115 @@ $font-family-monospace: "SFMono-Regular", Consolas, "Liberation Mono", monospace
   text-decoration: none;
 }
 
+// Quarto content: notebooks, callouts, tables, and the table of contents.
 .callout {
+  color: var(--euler-ink);
+  background: rgba(15, 61, 47, 0.82);
+  border-color: var(--euler-line);
   border-radius: 0.75rem;
 }
 
-.cell-output-display img {
+.callout.callout-style-default .callout-header {
+  background: rgba(242, 251, 247, 0.055);
+}
+
+.callout.callout-note {
+  border-left-color: var(--euler-emerald-bright);
+}
+
+.callout.callout-warning,
+.callout.callout-important {
+  border-left-color: var(--euler-gold);
+}
+
+pre,
+code,
+.sourceCode {
+  border-color: var(--euler-line) !important;
+}
+
+div.sourceCode,
+.cell-output,
+.cell-output-display {
   border-radius: 0.5rem;
 }
 
+.cell-output-display img {
+  border: 1px solid var(--euler-line);
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+table {
+  --bs-table-bg: rgba(15, 61, 47, 0.72);
+  --bs-table-color: var(--euler-ink);
+  --bs-table-border-color: var(--euler-line);
+  --bs-table-striped-bg: rgba(242, 251, 247, 0.045);
+  --bs-table-hover-bg: rgba(40, 201, 135, 0.08);
+}
+
+#TOC,
+.sidebar nav[role="doc-toc"] {
+  color: var(--euler-muted);
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a.active,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > a.active {
+  color: var(--euler-emerald-bright) !important;
+  border-left-color: var(--euler-emerald-bright);
+}
+
+.quarto-title-meta,
+.quarto-title-meta-heading,
+.description,
+.subtitle,
+.abstract,
+.figure-caption,
+.table-caption {
+  color: var(--euler-muted);
+}
+
+.nav-tabs {
+  border-bottom-color: var(--euler-line);
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--euler-ink);
+  background: var(--euler-surface);
+  border-color: var(--euler-line);
+}
+
+.page-footer {
+  color: var(--euler-muted);
+  background: rgba(3, 9, 7, 0.74);
+  border-top: 1px solid var(--euler-line-soft);
+}
+
+.page-footer a {
+  color: var(--euler-emerald-bright);
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    padding: 0.6rem 0;
+  }
+
+  .navbar .nav-link {
+    margin: 0.1rem 0;
+  }
+}
+
+@media (max-width: 575.98px) {
+  main.content {
+    padding-top: 1.25rem;
+  }
+
+  .hero {
+    margin-top: 0.5rem;
+    padding: 1.6rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.3rem, 14vw, 3.5rem);
+  }
+}

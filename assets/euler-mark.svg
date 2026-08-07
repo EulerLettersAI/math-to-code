@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
   <title id="title">EulerLettersAI mark</title>
-  <rect width="64" height="64" rx="14" fill="#3157a4"/>
+  <rect width="64" height="64" rx="14" fill="#0f8f62"/>
   <path d="M17 16h32v8H27v8h18v8H27v8h22v8H17z" fill="#fff"/>
 </svg>
-
