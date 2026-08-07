@@ -13,7 +13,7 @@ website:
     logo: assets/euler-letters-ai-logo.png
     logo-alt: "Euler Letters AI"
     logo-href: https://eulerlettersai.github.io/
-    right:
+    left:
       - text: Home
         href: index.qmd
       - text: Lessons

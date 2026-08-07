@@ -152,6 +152,19 @@ body {
   color: var(--euler-emerald);
 }
 
+// The parent site presents Contact as its outlined call to action.
+.navbar a.nav-link[href="https://eulerlettersai.github.io/#contact"] {
+  border: 1px solid rgba(4, 120, 87, 0.34);
+  background: #ccf4df;
+}
+
+.navbar a.nav-link[href="https://eulerlettersai.github.io/#contact"]:hover,
+.navbar a.nav-link[href="https://eulerlettersai.github.io/#contact"]:focus {
+  color: #fff !important;
+  background: #047857;
+  border-color: #047857;
+}
+
 #quarto-content {
   min-height: calc(100vh - 11rem);
 }
