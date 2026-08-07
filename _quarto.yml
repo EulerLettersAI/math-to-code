@@ -9,7 +9,7 @@ website:
   repo-url: "https://github.com/EulerLettersAI/math-to-code"
   repo-actions: [source, issue]
   navbar:
-    logo: assets/euler-mark.svg
+    logo: assets/euler-letters-ai-logo.png
     left:
       - href: index.qmd
         text: Home
