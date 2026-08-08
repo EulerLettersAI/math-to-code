@@ -28,21 +28,21 @@ website:
         href: https://github.com/EulerLettersAI/math-to-code
         aria-label: GitHub
   sidebar:
-    - id: classical-vs-quantum
-      title: "Classical and Quantum Kernels"
+    - id: svm-classical-vs-quantum
+      title: "SVM: Classical and Quantum Kernels"
       style: floating
       collapse-level: 2
       contents:
         - text: "Lesson overview"
-          href: lessons/classical-vs-quantum/index.qmd
+          href: lessons/svm-classical-vs-quantum/index.qmd
         - section: "Notebooks"
           contents:
             - text: "1. Support Vector Machines"
-              href: lessons/classical-vs-quantum/1.0-svm.ipynb
+              href: lessons/svm-classical-vs-quantum/1.0-svm.ipynb
             - text: "2. Kernels in SVMs"
-              href: lessons/classical-vs-quantum/2.0-kernel.ipynb
+              href: lessons/svm-classical-vs-quantum/2.0-kernel.ipynb
             - text: "3. Classical vs Quantum"
-              href: lessons/classical-vs-quantum/3.0-classical-vs-quantum.ipynb
+              href: lessons/svm-classical-vs-quantum/3.0-classical-vs-quantum.ipynb
     - id: optimization-primal-dual
       title: "Optimization: Primal and Dual"
       style: floating

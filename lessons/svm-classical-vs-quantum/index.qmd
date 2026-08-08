@@ -1,10 +1,10 @@
 ---
-title: "Classical and Quantum Kernel Classifiers"
+title: "SVM: Classical and Quantum Kernel Classifiers"
 description: "A three-part series: from the SVM margin to a side-by-side comparison of classical and quantum kernels."
 toc: false
 ---
 
-This series builds from first principles to a head-to-head comparison of classical and quantum kernel classifiers.
+This SVM series builds from first principles to a head-to-head comparison of classical and quantum kernel classifiers.
 Each notebook follows the same pattern: mathematics first, then code.
 
 ::: {.lesson-grid}
@@ -25,7 +25,7 @@ Understand feature maps, the kernel trick, and the kernel SVM decision function 
 :::
 
 ::: {.lesson-card}
-### [3. Classical and Quantum Kernel Classifiers](3.0-classical-vs-quantum.ipynb)
+### [3. SVM: Classical and Quantum Kernel Classifiers](3.0-classical-vs-quantum.ipynb)
 
 Compare a classical RBF kernel and a quantum feature-map kernel side by side on the same dataset using the same support-vector learning rule.
 

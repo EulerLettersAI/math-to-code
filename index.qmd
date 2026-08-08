@@ -8,7 +8,7 @@ toc: false
 
 Short, executable lessons that connect mathematical notation to working code—one concept and one experiment at a time.
 
-<!-- [Start the first lesson](lessons/classical-vs-quantum/index.ipynb){.btn .btn-primary .btn-lg}
+[Browse all lessons](lessons/index.qmd){.btn .btn-primary .btn-lg}
 [Browse the source](https://github.com/EulerLettersAI/math-to-code){.btn .btn-outline-secondary .btn-lg}
 :::
 
@@ -24,26 +24,18 @@ Build intuition from equations, diagrams, and carefully defined notation.
 ::: {.lesson-card}
 ### 2. Run
 
-Execute the Python cell immediately after the mathematical concept.
+Execute the code cell immediately after the mathematical concept.
 :::
 
 ::: {.lesson-card}
-### 3. Change -->
+### 3. Change
 
-Download the notebook, vary its assumptions, and investigate what happens.
+Download the source, vary its assumptions, and investigate what happens.
 :::
 :::
 
-## Latest lesson
+## A multidisciplinary collection
 
-::: {.lesson-card}
-### [Classical and quantum kernel classifiers](lessons/classical-vs-quantum/index.qmd)
-
-Compare an ordinary support-vector classifier with a simulated quantum-kernel classifier on the same two-dimensional dataset.
-
-**Level:** Introductory · **Language:** Python · **Runtime:** Local quantum simulation
-:::
-
-::: {.callout-note}
-The quantum example is an educational simulation. It does not claim quantum advantage; instead, it makes the mathematical and computational differences visible.
-:::
+Euler Letters AI is multidisciplinary, so this collection comprises independent
+lessons on miscellaneous topics rather than following a single curriculum. Each
+lesson connects its mathematical formulation directly to executable code.

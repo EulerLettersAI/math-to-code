@@ -32,6 +32,6 @@ repository settings, set **Pages → Build and deployment → Source** to
 
 ## First lesson
 
-[Classical and quantum kernel classifiers](lessons/classical-vs-quantum/index.ipynb)
+[SVM: Classical and quantum kernel classifiers](lessons/svm-classical-vs-quantum/index.qmd)
 compares a classical RBF support-vector classifier with a quantum-kernel
 support-vector classifier using the same dataset and split.

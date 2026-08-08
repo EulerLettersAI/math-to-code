@@ -8,7 +8,7 @@ toc: false
 
 ::: {.lesson-grid}
 ::: {.lesson-card}
-### [Classical and Quantum Kernel Classifiers](classical-vs-quantum/)
+### [SVM: Classical and Quantum Kernel Classifiers](svm-classical-vs-quantum/)
 
 A three-part series from the SVM margin to a side-by-side comparison of classical and quantum kernels.
 
