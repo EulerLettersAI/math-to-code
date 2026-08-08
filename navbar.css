@@ -36,6 +36,34 @@
   color: #022c22 !important;
 }
 
+/* Keep environment preparation visible but visually secondary to the lesson. */
+section#setup {
+  margin: 1rem 0 2rem;
+  padding: 1rem 1.25rem;
+  color: #495057;
+  background: #f1f3f5;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+}
+
+section#setup h2 {
+  margin-top: 0;
+  color: inherit;
+  font-size: 1.15rem;
+}
+
+section#setup p,
+section#setup pre,
+section#setup code {
+  font-size: 0.9rem;
+}
+
+body.quarto-dark section#setup {
+  color: #ced4da;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
 .navbar-brand-logo {
   display: flex;
   width: 8rem;

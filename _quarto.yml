@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - "lessons/**/*.ipynb"
+    - requirements.txt
 
 website:
   title: "Math to Code"
@@ -39,6 +42,19 @@ website:
               href: lessons/classical-vs-quantum/2.0-kernel.ipynb
             - text: "3. Classical vs Quantum"
               href: lessons/classical-vs-quantum/3.0-classical-vs-quantum.ipynb
+    - id: optimization-primal-dual
+      title: "Optimization: Primal and Dual"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "Lesson overview"
+          href: lessons/optimization-primal-dual/index.qmd
+        - section: "Notebooks"
+          contents:
+            - text: "1. A Simple Optimization Problem"
+              href: lessons/optimization-primal-dual/1.0-simple-optimization.ipynb
+            - text: "2. Primal and Dual Problems"
+              href: lessons/optimization-primal-dual/2.0-primal-and-dual.ipynb
   page-footer:
     left: "© EulerLettersAI"
     center: "Mathematics you can read, run, and change."
@@ -54,6 +70,7 @@ format:
       light: flatly
       dark: darkly
     css: navbar.css
+    include-after-body: download-links.html
     toc: true
     code-copy: true
     code-fold: show

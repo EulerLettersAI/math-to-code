@@ -18,3 +18,14 @@ A three-part series from the SVM margin to a side-by-side comparison of classica
 
 More lessons will be added as independent, downloadable notebooks.
 
+## Optimization
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [Optimization: Primal and Dual](optimization-primal-dual/)
+
+A two-part lesson that starts with a simple constrained minimization problem and then derives its Lagrangian dual.
+
+**Prerequisites:** algebra, derivatives, and basic Python.
+:::
+:::

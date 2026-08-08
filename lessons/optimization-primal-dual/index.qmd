@@ -1,0 +1,25 @@
+---
+title: "Optimization: Primal and Dual"
+description: "A two-part lesson from constrained minimization to Lagrangian duality."
+toc: false
+---
+
+This lesson develops one small optimization problem carefully enough that every geometric and algebraic step can be seen.
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [1. A Simple Optimization Problem](1.0-simple-optimization.ipynb)
+
+State a constrained minimization problem, identify its feasible set, solve it analytically, and verify the answer numerically and graphically.
+
+**Prerequisites:** algebra, derivatives, NumPy, and Matplotlib.
+:::
+
+::: {.lesson-card}
+### [2. Primal and Dual Problems](2.0-primal-and-dual.ipynb)
+
+Construct the Lagrangian, derive the dual function, compare primal and dual bounds, and verify strong duality through the KKT conditions.
+
+**Prerequisites:** [1. A Simple Optimization Problem](1.0-simple-optimization.ipynb).
+:::
+:::
