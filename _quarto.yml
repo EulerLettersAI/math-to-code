@@ -55,6 +55,19 @@ website:
               href: lessons/optimization-primal-dual/1.0-simple-optimization.ipynb
             - text: "2. Primal and Dual Problems"
               href: lessons/optimization-primal-dual/2.0-primal-and-dual.ipynb
+    - id: logistic-mixed-effects
+      title: "Logistic and Mixed-Effects Regression"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "Lesson overview"
+          href: lessons/logistic-mixed-effects/index.qmd
+        - section: "Lessons"
+          contents:
+            - text: "1. Logistic Regression and p-values"
+              href: lessons/logistic-mixed-effects/1-logistic-regression.Rmd
+            - text: "2. Mixed-Effects Logistic Regression"
+              href: lessons/logistic-mixed-effects/2-mixed-effects-logistic-regression.Rmd
   page-footer:
     left: "© EulerLettersAI"
     center: "Mathematics you can read, run, and change."

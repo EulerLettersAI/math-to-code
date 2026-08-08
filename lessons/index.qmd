@@ -14,6 +14,15 @@ A three-part series from the SVM margin to a side-by-side comparison of classica
 
 **Prerequisites:** vectors, inner products, and basic Python.
 :::
+
+::: {.lesson-card}
+### [Logistic and Mixed-Effects Regression](logistic-mixed-effects/)
+
+A two-part medical example covering binary outcomes, odds ratios, p-values,
+clinical interpretation, and patients clustered within clinics.
+
+**Prerequisites:** basic algebra and introductory R.
+:::
 :::
 
 More lessons will be added as independent, downloadable notebooks.

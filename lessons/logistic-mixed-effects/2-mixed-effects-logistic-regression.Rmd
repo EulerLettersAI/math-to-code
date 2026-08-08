@@ -1,0 +1,345 @@
+---
+title: "Mixed-Effects Logistic Regression"
+subtitle: "Accounting for patients grouped within clinics"
+author: "EulerLettersAI"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Learning goals
+
+By the end of this lesson, you should be able to:
+
+1. explain why patients within a clinic may not be independent;
+2. distinguish fixed effects from random effects;
+3. fit a random-intercept logistic model;
+4. interpret the treatment effect and clinic variation;
+5. explain why a mixed model may change standard errors and p-values.
+
+This lesson uses exactly the same fictional study and simulation as the first
+lesson. The outcome is 30-day recovery, and 300 patients are nested in 10
+clinics.
+
+```{r simulate-same-data}
+set.seed(2026)
+
+n_clinics <- 10
+patients_per_clinic <- 30
+n <- n_clinics * patients_per_clinic
+
+clinic <- factor(rep(seq_len(n_clinics), each = patients_per_clinic))
+clinic_effect <- rnorm(n_clinics, mean = 0, sd = 0.65)
+treatment <- rbinom(n, size = 1, prob = 0.50)
+age <- round(pmin(pmax(rnorm(n, mean = 60, sd = 11), 30), 85))
+linear_predictor <- -0.40 + log(1.8) * treatment - 0.035 * (age - 60) +
+  clinic_effect[as.integer(clinic)]
+probability_recovery <- plogis(linear_predictor)
+recovered <- rbinom(n, size = 1, prob = probability_recovery)
+
+medical <- data.frame(
+  clinic = clinic,
+  treatment = treatment,
+  age = age,
+  age_centered = age - 60,
+  recovered = recovered
+)
+
+head(medical)
+```
+
+## Why ordinary logistic regression may be insufficient
+
+Patients in one clinic share an environment. Even after accounting for
+treatment and age, two patients from the same clinic may be more alike than two
+patients from different clinics. Ordinary logistic regression assumes the
+remaining observations are independent, so its uncertainty calculation can be
+misleading when outcomes are clustered.
+
+Compare recovery proportions across clinics:
+
+```{r clinic-proportions}
+clinic_summary <- aggregate(
+  recovered ~ clinic,
+  data = medical,
+  FUN = function(x) c(n = length(x), recovery = mean(x))
+)
+
+clinic_summary <- data.frame(
+  clinic = clinic_summary$clinic,
+  n = clinic_summary$recovered[, "n"],
+  recovery_proportion = clinic_summary$recovered[, "recovery"]
+)
+clinic_summary
+```
+
+Some variation is sampling noise, and some may reflect real clinic-to-clinic
+differences. A mixed-effects model estimates the amount of extra variation.
+
+## The random-intercept model
+
+We extend the earlier equation:
+
+$$
+\log\left(\frac{p_{ij}}{1-p_{ij}}\right)
+= \beta_0 + \beta_1\text{Treatment}_{ij}
++ \beta_2(\text{Age}_{ij}-60) + u_j,
+$$
+
+where patient $i$ belongs to clinic $j$. The new term is
+
+$$u_j \sim N(0, \sigma^2_{clinic}).$$
+
+The parts play different roles:
+
+- **Fixed intercept $\beta_0$:** average baseline log-odds for a 60-year-old
+  standard-care patient in a typical clinic.
+- **Fixed treatment effect $\beta_1$:** average adjusted treatment association
+  across clinics.
+- **Fixed age effect $\beta_2$:** average adjusted association for one more year
+  of age.
+- **Random intercept $u_j$:** clinic $j$'s deviation from the average baseline.
+- **Random-effect SD $\sigma_{clinic}$:** how much baseline log-odds vary among
+  clinics.
+
+The model is called "mixed" because it contains both fixed and random effects.
+
+## Fit the model
+
+We use `glmer()` from **lme4**. Install the package once with
+`install.packages("lme4")` if needed.
+
+```{r fit-models}
+if (!requireNamespace("lme4", quietly = TRUE)) {
+  stop("This lesson requires the lme4 package. Run install.packages('lme4').")
+}
+
+ordinary_model <- glm(
+  recovered ~ treatment + age_centered,
+  data = medical,
+  family = binomial
+)
+
+mixed_model <- lme4::glmer(
+  recovered ~ treatment + age_centered + (1 | clinic),
+  data = medical,
+  family = binomial(link = "logit")
+)
+
+summary(mixed_model)
+```
+
+The notation `(1 | clinic)` means: allow every clinic to have its own
+intercept, while estimating those clinic intercepts as draws from one shared
+distribution.
+
+## Interpret the fixed effects
+
+As before, exponentiate fixed-effect coefficients to obtain odds ratios.
+
+```{r mixed-fixed-effects}
+mixed_coefficients <- summary(mixed_model)$coefficients
+
+mixed_results <- data.frame(
+  term = rownames(mixed_coefficients),
+  estimate_log_odds = mixed_coefficients[, "Estimate"],
+  odds_ratio = exp(mixed_coefficients[, "Estimate"]),
+  confidence_low = exp(mixed_coefficients[, "Estimate"] -
+                         1.96 * mixed_coefficients[, "Std. Error"]),
+  confidence_high = exp(mixed_coefficients[, "Estimate"] +
+                          1.96 * mixed_coefficients[, "Std. Error"]),
+  p_value = mixed_coefficients[, "Pr(>|z|)"],
+  row.names = NULL
+)
+
+mixed_results
+```
+
+The treatment OR is a **clinic-specific**, or conditional, odds ratio: it
+compares two otherwise similar patients in the same clinic. As in Lesson 1, the
+p-value tests a no-association null hypothesis; it does not measure effect size,
+clinical importance, or the probability that the null is true. Interpret it
+with the OR, confidence interval, design, and clinical threshold.
+
+The Wald intervals above are convenient teaching approximations. For important
+research, consider likelihood-profile or bootstrap intervals and a pre-specified
+analysis plan.
+
+## Interpret the random effect
+
+```{r random-effect-variation}
+clinic_variance <- as.data.frame(lme4::VarCorr(mixed_model))$vcov[1]
+clinic_sd <- sqrt(clinic_variance)
+
+c(clinic_variance = clinic_variance, clinic_sd = clinic_sd)
+```
+
+The clinic SD is measured on the log-odds scale. A value near zero suggests
+little residual clinic-to-clinic variation after adjustment. A larger value
+suggests that baseline recovery odds differ meaningfully among clinics.
+
+For logistic mixed models, a commonly used latent-scale intraclass correlation
+coefficient (ICC) is
+
+$$
+ICC \approx \frac{\sigma^2_{clinic}}
+{\sigma^2_{clinic}+\pi^2/3}.
+$$
+
+```{r icc}
+icc <- clinic_variance / (clinic_variance + pi^2 / 3)
+icc
+```
+
+The ICC approximates the proportion of latent-scale variation attributable to
+clinics. It is not literally the observed correlation between two binary
+outcomes, so state the scale and approximation when reporting it.
+
+## Clinic estimates and partial pooling
+
+The estimated clinic deviations are:
+
+```{r clinic-random-intercepts}
+clinic_estimates <- data.frame(
+  clinic = rownames(lme4::ranef(mixed_model)$clinic),
+  random_intercept = lme4::ranef(mixed_model)$clinic[, "(Intercept)"],
+  row.names = NULL
+)
+
+clinic_estimates
+```
+
+Mixed models use **partial pooling**. A clinic's estimate is informed by its own
+patients but pulled toward the overall mean, especially when the clinic has
+little information. This is usually more stable than fitting an entirely
+separate model for every clinic.
+
+## Compare ordinary and mixed models
+
+```{r compare-models}
+extract_treatment <- function(model) {
+  model_table <- summary(model)$coefficients
+  estimate <- model_table["treatment", "Estimate"]
+  standard_error <- model_table["treatment", "Std. Error"]
+  p <- model_table["treatment", "Pr(>|z|)"]
+
+  c(
+    odds_ratio = exp(estimate),
+    confidence_low = exp(estimate - 1.96 * standard_error),
+    confidence_high = exp(estimate + 1.96 * standard_error),
+    standard_error = standard_error,
+    p_value = p
+  )
+}
+
+comparison <- rbind(
+  ordinary_logistic = extract_treatment(ordinary_model),
+  mixed_effects_logistic = extract_treatment(mixed_model)
+)
+
+comparison
+```
+
+The two estimates need not be identical. More importantly, the mixed model's
+standard error acknowledges the grouping structure. Clustering often reduces
+the effective amount of independent information, although the exact change
+depends on the data and model. A p-value crossing 0.05 after accounting for
+clustering does not mean the effect disappeared; it means the evidence and its
+uncertainty were evaluated under a different, more suitable model.
+
+Do not choose between these models based on which produces the smaller p-value.
+Choose based on the study design and how the observations were generated.
+
+## Population-average and clinic-specific predictions
+
+A mixed model supports different prediction questions:
+
+- **Typical-clinic prediction:** set the clinic random effect to zero. This is
+  conditional on a clinic with average random intercept.
+- **Known-clinic prediction:** include that clinic's estimated random effect.
+
+Here are typical-clinic probabilities for a 60-year-old:
+
+```{r typical-clinic-predictions}
+new_patients <- data.frame(
+  treatment = c(0, 1),
+  age_centered = c(0, 0),
+  clinic = factor(c(1, 1), levels = levels(medical$clinic))
+)
+
+new_patients$group <- c("Standard care", "New treatment")
+new_patients$predicted_recovery_typical_clinic <- predict(
+  mixed_model,
+  newdata = new_patients,
+  type = "response",
+  re.form = NA
+)
+
+new_patients[, c("group", "predicted_recovery_typical_clinic")]
+```
+
+These are not fully marginal, population-averaged probabilities: simply setting
+$u_j=0$ does not integrate over the distribution of clinics. That distinction
+matters when selecting a prediction method for a clinical report.
+
+## When should you use a mixed-effects model?
+
+A mixed model is useful when observations are naturally grouped or repeated,
+for example:
+
+- patients within clinics or hospitals;
+- repeated visits within patients;
+- students within schools;
+- measurements made by different clinicians or devices.
+
+The grouping variable should represent a meaningful source of dependence. With
+very few groups, random-effect variance and small-sample inference can be
+unstable; alternatives may include clinic fixed effects, cluster-robust methods,
+or small-sample corrections, depending on the research question and design.
+
+Our random-intercept model assumes the treatment effect is the same across
+clinics. If the treatment effect plausibly varies by clinic and enough clinics
+and data are available, a random-slope model may be appropriate:
+
+```{r random-slope-example, eval=FALSE}
+random_slope_model <- lme4::glmer(
+  recovered ~ treatment + age_centered + (1 + treatment | clinic),
+  data = medical,
+  family = binomial
+)
+```
+
+That is a more demanding model and should be motivated by the design, not added
+only because the syntax is available.
+
+## Reporting template
+
+> We fitted a mixed-effects logistic regression with fixed effects for treatment
+> and age and a random intercept for clinic. The adjusted clinic-specific
+> treatment odds ratio was **[OR]** (95% CI **[lower, upper]**, Wald p = **[p]**).
+> The estimated between-clinic random-intercept SD was **[SD]**, corresponding
+> to a latent-scale ICC of **[ICC]**. Effect magnitude, precision, clinical
+> importance, and study limitations were considered together.
+
+```{r report-values}
+treatment_result <- mixed_results[mixed_results$term == "treatment", ]
+
+c(
+  odds_ratio = treatment_result$odds_ratio,
+  confidence_low = treatment_result$confidence_low,
+  confidence_high = treatment_result$confidence_high,
+  p_value = treatment_result$p_value,
+  clinic_sd = clinic_sd,
+  latent_scale_icc = icc
+)
+```
+
+## Check your understanding
+
+1. What dependence does `(1 | clinic)` represent?
+2. Why is the treatment OR described as clinic-specific?
+3. If the mixed-model p-value is larger than the ordinary-model p-value, did the
+   treatment effect necessarily become smaller?
+4. What does partial pooling do to clinic estimates?
+5. When might a random treatment slope be scientifically justified?

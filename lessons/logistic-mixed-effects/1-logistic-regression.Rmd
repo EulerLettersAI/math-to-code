@@ -1,0 +1,298 @@
+---
+title: "Logistic Regression and p-values"
+subtitle: "A medical example with 30-day recovery"
+author: "EulerLettersAI"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Learning goals
+
+By the end of this lesson, you should be able to:
+
+1. explain why logistic regression is used for a yes/no outcome;
+2. interpret coefficients as odds ratios;
+3. explain what a p-value does—and does not—tell us;
+4. use an effect estimate, confidence interval, and clinical context together;
+5. recognize when clustered medical data need a mixed-effects model.
+
+## The medical question
+
+Imagine a fictional study of 300 patients in 10 clinics. Each patient received
+either a new treatment (`treatment = 1`) or standard care (`treatment = 0`). The
+outcome `recovered` is 1 if the patient recovered within 30 days and 0 otherwise.
+We also record age because age may affect recovery.
+
+Our main question is:
+
+> After accounting for age, is the new treatment associated with 30-day recovery?
+
+The data below are simulated for teaching. They do not describe real patients
+or establish that any real treatment works.
+
+```{r simulate-data}
+set.seed(2026)
+
+n_clinics <- 10
+patients_per_clinic <- 30
+n <- n_clinics * patients_per_clinic
+
+clinic <- factor(rep(seq_len(n_clinics), each = patients_per_clinic))
+clinic_effect <- rnorm(n_clinics, mean = 0, sd = 0.65)
+treatment <- rbinom(n, size = 1, prob = 0.50)
+age <- round(pmin(pmax(rnorm(n, mean = 60, sd = 11), 30), 85))
+
+# The simulation uses a treatment log-odds effect of log(1.8).
+linear_predictor <- -0.40 + log(1.8) * treatment - 0.035 * (age - 60) +
+  clinic_effect[as.integer(clinic)]
+probability_recovery <- plogis(linear_predictor)
+recovered <- rbinom(n, size = 1, prob = probability_recovery)
+
+medical <- data.frame(
+  clinic = clinic,
+  treatment = treatment,
+  age = age,
+  recovered = recovered
+)
+
+head(medical)
+```
+
+## Start with descriptive results
+
+Before fitting a model, inspect the observed recovery proportions.
+
+```{r descriptive-results}
+recovery_table <- with(
+  medical,
+  aggregate(recovered, list(treatment = treatment), mean)
+)
+names(recovery_table)[2] <- "recovery_proportion"
+recovery_table$treatment <- c("Standard care", "New treatment")
+recovery_table
+```
+
+This is an *unadjusted* comparison. It does not account for age, and it treats
+all patients as independent even though patients from one clinic may resemble
+one another.
+
+## Why not ordinary linear regression?
+
+For a binary outcome, a straight-line model can predict impossible values below
+0 or above 1. Logistic regression instead models the **log-odds**:
+
+$$
+\log\left(\frac{p_i}{1-p_i}\right)
+= \beta_0 + \beta_1\text{Treatment}_i
++ \beta_2(\text{Age}_i-60),
+$$
+
+where $p_i$ is patient $i$'s probability of recovery. Centering age at 60 makes
+the intercept refer to a 60-year-old patient rather than a hypothetical
+zero-year-old patient.
+
+Fit the model with `glm()` and the binomial family:
+
+```{r fit-logistic-model}
+medical$age_centered <- medical$age - 60
+
+ordinary_model <- glm(
+  recovered ~ treatment + age_centered,
+  data = medical,
+  family = binomial(link = "logit")
+)
+
+summary(ordinary_model)
+```
+
+## From coefficients to odds ratios
+
+The coefficients printed by R are changes in log-odds. Exponentiating a
+coefficient gives an **odds ratio (OR)**, which is usually easier to discuss.
+
+```{r odds-ratios}
+coefficient_table <- summary(ordinary_model)$coefficients
+
+results <- data.frame(
+  term = rownames(coefficient_table),
+  estimate_log_odds = coefficient_table[, "Estimate"],
+  odds_ratio = exp(coefficient_table[, "Estimate"]),
+  confidence_low = exp(coefficient_table[, "Estimate"] -
+                         1.96 * coefficient_table[, "Std. Error"]),
+  confidence_high = exp(coefficient_table[, "Estimate"] +
+                          1.96 * coefficient_table[, "Std. Error"]),
+  p_value = coefficient_table[, "Pr(>|z|)"],
+  row.names = NULL
+)
+
+results
+```
+
+Interpret the treatment row as follows:
+
+- An OR of 1 means equal odds of recovery in the two treatment groups.
+- An OR above 1 means higher odds with the new treatment.
+- An OR below 1 means lower odds with the new treatment.
+- For example, OR = 1.50 means 50% higher **odds**, not 50 percentage points
+  higher probability and not necessarily 50% higher risk.
+
+For age, the OR is for each additional year because age is measured in years.
+An age OR of 0.96 would mean about 4% lower odds per additional year:
+$100(0.96-1)=-4\%$. Centering age changes the intercept, but it does not change
+the age slope, its odds ratio, or its p-value.
+
+## Odds are not probabilities
+
+The same odds ratio can correspond to different changes in probability,
+depending on the starting risk. Predicted probabilities make the result more
+concrete. Here are predictions for a 60-year-old patient:
+
+```{r predicted-probabilities}
+new_patients <- data.frame(
+  treatment = c(0, 1),
+  age_centered = c(0, 0)
+)
+
+new_patients$group <- c("Standard care", "New treatment")
+new_patients$predicted_recovery <- predict(
+  ordinary_model,
+  newdata = new_patients,
+  type = "response"
+)
+new_patients[, c("group", "predicted_recovery")]
+```
+
+These model-based probabilities are often more understandable to patients and
+clinicians than odds ratios. They are estimates, not guarantees for an
+individual patient.
+
+## What exactly is a p-value?
+
+For the treatment coefficient, the model tests:
+
+$$
+H_0: \beta_1=0 \quad \text{or equivalently} \quad H_0: OR=1.
+$$
+
+R reports a two-sided Wald p-value. Informally, it asks:
+
+> If the treatment truly had no association with recovery, and the model's
+> assumptions were correct, how surprising would an estimate at least this far
+> from zero be because of random sampling variation?
+
+A small p-value means the observed estimate is relatively incompatible with
+that null model. It is **not**:
+
+- the probability that the null hypothesis is true;
+- the probability that the result happened "by chance";
+- the probability that the treatment works;
+- the size or clinical importance of the effect;
+- proof that treatment causes recovery.
+
+For example, `p = 0.03` does **not** mean there is a 3% probability that no
+treatment effect exists. It describes the data under a null hypothesis; it does
+not assign a probability to that hypothesis.
+
+## How the p-value is calculated
+
+For each coefficient, R divides the estimate by its standard error:
+
+$$z=\frac{\widehat\beta}{SE(\widehat\beta)}.$$
+
+It then compares $|z|$ with a standard normal distribution. We can reproduce
+the treatment p-value:
+
+```{r calculate-p-value}
+treatment_estimate <- coef(ordinary_model)["treatment"]
+treatment_se <- coefficient_table["treatment", "Std. Error"]
+z_value <- treatment_estimate / treatment_se
+p_value <- 2 * pnorm(-abs(z_value))
+
+c(z_value = z_value, p_value = p_value)
+```
+
+The standard error reflects uncertainty. Larger samples generally produce
+smaller standard errors, so a tiny effect can have a small p-value in a very
+large study. Conversely, a clinically important estimated effect can have a
+large p-value in a small, imprecise study.
+
+## Reading p-values with confidence intervals
+
+At a conventional two-sided 5% significance level, these statements usually
+agree for the same coefficient and method:
+
+- `p < 0.05`;
+- the 95% confidence interval for the log-odds coefficient excludes 0;
+- the 95% confidence interval for the odds ratio excludes 1.
+
+The confidence interval is more informative because it shows both the estimated
+effect and its precision. A wide interval means many effect sizes remain
+compatible with the data.
+
+Avoid saying "there is no effect" merely because `p >= 0.05`. A better statement
+is: "The study did not provide strong evidence against no association; the
+confidence interval shows which beneficial or harmful effects remain plausible."
+
+## A responsible decision process
+
+Do not let `p < 0.05` make the decision by itself. Before seeing the data, define
+the primary outcome, model, significance level, and a **minimum clinically
+important effect**. Then ask:
+
+1. **What is the direction and size?** Read the odds ratio and predicted
+   probabilities.
+2. **How uncertain is it?** Read the confidence interval, not only the p-value.
+3. **Is it clinically meaningful?** Compare the estimate and interval with a
+   pre-specified clinical threshold.
+4. **Is the design credible?** Consider randomization, missing data,
+   confounding, measurement quality, and whether assumptions are reasonable.
+5. **Were many hypotheses tested?** Selective reporting and multiple testing
+   can create small p-values even when no real effects exist.
+6. **Do benefits outweigh harms, costs, and patient preferences?** Statistical
+   evidence is only one part of a medical decision.
+
+A compact conclusion template is:
+
+> After adjustment for age, the estimated treatment odds ratio was **[OR]**
+> (95% CI **[lower, upper]**, p = **[p]**). This is [compatible/not compatible]
+> with no association at the pre-specified 5% level. The estimated probability
+> difference for a 60-year-old was **[difference]** percentage points. Clinical
+> importance should be judged against the pre-specified threshold and study
+> limitations.
+
+Use the next chunk to fill in those values.
+
+```{r conclusion-values}
+treatment_result <- results[results$term == "treatment", ]
+probability_difference <- diff(new_patients$predicted_recovery)
+
+c(
+  odds_ratio = treatment_result$odds_ratio,
+  confidence_low = treatment_result$confidence_low,
+  confidence_high = treatment_result$confidence_high,
+  p_value = treatment_result$p_value,
+  probability_difference = probability_difference
+)
+```
+
+## An important limitation: patients are clustered
+
+The ordinary model assumes that, after accounting for treatment and age, all
+observations are independent. But patients treated in the same clinic may share
+staff, procedures, referral patterns, or local populations. Their outcomes may
+therefore be correlated.
+
+Ignoring that correlation can make standard errors too small and p-values too
+optimistic. The second lesson uses the same data and adds a clinic-level random
+intercept.
+
+## Check your understanding
+
+1. If the treatment OR is 1.7, does that mean recovery probability rose by 70
+   percentage points? Why not?
+2. If p = 0.08, can you conclude that treatment has no effect?
+3. Which communicates more information: a p-value alone, or an odds ratio with
+   a confidence interval? Why?
+4. What part of this study makes the independence assumption questionable?

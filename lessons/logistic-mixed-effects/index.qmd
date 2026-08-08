@@ -1,0 +1,31 @@
+---
+title: "Logistic and Mixed-Effects Regression"
+description: "A two-part medical example about binary outcomes, p-values, and clustered data."
+toc: false
+---
+
+This lesson follows the same fictional medical study from an ordinary logistic
+regression to a mixed-effects logistic regression. The outcome is whether a
+patient recovered within 30 days, and patients are grouped within clinics.
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [1. Logistic Regression and p-values](1-logistic-regression.Rmd)
+
+Fit a logistic regression, translate log-odds into odds ratios and
+probabilities, and interpret p-values without treating them as automatic
+decisions about clinical importance.
+
+**Prerequisites:** basic algebra and introductory R.
+:::
+
+::: {.lesson-card}
+### [2. Mixed-Effects Logistic Regression](2-mixed-effects-logistic-regression.Rmd)
+
+Account for patients being grouped within clinics, interpret a random
+intercept, and compare the result with the ordinary logistic model.
+
+**Prerequisites:** [1. Logistic Regression and p-values](1-logistic-regression.Rmd).
+:::
+:::
+

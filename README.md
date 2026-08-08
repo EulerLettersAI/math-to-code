@@ -7,12 +7,14 @@ code. The site is designed for publication at:
 
 ## Work locally
 
-Install [Quarto](https://quarto.org/docs/get-started/) and Python 3.11, then:
+Install [Quarto](https://quarto.org/docs/get-started/), Python 3.11, and R,
+then:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
+Rscript -e 'install.packages(c("knitr", "rmarkdown", "lme4"))'
 quarto preview
 ```
 
@@ -33,4 +35,3 @@ repository settings, set **Pages → Build and deployment → Source** to
 [Classical and quantum kernel classifiers](lessons/classical-vs-quantum/index.ipynb)
 compares a classical RBF support-vector classifier with a quantum-kernel
 support-vector classifier using the same dataset and split.
-
