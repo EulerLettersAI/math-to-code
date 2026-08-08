@@ -2,6 +2,12 @@
 title: "Logistic Regression and p-values"
 subtitle: "A medical example with 30-day recovery"
 author: "EulerLettersAI"
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: 1-logistic-regression.Rmd?download=1
 ---
 
 ```{r setup, include=FALSE}
@@ -31,6 +37,37 @@ Our main question is:
 
 The data below are simulated for teaching. They do not describe real patients
 or establish that any real treatment works.
+
+### Mathematics: generate one binary outcome per patient
+
+Let $Y_i$ denote recovery for patient $i$, $T_i$ denote treatment, and
+$A_i=\text{Age}_i-60$ denote centered age. A binary outcome follows a Bernoulli
+distribution:
+
+$$
+Y_i\mid p_i \sim \operatorname{Bernoulli}(p_i),
+\qquad
+P(Y_i=y_i)=p_i^{y_i}(1-p_i)^{1-y_i}.
+$$
+
+To make the same simulated data useful in Lesson 2, patients also have a clinic
+effect $u_{j[i]}$. The data-generating equation is
+
+$$
+\eta_i=-0.40+\log(1.8)T_i-0.035A_i+u_{j[i]},
+\qquad
+u_j\sim N(0,0.65^2),
+$$
+
+and the inverse-logit function converts the linear predictor to a probability:
+
+$$
+p_i=\operatorname{logit}^{-1}(\eta_i)
+=\frac{e^{\eta_i}}{1+e^{\eta_i}}.
+$$
+
+The R cell implements these equations. `plogis(eta)` is R's numerically stable
+version of $\operatorname{logit}^{-1}(\eta)$.
 
 ```{r simulate-data}
 set.seed(2026)
@@ -64,6 +101,16 @@ head(medical)
 
 Before fitting a model, inspect the observed recovery proportions.
 
+### Mathematics: an observed proportion
+
+For treatment group $t\in\{0,1\}$, the empirical recovery proportion is
+
+$$
+\widehat p_t=\frac{1}{n_t}\sum_{i:T_i=t}Y_i.
+$$
+
+The next cell groups patients by $T_i$ and computes this sample mean.
+
 ```{r descriptive-results}
 recovery_table <- with(
   medical,
@@ -93,6 +140,26 @@ where $p_i$ is patient $i$'s probability of recovery. Centering age at 60 makes
 the intercept refer to a 60-year-old patient rather than a hypothetical
 zero-year-old patient.
 
+Because observations are Bernoulli, the likelihood for
+$\boldsymbol\beta=(\beta_0,\beta_1,\beta_2)$ is
+
+$$
+L(\boldsymbol\beta)
+=\prod_{i=1}^{n}p_i^{y_i}(1-p_i)^{1-y_i},
+$$
+
+or, more conveniently, the log-likelihood is
+
+$$
+\ell(\boldsymbol\beta)
+=\sum_{i=1}^{n}\left[y_i\log(p_i)+(1-y_i)\log(1-p_i)\right].
+$$
+
+Logistic regression chooses the maximum-likelihood estimate
+$\widehat{\boldsymbol\beta}=\arg\max_{\boldsymbol\beta}\ell(\boldsymbol\beta)$.
+Unlike ordinary least squares, this optimization has no simple closed-form
+solution, so `glm()` solves it iteratively.
+
 Fit the model with `glm()` and the binomial family:
 
 ```{r fit-logistic-model}
@@ -111,6 +178,28 @@ summary(ordinary_model)
 
 The coefficients printed by R are changes in log-odds. Exponentiating a
 coefficient gives an **odds ratio (OR)**, which is usually easier to discuss.
+
+For treatment, holding age fixed,
+
+$$
+\frac{\operatorname{odds}(Y=1\mid T=1,A)}
+{\operatorname{odds}(Y=1\mid T=0,A)}
+=\frac{e^{\beta_0+\beta_1+\beta_2A}}
+{e^{\beta_0+\beta_2A}}
+=e^{\beta_1}.
+$$
+
+A large-sample 95% Wald interval is first formed on the log-odds scale and then
+exponentiated:
+
+$$
+\widehat\beta_k\pm1.96\,SE(\widehat\beta_k)
+\quad\Longrightarrow\quad
+\left[e^{\widehat\beta_k-1.96SE},
+e^{\widehat\beta_k+1.96SE}\right].
+$$
+
+The next cell performs exactly these transformations for every coefficient.
 
 ```{r odds-ratios}
 coefficient_table <- summary(ordinary_model)$coefficients
@@ -148,6 +237,22 @@ the age slope, its odds ratio, or its p-value.
 The same odds ratio can correspond to different changes in probability,
 depending on the starting risk. Predicted probabilities make the result more
 concrete. Here are predictions for a 60-year-old patient:
+
+For treatment value $t$ and centered age $a$, first calculate
+
+$$
+\widehat\eta(t,a)=\widehat\beta_0+\widehat\beta_1t+
+\widehat\beta_2a,
+$$
+
+then transform it back from log-odds:
+
+$$
+\widehat p(t,a)=\frac{1}{1+e^{-\widehat\eta(t,a)}}.
+$$
+
+The code uses `type = "response"` to request this inverse-logit transformation
+rather than the raw linear predictor.
 
 ```{r predicted-probabilities}
 new_patients <- data.frame(
@@ -203,6 +308,16 @@ $$z=\frac{\widehat\beta}{SE(\widehat\beta)}.$$
 
 It then compares $|z|$ with a standard normal distribution. We can reproduce
 the treatment p-value:
+
+$$
+p\text{-value}=P(|Z|\ge |z_{obs}|\mid H_0)
+=2\left[1-\Phi(|z_{obs}|)\right]
+=2\Phi(-|z_{obs}|),
+$$
+
+where $Z\sim N(0,1)$ under the large-sample null approximation and $\Phi$ is
+the standard normal cumulative distribution function. The R functions
+`pnorm()` and `abs()` translate this equation directly.
 
 ```{r calculate-p-value}
 treatment_estimate <- coef(ordinary_model)["treatment"]
@@ -263,6 +378,16 @@ A compact conclusion template is:
 > limitations.
 
 Use the next chunk to fill in those values.
+
+For the 60-year-old example, the model-based absolute effect is the probability
+difference
+
+$$
+\widehat\Delta_p=\widehat p(T=1,A=0)-\widehat p(T=0,A=0).
+$$
+
+This is different from the odds ratio $e^{\widehat\beta_1}$ and is usually
+reported in percentage points.
 
 ```{r conclusion-values}
 treatment_result <- results[results$term == "treatment", ]

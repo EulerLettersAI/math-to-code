@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - "lessons/**/*.ipynb"
+    - "lessons/**/*.Rmd"
     - requirements.txt
 
 website:

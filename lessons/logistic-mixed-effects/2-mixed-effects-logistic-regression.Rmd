@@ -2,6 +2,12 @@
 title: "Mixed-Effects Logistic Regression"
 subtitle: "Accounting for patients grouped within clinics"
 author: "EulerLettersAI"
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: 2-mixed-effects-logistic-regression.Rmd?download=1
 ---
 
 ```{r setup, include=FALSE}
@@ -21,6 +27,24 @@ By the end of this lesson, you should be able to:
 This lesson uses exactly the same fictional study and simulation as the first
 lesson. The outcome is 30-day recovery, and 300 patients are nested in 10
 clinics.
+
+## Recreate the shared medical data
+
+For patient $i$ in clinic $j$, the simulation follows
+
+$$
+Y_{ij}\mid p_{ij},u_j\sim\operatorname{Bernoulli}(p_{ij}),
+\qquad u_j\sim N(0,0.65^2),
+$$
+
+$$
+\operatorname{logit}(p_{ij})
+=-0.40+\log(1.8)T_{ij}-0.035(Age_{ij}-60)+u_j.
+$$
+
+Using the same random seed and the same equations as Lesson 1 produces exactly
+the same patients. The only change in this lesson is the model used to analyze
+them.
 
 ```{r simulate-same-data}
 set.seed(2026)
@@ -58,6 +82,14 @@ remaining observations are independent, so its uncertainty calculation can be
 misleading when outcomes are clustered.
 
 Compare recovery proportions across clinics:
+
+For clinic $j$, with $n_j$ patients, the observed clinic recovery proportion is
+
+$$
+\widehat p_j=\frac{1}{n_j}\sum_{i=1}^{n_j}Y_{ij}.
+$$
+
+The next cell evaluates $n_j$ and $\widehat p_j$ for all ten clinics.
 
 ```{r clinic-proportions}
 clinic_summary <- aggregate(
@@ -110,6 +142,30 @@ The model is called "mixed" because it contains both fixed and random effects.
 We use `glmer()` from **lme4**. Install the package once with
 `install.packages("lme4")` if needed.
 
+Conditional on a clinic effect $u_j$, the contribution of patient $i$ is
+
+$$
+P(Y_{ij}=y_{ij}\mid u_j)
+=p_{ij}^{y_{ij}}(1-p_{ij})^{1-y_{ij}}.
+$$
+
+Because $u_j$ is unobserved, the mixed model integrates it out. The marginal
+likelihood is
+
+$$
+L(\boldsymbol\beta,\sigma_{clinic})
+=\prod_{j=1}^{J}
+\int_{-\infty}^{\infty}
+\left[\prod_{i=1}^{n_j}
+p_{ij}(u)^{y_{ij}}\{1-p_{ij}(u)\}^{1-y_{ij}}
+\right]
+\phi(u;0,\sigma_{clinic}^2)\,du.
+$$
+
+`glmer()` numerically approximates these integrals while estimating the fixed
+effects and clinic variance. The ordinary `glm()` is also fitted below so both
+models use the identical outcome and predictors.
+
 ```{r fit-models}
 if (!requireNamespace("lme4", quietly = TRUE)) {
   stop("This lesson requires the lme4 package. Run install.packages('lme4').")
@@ -137,6 +193,31 @@ distribution.
 ## Interpret the fixed effects
 
 As before, exponentiate fixed-effect coefficients to obtain odds ratios.
+
+Within a clinic, the random intercept cancels from the treatment odds ratio:
+
+$$
+OR_{treatment\mid clinic}
+=\frac{e^{\beta_0+\beta_1+\beta_2A+u_j}}
+{e^{\beta_0+\beta_2A+u_j}}
+=e^{\beta_1}.
+$$
+
+For fixed effect $k$, the cell calculates
+
+$$
+\widehat{OR}_k=e^{\widehat\beta_k},\qquad
+CI_{95\%}=\left[
+e^{\widehat\beta_k-1.96SE_k},
+e^{\widehat\beta_k+1.96SE_k}
+\right],
+$$
+
+and the two-sided Wald p-value
+
+$$
+p_k=2\Phi\left(-\left|\frac{\widehat\beta_k}{SE_k}\right|\right).
+$$
 
 ```{r mixed-fixed-effects}
 mixed_coefficients <- summary(mixed_model)$coefficients
@@ -167,6 +248,17 @@ research, consider likelihood-profile or bootstrap intervals and a pre-specified
 analysis plan.
 
 ## Interpret the random effect
+
+The fitted model estimates the clinic variance
+$\widehat\sigma_{clinic}^2$. Its square root returns variation to the log-odds
+scale:
+
+$$
+\widehat\sigma_{clinic}
+=\sqrt{\widehat{\operatorname{Var}}(u_j)}.
+$$
+
+The following cell extracts these two quantities from `VarCorr()`.
 
 ```{r random-effect-variation}
 clinic_variance <- as.data.frame(lme4::VarCorr(mixed_model))$vcov[1]
@@ -200,6 +292,21 @@ outcomes, so state the scale and approximation when reporting it.
 
 The estimated clinic deviations are:
 
+For clinic $j$, `ranef()` returns the conditional mode
+
+$$
+\widehat u_j
+=\arg\max_{u_j}
+\left\{
+\log P(\mathbf y_j\mid u_j,\widehat{\boldsymbol\beta})
++\log\phi(u_j;0,\widehat\sigma_{clinic}^2)
+\right\}.
+$$
+
+The normal-density term penalizes extreme clinic effects. This is the
+mathematical source of partial pooling: estimates with weak clinic-level
+information are pulled more strongly toward $0$.
+
 ```{r clinic-random-intercepts}
 clinic_estimates <- data.frame(
   clinic = rownames(lme4::ranef(mixed_model)$clinic),
@@ -216,6 +323,17 @@ little information. This is usually more stable than fitting an entirely
 separate model for every clinic.
 
 ## Compare ordinary and mixed models
+
+To compare like with like, define for each fitted model $m$
+
+$$
+\widehat{OR}_m=e^{\widehat\beta_{1m}},\qquad
+SE_m=SE(\widehat\beta_{1m}),\qquad
+p_m=2\Phi\left(-\left|\widehat\beta_{1m}/SE_m\right|\right).
+$$
+
+The helper function below applies these same equations to `glm` and `glmer`
+objects and stacks the results.
 
 ```{r compare-models}
 extract_treatment <- function(model) {
@@ -261,6 +379,18 @@ A mixed model supports different prediction questions:
 
 Here are typical-clinic probabilities for a 60-year-old:
 
+Setting the clinic deviation to its population mean, $u_j=0$, gives
+
+$$
+\widehat p_{typical}(t,a)
+=\operatorname{logit}^{-1}
+\left(\widehat\beta_0+\widehat\beta_1t+\widehat\beta_2a\right).
+$$
+
+In `predict()`, `re.form = NA` excludes all fitted random effects and implements
+this equation. Setting `type = "response"` returns probability rather than
+log-odds.
+
 ```{r typical-clinic-predictions}
 new_patients <- data.frame(
   treatment = c(0, 1),
@@ -302,6 +432,27 @@ Our random-intercept model assumes the treatment effect is the same across
 clinics. If the treatment effect plausibly varies by clinic and enough clinics
 and data are available, a random-slope model may be appropriate:
 
+$$
+\operatorname{logit}(p_{ij})
+=\beta_0+\beta_1T_{ij}+\beta_2A_{ij}
++u_{0j}+u_{1j}T_{ij},
+$$
+
+$$
+\begin{pmatrix}u_{0j}\\u_{1j}\end{pmatrix}
+\sim N\left[
+\begin{pmatrix}0\\0\end{pmatrix},
+\begin{pmatrix}
+\sigma_0^2 & \sigma_{01}\\
+\sigma_{01} & \sigma_1^2
+\end{pmatrix}
+\right].
+$$
+
+Here $u_{0j}$ changes clinic $j$'s baseline, while $u_{1j}$ changes its treatment
+effect. The R notation `(1 + treatment | clinic)` estimates both variation
+terms and their correlation.
+
 ```{r random-slope-example, eval=FALSE}
 random_slope_model <- lme4::glmer(
   recovered ~ treatment + age_centered + (1 + treatment | clinic),
@@ -321,6 +472,17 @@ only because the syntax is available.
 > The estimated between-clinic random-intercept SD was **[SD]**, corresponding
 > to a latent-scale ICC of **[ICC]**. Effect magnitude, precision, clinical
 > importance, and study limitations were considered together.
+
+The reporting cell collects the mathematical summaries already derived:
+
+$$
+e^{\widehat\beta_1},\quad
+e^{\widehat\beta_1\pm1.96SE_1},\quad
+2\Phi(-|\widehat\beta_1/SE_1|),\quad
+\widehat\sigma_{clinic},\quad
+\frac{\widehat\sigma_{clinic}^2}
+{\widehat\sigma_{clinic}^2+\pi^2/3}.
+$$
 
 ```{r report-values}
 treatment_result <- mixed_results[mixed_results$term == "treatment", ]
