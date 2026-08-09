@@ -17,15 +17,6 @@ Derive the maximum-margin hyperplane, read the primal and dual forms of the SVM,
 :::
 
 ::: {.lesson-card}
-### [1.1 SVM Margin Geometry in Two Features](1.1-margin-geometry.ipynb)
-
-Draw the decision and margin lines, derive the canonical SVM inequality, and
-prove that the full geometric margin is $2/\lVert\mathbf{w}\rVert$.
-
-**Companion to:** [1. Support Vector Machines](1.0-svm.ipynb), Section 2.
-:::
-
-::: {.lesson-card}
 ### [2. Kernels in Support Vector Machines](2.0-kernel.ipynb)
 
 Understand feature maps, the kernel trick, and the kernel SVM decision function through polynomial and RBF examples.
@@ -39,5 +30,18 @@ Understand feature maps, the kernel trick, and the kernel SVM decision function 
 Compare a classical RBF kernel and a quantum feature-map kernel side by side on the same dataset using the same support-vector learning rule.
 
 **Prerequisites:** [2. Kernels in SVMs](2.0-kernel.ipynb).
+:::
+:::
+
+**Refreshers**
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [1.1 SVM Margin Geometry in Two Features](1.1-margin-geometry.ipynb)
+
+Draw the decision and margin lines, derive the canonical SVM inequality, and
+prove that the full geometric margin is $2/\lVert\mathbf{w}\rVert$.
+
+**Companion to:** [1. Support Vector Machines](1.0-svm.ipynb), Section 2.
 :::
 :::
