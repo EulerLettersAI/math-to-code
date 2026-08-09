@@ -10,7 +10,7 @@ toc: false
 ::: {.lesson-card}
 ### [SVM: Classical and Quantum Kernel Classifiers](svm-classical-vs-quantum/)
 
-A three-part series from the SVM margin to a side-by-side comparison of classical and quantum kernels.
+A four-part series from two-feature SVM margin geometry to a side-by-side comparison of classical and quantum kernels.
 
 **Prerequisites:** vectors, inner products, and basic Python.
 :::

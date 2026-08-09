@@ -1,6 +1,6 @@
 ---
 title: "SVM: Classical and Quantum Kernel Classifiers"
-description: "A three-part series: from the SVM margin to a side-by-side comparison of classical and quantum kernels."
+description: "A four-part series: from margin geometry to a side-by-side comparison of classical and quantum kernels."
 toc: false
 ---
 
@@ -14,6 +14,15 @@ Each notebook follows the same pattern: mathematics first, then code.
 Derive the maximum-margin hyperplane, read the primal and dual forms of the SVM, and control the soft-margin trade-off with $C$.
 
 **Prerequisites:** vectors, inner products, and basic Python.
+:::
+
+::: {.lesson-card}
+### [1.1 SVM Margin Geometry in Two Features](1.1-margin-geometry.ipynb)
+
+Draw the decision and margin lines, derive the canonical SVM inequality, and
+prove that the full geometric margin is $2/\lVert\mathbf{w}\rVert$.
+
+**Companion to:** [1. Support Vector Machines](1.0-svm.ipynb), Section 2.
 :::
 
 ::: {.lesson-card}
