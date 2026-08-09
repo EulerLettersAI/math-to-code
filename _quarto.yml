@@ -39,12 +39,14 @@ website:
           contents:
             - text: "1. Support Vector Machines"
               href: lessons/svm-classical-vs-quantum/1.0-svm.ipynb
-            - text: "1.1 SVM Margin Geometry"
-              href: lessons/svm-classical-vs-quantum/1.1-margin-geometry.ipynb
             - text: "2. Kernels in SVMs"
               href: lessons/svm-classical-vs-quantum/2.0-kernel.ipynb
             - text: "3. Classical vs Quantum"
               href: lessons/svm-classical-vs-quantum/3.0-classical-vs-quantum.ipynb
+        - section: "Refreshers"
+          contents:
+            - text: "1.1 Margin Geometry"
+              href: lessons/svm-classical-vs-quantum/1.1-margin-geometry.ipynb
     - id: optimization-primal-dual
       title: "Optimization: Primal and Dual"
       style: floating
