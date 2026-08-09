@@ -1,0 +1,38 @@
+---
+title: "Power Flow and State Estimation"
+description: "A three-part pandapower lesson using the IEEE 14-bus benchmark."
+toc: false
+---
+
+This lesson uses pandapower's built-in IEEE 14-bus network to separate two ideas that are often
+confused: predicting an operating point from specified injections, and
+reconstructing an operating point from noisy meter data.
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [1. Power-Flow Analysis](1.0-power-flow-analysis.ipynb)
+
+Formulate the AC nodal equations, solve them with Newton–Raphson, and inspect
+bus voltages, line flows, losses, and loading.
+
+**Prerequisites:** complex numbers, basic circuits, NumPy, and pandas.
+:::
+
+::: {.lesson-card}
+### [2. WLS State Estimation](2.0-wls-state-estimation.ipynb)
+
+Build a redundant noisy measurement set, formulate weighted least squares,
+estimate all voltage states, and calculate flows from the estimate.
+
+**Prerequisites:** Part 1 and introductory probability.
+:::
+
+::: {.lesson-card}
+### [3. Observability](3.0-state-estimation-observability.ipynb)
+
+Explore Jacobian rank, spanning-tree intuition, unobservable directions,
+critical measurements, redundancy, and numerical conditioning.
+
+**Prerequisites:** Part 2 and elementary linear algebra.
+:::
+:::

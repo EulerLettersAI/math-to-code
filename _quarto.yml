@@ -73,6 +73,21 @@ website:
               href: lessons/logistic-mixed-effects/1-logistic-regression.Rmd
             - text: "2. Mixed-Effects Logistic Regression"
               href: lessons/logistic-mixed-effects/2-mixed-effects-logistic-regression.Rmd
+    - id: power-flow-state-estimation
+      title: "Power Flow and State Estimation"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "Lesson overview"
+          href: lessons/power-flow-state-estimation/index.qmd
+        - section: "Notebooks"
+          contents:
+            - text: "1. Power-Flow Analysis"
+              href: lessons/power-flow-state-estimation/1.0-power-flow-analysis.ipynb
+            - text: "2. WLS State Estimation"
+              href: lessons/power-flow-state-estimation/2.0-wls-state-estimation.ipynb
+            - text: "3. State-Estimation Observability"
+              href: lessons/power-flow-state-estimation/3.0-state-estimation-observability.ipynb
   page-footer:
     left: "© EulerLettersAI"
     center: "Mathematics you can read, run, and change."

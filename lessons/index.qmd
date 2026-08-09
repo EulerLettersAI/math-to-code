@@ -38,3 +38,16 @@ A two-part lesson that starts with a simple constrained minimization problem and
 **Prerequisites:** algebra, derivatives, and basic Python.
 :::
 :::
+
+## Power systems
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [Power Flow and State Estimation](power-flow-state-estimation/)
+
+A three-part pandapower lesson comparing AC load flow with WLS state
+estimation, then exploring measurement observability on the same five-bus grid.
+
+**Prerequisites:** complex numbers, basic circuits, probability, and linear algebra.
+:::
+:::
