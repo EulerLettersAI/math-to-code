@@ -38,8 +38,6 @@ website:
       - text: Contact
         href: https://eulerlettersai.github.io/index.html#contact
     right:
-      - text: Lessons
-        href: lessons/index.qmd
       - icon: github
         href: https://github.com/EulerLettersAI/math-to-code
         aria-label: GitHub
