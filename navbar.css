@@ -1,39 +1,87 @@
-.navbar,
-[data-bs-theme="light"] .navbar,
-[data-bs-theme="dark"] .navbar {
-  --bs-navbar-color: #065f46;
+/* Match the shared Euler Letters AI / Light & Lens header. */
+.navbar {
+  --bs-navbar-color: #064e3b;
   --bs-navbar-hover-color: #022c22;
   --bs-navbar-active-color: #022c22;
-  --bs-navbar-brand-color: #065f46;
-  --bs-navbar-brand-hover-color: #022c22;
   --bs-navbar-toggler-border-color: rgba(6, 95, 70, 0.3);
-  color: #065f46;
-  background-color: #f6fffa !important;
+  background: #f4fff9 !important;
+  color: #04251c !important;
+  border-bottom: 1px solid rgba(4, 78, 59, 0.18);
+  box-shadow: 0 8px 22px rgba(2, 44, 34, 0.08);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-.navbar .nav-link,
-.navbar .navbar-title,
-.navbar .quarto-navigation-tool,
-.navbar #quarto-search .aa-DetachedSearchButtonIcon {
-  color: #065f46 !important;
+.navbar > .container-fluid {
+  max-width: 1140px;
+  padding: 10px 22px;
+  gap: 24px;
+}
+
+.navbar-brand-logo {
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-brand-logo .navbar-logo {
+  width: 150px;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+.navbar .navbar-nav {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.navbar .navbar-collapse {
+  flex-wrap: wrap;
 }
 
 .navbar .nav-link {
-  font-size: 1.25rem;
+  color: #064e3b !important;
+  font-size: 18px;
   font-weight: 700;
+  padding: 10px 12px !important;
+  border-radius: 10px;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible,
+.navbar .nav-link.active,
+.navbar .nav-link[aria-current="page"] {
+  background: #d9f8e8 !important;
+  color: #022c22 !important;
+}
+
+.navbar .nav-link[href$="#contact"] {
+  border: 1px solid rgba(4, 120, 87, 0.34);
+  background: #ccf4df !important;
+}
+
+.navbar .nav-link[href$="#contact"]:hover,
+.navbar .nav-link[href$="#contact"]:focus-visible {
+  background: #047857 !important;
+  color: #fff !important;
 }
 
 .navbar .quarto-navigation-tool,
 .navbar #quarto-search .aa-DetachedSearchButtonIcon {
-  font-size: 1.2rem;
+  color: #064e3b !important;
 }
 
-.navbar .nav-link:hover,
-.navbar .nav-link:focus,
-.navbar .nav-link.active,
-.navbar .nav-link[aria-current="page"],
-.navbar .quarto-navigation-tool:hover {
-  color: #022c22 !important;
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23064e3b' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 991.98px) {
+  .navbar > .container-fluid { gap: 12px; }
+  .navbar .navbar-nav { align-items: stretch; gap: 4px; }
 }
 
 /* Keep environment preparation visible but visually secondary to the lesson. */
@@ -62,41 +110,4 @@ body.quarto-dark section#setup {
   color: #ced4da;
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.14);
-}
-
-.navbar-brand-logo {
-  display: flex;
-  width: 8rem;
-  height: 6.5rem;
-  margin-right: 1rem;
-  padding: 0.25rem 0;
-  align-items: center;
-  justify-content: center;
-}
-
-.navbar-brand-logo .navbar-logo {
-  position: static;
-  width: 8rem;
-  max-width: 100%;
-  height: auto;
-  max-height: 6rem;
-  object-fit: contain;
-  transform: none;
-}
-
-@media (max-width: 575.98px) {
-  .navbar-brand-logo {
-    width: 5.75rem;
-    height: 4.75rem;
-    margin-right: 0.5rem;
-  }
-
-  .navbar-brand-logo .navbar-logo {
-    width: 5.75rem;
-    max-height: 4.5rem;
-  }
-
-  .navbar .nav-link {
-    font-size: 1.1rem;
-  }
 }

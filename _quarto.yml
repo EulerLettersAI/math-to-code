@@ -15,15 +15,31 @@ website:
   page-navigation: true
   navbar:
     title: false
-    logo: assets/euler-letters-ai-logo.png
+    logo: assets/logo_header.png
     logo-alt: "Euler Letters AI"
     logo-href: https://eulerlettersai.github.io/
     left:
-      - text: Home
+      - text: Introduction
+        href: https://eulerlettersai.github.io/index.html#introduction
+      - text: Lead
+        href: https://eulerlettersai.github.io/index.html#lead-profile
+      - text: Publications
+        href: https://eulerlettersai.github.io/publications.html
+      - text: Projects
+        href: https://eulerlettersai.github.io/projects.html
+      - text: Math to Code
         href: index.qmd
+      - text: Letters & Verse
+        href: https://eulerlettersai.github.io/letters-and-verse/
+      - text: Light & Lens
+        href: https://eulerlettersai.github.io/light-and-lens/
+      - text: References
+        href: https://eulerlettersai.github.io/index.html#references
+      - text: Contact
+        href: https://eulerlettersai.github.io/index.html#contact
+    right:
       - text: Lessons
         href: lessons/index.qmd
-    right:
       - icon: github
         href: https://github.com/EulerLettersAI/math-to-code
         aria-label: GitHub
