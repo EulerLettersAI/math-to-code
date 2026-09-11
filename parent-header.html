@@ -1,0 +1,36 @@
+    <header class="ela-site-header">
+        <div class="ela-container ela-header-inner">
+            <a class="ela-brand" href="https://eulerlettersai.github.io/index.html#top" aria-label="Euler Letters AI Home">
+                <img class="ela-brand-mark" src="/assets/logo_header.png" alt="Euler Letters AI logo" />
+            </a>
+
+            <nav class="ela-nav" id="ela-main-nav">
+                <a href="https://eulerlettersai.github.io/index.html#introduction">Introduction</a>
+                <a href="https://eulerlettersai.github.io/index.html#lead-profile">Lead</a>
+                <a href="https://eulerlettersai.github.io/publications.html">Publications</a>
+                <a href="https://eulerlettersai.github.io/projects.html">Projects</a>
+                <a href="https://eulerlettersai.github.io/math-to-code/" target="_blank" rel="noopener noreferrer">Math to Code</a>
+                <a href="https://eulerlettersai.github.io/letters-and-verse/" target="_blank" rel="noopener noreferrer">Letters &amp; Verse</a>
+                <a href="https://eulerlettersai.github.io/light-and-lens/" target="_blank" rel="noopener noreferrer">Light &amp; Lens</a>
+                <a href="https://eulerlettersai.github.io/index.html#references">References</a>
+                <a class="ela-nav-cta" href="https://eulerlettersai.github.io/index.html#contact">Contact</a>
+            </nav>
+            <button class="ela-nav-toggle" id="ela-nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="ela-main-nav">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+<script>
+(() => {
+  document.body.prepend(document.querySelector('.ela-site-header'));
+  const toggle = document.getElementById('ela-nav-toggle');
+  const nav = document.getElementById('ela-main-nav');
+  toggle.addEventListener('click', () => {
+    toggle.setAttribute('aria-expanded', nav.classList.toggle('open'));
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+})();
+</script>

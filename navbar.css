@@ -1,87 +1,179 @@
-/* Match the shared Euler Letters AI / Light & Lens header. */
-.navbar {
-  --bs-navbar-color: #064e3b;
-  --bs-navbar-hover-color: #022c22;
-  --bs-navbar-active-color: #022c22;
-  --bs-navbar-toggler-border-color: rgba(6, 95, 70, 0.3);
+/* Shared parent header, isolated from Bootstrap's navigation styles. */
+.ela-site-header { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.6; flex-shrink: 0; }
+.ela-site-header * { box-sizing: border-box; }
+.ela-container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 22px; }
+/* LIGHT HEADER */
+.ela-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   background: #f4fff9 !important;
+  background-color: #f4fff9 !important;
+  background-image: none !important;
   color: #04251c !important;
   border-bottom: 1px solid rgba(4, 78, 59, 0.18);
   box-shadow: 0 8px 22px rgba(2, 44, 34, 0.08);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
-.navbar > .container-fluid {
-  max-width: 1140px;
+.ela-header-inner,
+.ela-site-header .ela-header-inner,
+.ela-site-header .ela-nav,
+.ela-site-header .ela-container,
+.ela-site-header nav {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.ela-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Keep header content on the same 22px gutter as every body container. */
   padding: 10px 22px;
   gap: 24px;
 }
 
-.navbar-brand-logo {
+.ela-brand {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: #04251c;
   min-width: 150px;
-  margin: 0;
-  padding: 0;
 }
 
-.navbar-brand-logo .navbar-logo {
+.ela-brand-mark {
   width: 150px;
   height: auto;
-  max-height: none;
   object-fit: contain;
+  display: block;
 }
 
-.navbar .navbar-nav {
+.ela-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 12px;
 }
 
-.navbar .navbar-collapse {
-  flex-wrap: wrap;
-}
-
-.navbar .nav-link {
+.ela-nav a,
+.ela-site-header .ela-nav a,
+.ela-site-header nav a {
+  text-decoration: none;
   color: #064e3b !important;
+  background: transparent !important;
   font-size: 18px;
-  font-weight: 700;
-  padding: 10px 12px !important;
+  padding: 10px 12px;
   border-radius: 10px;
-  transition: background-color 0.18s ease, color 0.18s ease;
+  font-weight: 700;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
-.navbar .nav-link:hover,
-.navbar .nav-link:focus-visible,
-.navbar .nav-link.active,
-.navbar .nav-link[aria-current="page"] {
+.ela-nav a:hover,
+.ela-nav a:focus-visible,
+.ela-nav a.active,
+.ela-nav a[aria-current="page"],
+.ela-site-header .ela-nav a:hover,
+.ela-site-header .ela-nav a:focus-visible,
+.ela-site-header .ela-nav a.active,
+.ela-site-header .ela-nav a[aria-current="page"] {
   background: #d9f8e8 !important;
   color: #022c22 !important;
+  outline: none;
 }
 
-.navbar .nav-link[href$="#contact"] {
-  border: 1px solid rgba(4, 120, 87, 0.34);
+.ela-nav-cta,
+.ela-site-header .ela-nav-cta,
+header .ela-nav-cta {
+  border: 1px solid rgba(4, 120, 87, 0.34) !important;
   background: #ccf4df !important;
-}
-
-.navbar .nav-link[href$="#contact"]:hover,
-.navbar .nav-link[href$="#contact"]:focus-visible {
-  background: #047857 !important;
-  color: #fff !important;
-}
-
-.navbar .quarto-navigation-tool,
-.navbar #quarto-search .aa-DetachedSearchButtonIcon {
   color: #064e3b !important;
 }
 
-.navbar .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23064e3b' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+.ela-nav-cta:hover,
+.ela-nav-cta:focus-visible,
+.ela-site-header .ela-nav-cta:hover,
+.ela-site-header .ela-nav-cta:focus-visible {
+  background: #047857 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
 }
 
-@media (max-width: 991.98px) {
-  .navbar > .container-fluid { gap: 12px; }
-  .navbar .navbar-nav { align-items: stretch; gap: 4px; }
+/* HAMBURGER BUTTON */
+.ela-nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.ela-nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #064e3b;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.ela-nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.ela-nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.ela-nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 860px) {
+  .ela-header-inner {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .ela-brand-mark {
+    width: min(150px, 52vw);
+  }
+
+  .ela-nav-toggle {
+    display: flex;
+  }
+
+  .ela-nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 6px 0 12px;
+    order: 3;
+    justify-content: flex-start;
+  }
+
+  .ela-nav.open {
+    display: flex;
+  }
+
+  .ela-nav a {
+    font-size: 16px;
+    width: 100%;
+    padding: 10px 10px;
+  }
+
 }
 
 /* Keep environment preparation visible but visually secondary to the lesson. */
@@ -106,7 +198,7 @@ section#setup code {
   font-size: 0.9rem;
 }
 
-body.quarto-dark section#setup {
+section#setup {
   color: #ced4da;
   background: rgba(255, 255, 255, 0.06);
   border-color: rgba(255, 255, 255, 0.14);
