@@ -10,7 +10,7 @@ format:
     code-links:
       - text: "Download R Markdown"
         icon: file-earmark-arrow-down
-        href: SD01-05-populations-and-sampling.Rmd?download=1
+        href: SD01-03-populations-and-sampling.Rmd?download=1
 ---
 
 ```{r setup, include=FALSE}

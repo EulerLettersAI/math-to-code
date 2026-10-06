@@ -14,9 +14,9 @@ The four displayed loan records are transcribed from the deck.
 
 | Companion | Focus |
 |---|---|
-| [SD01-02: Data Matrices and Variables](SD01-02-data-matrices-and-variables.Rmd) | Rows, columns, variable types, and shared-cause association |
-| [SD01-04: Covariates, Confounding, Association, and Causation](SD01-04-covariates-confounding-and-causation.Rmd) | Group comparisons without regression |
-| [SD01-05: Populations and Sampling](SD01-05-populations-and-sampling.Rmd) | Simple, stratified, cluster, multistage, and convenience samples |
+| [SD01-01: Data Matrices and Variables](SD01-01-data-matrices-and-variables.Rmd) | Rows, columns, variable types, and shared-cause association |
+| [SD01-02: Covariates, Confounding, Association, and Causation](SD01-02-covariates-confounding-and-causation.Rmd) | Group comparisons without regression |
+| [SD01-03: Populations and Sampling](SD01-03-populations-and-sampling.Rmd) | Simple, stratified, cluster, multistage, and convenience samples |
 
 ## Run the companions
 
@@ -25,7 +25,7 @@ use **Knit** to create HTML. Every lesson is independent and uses base R.
 Rendering requires `knitr` and `rmarkdown`. From this folder:
 
 ```{r render-example, eval=FALSE}
-rmarkdown::render("SD01-02-data-matrices-and-variables.Rmd")
+rmarkdown::render("SD01-01-data-matrices-and-variables.Rmd")
 ```
 
 The separate [Advanced Statistical Modeling](../advanced-statistical-modeling/index.qmd)

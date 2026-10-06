@@ -59,11 +59,11 @@ website:
         - section: "SD01 — Statistical Thinking"
           contents:
             - text: "Data Matrices, Variable Types, and Association"
-              href: lessons/statistics-and-probability-for-data-science/SD01-02-data-matrices-and-variables.Rmd
+              href: lessons/statistics-and-probability-for-data-science/SD01-01-data-matrices-and-variables.Rmd
             - text: "Covariates, Confounding, Association, and Causation"
-              href: lessons/statistics-and-probability-for-data-science/SD01-04-covariates-confounding-and-causation.Rmd
+              href: lessons/statistics-and-probability-for-data-science/SD01-02-covariates-confounding-and-causation.Rmd
             - text: "Populations and Sampling Designs"
-              href: lessons/statistics-and-probability-for-data-science/SD01-05-populations-and-sampling.Rmd
+              href: lessons/statistics-and-probability-for-data-science/SD01-03-populations-and-sampling.Rmd
     - id: advanced-statistical-modeling
       title: "Advanced Statistical Modeling"
       style: floating
