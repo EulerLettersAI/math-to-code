@@ -10,8 +10,10 @@ toc: false
 ::: {.lesson-card}
 ### [Statistics and Probability for Data Science](statistics-and-probability-for-data-science/index.Rmd)
 
-DS14270 deck companions, starting with SD01 — Statistical Thinking.
-Three R Markdown lessons connect introductory statistical ideas to executable R.
+DS14270 deck companions covering SD01 — Statistical Thinking and SD02 —
+Exploratory Data Analysis.
+Six R Markdown lessons across SD01 and SD02 connect introductory statistical
+ideas to executable R.
 
 **Prerequisites:** basic algebra; introductory R is explained in the examples.
 :::

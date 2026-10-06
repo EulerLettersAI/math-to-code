@@ -18,6 +18,16 @@ The four displayed loan records are transcribed from the deck.
 | [SD01-02: Covariates, Confounding, Association, and Causation](SD01-02-covariates-confounding-and-causation.Rmd) | Group comparisons without regression |
 | [SD01-03: Populations and Sampling](SD01-03-populations-and-sampling.Rmd) | Simple, stratified, cluster, multistage, and convenience samples |
 
+## SD02 — Exploratory Data Analysis
+
+Source deck: Samer El Kababji, **SD02 — Exploratory Data Analysis**.
+
+| Companion | Focus |
+|---|---|
+| [SD02-01: Descriptive Statistics and Quantiles](SD02-01-descriptive-statistics-and-quantiles.Rmd) | Mean, variance, proportion, median, and linearly interpolated quartiles |
+| [SD02-02: Shape and Univariate Plots](SD02-02-shape-and-univariate-plots.Rmd) | Dot plots, histograms, skewness, kurtosis, modes, and box plots |
+| [SD02-03: Comparing Variables with Plots](SD02-03-comparing-variables-with-plots.Rmd) | Scatter plots, categorical bar plots, grouped box plots, and violin plots |
+
 ## Run the companions
 
 Open any `.Rmd` file in RStudio and run its R chunks from top to bottom, or

@@ -1,0 +1,223 @@
+---
+title: "Descriptive Statistics and Quantiles"
+subtitle: "SD02 — Exploratory Data Analysis"
+author: "EulerLettersAI"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD02-01-descriptive-statistics-and-quantiles.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD02 — Exploratory Data Analysis*.
+
+This lesson uses small fictional datasets to connect each descriptive formula
+to its base R implementation. Each code cell follows the mathematics it
+implements.
+
+## Population parameters and sample statistics
+
+A **population** contains every observation of interest. A **sample** contains
+the observations actually collected from that population. A numerical summary
+of a population is called a **parameter**; a numerical summary of a sample is
+called a **statistic**.
+
+The same data values can be treated as a complete population in one question
+and as a sample in another. The question determines which formula is suitable.
+
+## Arithmetic mean
+
+For observations $x_1,\ldots,x_n$, the sample mean is
+
+$$
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+$$
+
+```{r sample-mean}
+delivery_minutes <- c(12, 15, 11, 14, 13, 18, 16, 12)
+n <- length(delivery_minutes)
+
+mean_by_formula <- sum(delivery_minutes) / n
+mean_by_R <- mean(delivery_minutes)
+
+c(formula = mean_by_formula, R = mean_by_R)
+stopifnot(isTRUE(all.equal(mean_by_formula, mean_by_R)))
+```
+
+The mean uses every value. A particularly large or small observation can pull
+it in that direction.
+
+## Population and sample variance
+
+Variance measures average squared distance from the mean. If the values are
+the complete population of size $N$, population variance is
+
+$$
+\sigma^2=\frac{1}{N}\sum_{i=1}^{N}(x_i-\mu)^2.
+$$
+
+If the values are a sample of size $n$, sample variance is
+
+$$
+s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
+$$
+
+Base R's `var()` computes sample variance, so its denominator is $n-1$.
+
+```{r variance}
+population_mean <- mean(delivery_minutes)
+population_variance <- mean((delivery_minutes - population_mean)^2)
+
+sample_mean <- mean(delivery_minutes)
+sample_variance_formula <-
+  sum((delivery_minutes - sample_mean)^2) / (n - 1)
+sample_variance_R <- var(delivery_minutes)
+
+c(population_variance = population_variance,
+  sample_variance_formula = sample_variance_formula,
+  sample_variance_R = sample_variance_R)
+stopifnot(isTRUE(all.equal(sample_variance_formula, sample_variance_R)))
+```
+
+Squaring prevents positive and negative deviations from cancelling. Variance
+is measured in squared units; the standard deviation `sd(delivery_minutes)` is
+the square root of sample variance and returns to the original units.
+
+## Proportion
+
+Suppose $x$ of the $n$ sampled observations have a characteristic. The sample
+proportion is
+
+$$
+\widehat p=\frac{x}{n}.
+$$
+
+In R, logical values behave like 1 for `TRUE` and 0 for `FALSE` when averaged.
+
+```{r proportion}
+defective <- c(FALSE, FALSE, TRUE, FALSE, FALSE,
+               TRUE, FALSE, FALSE, FALSE, FALSE)
+
+x <- sum(defective)
+n_defects <- length(defective)
+proportion_formula <- x / n_defects
+proportion_R <- mean(defective)
+
+c(defective_items = x, sample_size = n_defects,
+  formula = proportion_formula, R = proportion_R)
+```
+
+## Median
+
+First sort the values:
+
+$$
+x_{(1)}\leq x_{(2)}\leq\cdots\leq x_{(n)}.
+$$
+
+For odd $n$, the median is the middle ordered value. For even $n$, it is the
+mean of the two middle ordered values.
+
+```{r median}
+odd_values <- c(2, 4, 7, 10, 12, 15, 18, 20, 25)
+even_values <- c(3, 5, 8, 9, 14, 21)
+
+odd_sorted <- sort(odd_values)
+even_sorted <- sort(even_values)
+
+odd_median_formula <- odd_sorted[(length(odd_sorted) + 1) / 2]
+middle_left <- length(even_sorted) / 2
+even_median_formula <-
+  (even_sorted[middle_left] + even_sorted[middle_left + 1]) / 2
+
+c(odd_formula = odd_median_formula, odd_R = median(odd_values),
+  even_formula = even_median_formula, even_R = median(even_values))
+```
+
+The median describes position after sorting. It is less affected by an extreme
+value than the mean.
+
+## Quartiles by linear interpolation
+
+The standard quartiles correspond to
+
+$$
+Q_1=Q(0.25),\qquad Q_2=Q(0.50),\qquad Q_3=Q(0.75).
+$$
+
+For a target proportion $p$ between 0 and 1, the linear method used here finds
+the fractional position
+
+$$
+h=1+(n-1)p.
+$$
+
+Write $h=j+g$, where $j=\lfloor h\rfloor$ and $0\leq g<1$. Then
+
+$$
+Q(p)=x_{(j)}+g\left(x_{(j+1)}-x_{(j)}\right).
+$$
+
+When $g=0$, the quantile is exactly the observed value $x_{(j)}$. This method
+is `type = 7` in R's `quantile()` function.
+
+```{r linear-quantile-function}
+linear_quantile <- function(values, p) {
+  ordered <- sort(values)
+  n <- length(ordered)
+  h <- 1 + (n - 1) * p
+  j <- floor(h)
+  g <- h - j
+
+  if (g == 0) {
+    return(ordered[j])
+  }
+
+  ordered[j] + g * (ordered[j + 1] - ordered[j])
+}
+
+probabilities <- c(Q1 = 0.25, Q2 = 0.50, Q3 = 0.75)
+by_formula <- vapply(probabilities,
+                     function(p) linear_quantile(odd_values, p),
+                     numeric(1))
+by_R <- quantile(odd_values, probabilities, type = 7, names = FALSE)
+
+rbind(formula = by_formula, R = by_R)
+```
+
+For the nine-value example, the positions are integers, giving
+$Q_1=7$, $Q_2=12$, and $Q_3=18$.
+
+For the six-value example, the median position is $h=3.5$, so it lies halfway
+between the third and fourth ordered observations:
+
+$$
+Q_2=8+0.5(9-8)=8.5.
+$$
+
+```{r interpolated-quartiles}
+data.frame(
+  quartile = names(probabilities),
+  p = probabilities,
+  formula = vapply(probabilities,
+                   function(p) linear_quantile(even_values, p),
+                   numeric(1)),
+  R = as.numeric(quantile(even_values, probabilities, type = 7))
+)
+```
+
+R supports several quantile conventions. Always state the method when exact
+quartile values matter. The linear method in this lesson is R's default
+`type = 7`.
+
+**Try it:** add a very large value such as 100 to `even_values`. Compare how
+the mean and median change.

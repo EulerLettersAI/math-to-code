@@ -64,6 +64,14 @@ website:
               href: lessons/statistics-and-probability-for-data-science/SD01-02-covariates-confounding-and-causation.Rmd
             - text: "Populations and Sampling Designs"
               href: lessons/statistics-and-probability-for-data-science/SD01-03-populations-and-sampling.Rmd
+        - section: "SD02 — Exploratory Data Analysis"
+          contents:
+            - text: "Descriptive Statistics and Quantiles"
+              href: lessons/statistics-and-probability-for-data-science/SD02-01-descriptive-statistics-and-quantiles.Rmd
+            - text: "Shape and Plots for One Numerical Variable"
+              href: lessons/statistics-and-probability-for-data-science/SD02-02-shape-and-univariate-plots.Rmd
+            - text: "Comparing Variables with Plots"
+              href: lessons/statistics-and-probability-for-data-science/SD02-03-comparing-variables-with-plots.Rmd
     - id: advanced-statistical-modeling
       title: "Advanced Statistical Modeling"
       style: floating

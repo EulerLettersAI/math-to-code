@@ -1,0 +1,193 @@
+---
+title: "Comparing Variables with Plots"
+subtitle: "SD02 — Exploratory Data Analysis"
+author: "EulerLettersAI"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD02-03-comparing-variables-with-plots.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD02 — Exploratory Data Analysis*.
+
+Different plots answer different questions. This lesson uses base R and the
+built-in `iris` dataset, together with one small fictional categorical dataset.
+
+## Two numerical variables: scatter plot
+
+For observation $i$, a scatter plot places one point at the coordinate
+
+$$
+(x_i,y_i).
+$$
+
+The horizontal position represents one numerical variable and the vertical
+position represents another. Here each point is one iris flower.
+
+```{r scatter-plot}
+head(iris[c("Sepal.Length", "Petal.Length")])
+
+plot(iris$Sepal.Length, iris$Petal.Length,
+     pch = 19, col = rgb(70, 130, 180, 140, maxColorValue = 255),
+     xlab = "Sepal length (cm)", ylab = "Petal length (cm)",
+     main = "Petal length versus sepal length")
+```
+
+Read a scatter plot by looking for direction, form, strength, clusters, gaps,
+and unusual observations. The visible association does not by itself establish
+that changing sepal length would cause petal length to change.
+
+## Add a descriptive smooth
+
+A smooth curve can help reveal the overall shape when many points overlap.
+`lowess()` estimates local typical values using nearby observations. It is a
+descriptive guide rather than a causal conclusion.
+
+```{r scatter-with-smooth}
+plot(iris$Sepal.Length, iris$Petal.Length,
+     pch = 19, col = rgb(70, 130, 180, 140, maxColorValue = 255),
+     xlab = "Sepal length (cm)", ylab = "Petal length (cm)",
+     main = "Scatter plot with a descriptive smooth")
+smooth_curve <- lowess(iris$Sepal.Length, iris$Petal.Length)
+lines(smooth_curve, col = "tomato", lwd = 3)
+```
+
+The smooth summarizes the observed pattern. It should not hide clusters or
+replace inspection of the original points.
+
+## One categorical variable: counts and proportions
+
+For category $c$, the frequency and sample proportion are
+
+$$
+n_c=\sum_{i=1}^{n}\mathbf{1}(z_i=c),\qquad
+\widehat p_c=\frac{n_c}{n}.
+$$
+
+The following homeownership data are fictional.
+
+```{r categorical-data}
+homeownership <- factor(
+  rep(c("rent", "mortgage", "own"), times = c(38, 47, 15)),
+  levels = c("rent", "mortgage", "own")
+)
+
+category_counts <- table(homeownership)
+category_proportions <- prop.table(category_counts)
+
+category_counts
+category_proportions
+stopifnot(sum(category_counts) == length(homeownership),
+          isTRUE(all.equal(sum(category_proportions), 1)))
+```
+
+A bar plot can display either counts or proportions. Bar plots leave space
+between categories because the horizontal positions are labels, not a
+continuous number line.
+
+```{r categorical-bar-plots}
+old_mfrow <- par("mfrow")
+par(mfrow = c(1, 2))
+barplot(category_counts, col = "steelblue", ylab = "Frequency",
+        main = "Counts")
+barplot(category_proportions, col = "steelblue", ylab = "Proportion",
+        main = "Proportions")
+par(mfrow = old_mfrow)
+```
+
+The plots have the same shape because every count was divided by the same
+total. The vertical scales answer different questions.
+
+## Numerical response across categories: box plots
+
+To compare a numerical variable across groups, compute a separate five-number
+summary for each category:
+
+$$
+(\text{minimum},Q_1,\text{median},Q_3,\text{maximum}).
+$$
+
+```{r grouped-summaries}
+sepal_by_species <- split(iris$Sepal.Length, iris$Species)
+
+group_summaries <- do.call(rbind, lapply(sepal_by_species, function(values) {
+  c(minimum = min(values),
+    Q1 = unname(quantile(values, 0.25, type = 7)),
+    median = median(values),
+    Q3 = unname(quantile(values, 0.75, type = 7)),
+    maximum = max(values))
+}))
+group_summaries
+```
+
+```{r grouped-boxplots}
+boxplot(Sepal.Length ~ Species, data = iris,
+        col = c("lightblue", "lightgreen", "mistyrose"),
+        xlab = "Species", ylab = "Sepal length (cm)",
+        main = "Sepal length by iris species")
+```
+
+Box plots make medians, quartiles, and suspected outliers easy to compare, but
+they hide many details of the shape inside each group.
+
+## Box plots and violin plots
+
+A violin plot uses a smooth density estimate $\widehat f_g(y)$ for each group
+$g$. At height $y$, the violin width is proportional to
+$\widehat f_g(y)$. Wider sections indicate values that occur more densely.
+
+The helper below draws the violin shapes using base R's `density()` function.
+The dot in each violin is the group median.
+
+```{r boxplot-versus-violin}
+draw_violin <- function(values, center, color, width = 0.38) {
+  estimate <- density(values)
+  half_width <- width * estimate$y / max(estimate$y)
+  polygon(
+    x = c(center - half_width, rev(center + half_width)),
+    y = c(estimate$x, rev(estimate$x)),
+    col = color,
+    border = "grey30"
+  )
+  points(center, median(values), pch = 19)
+}
+
+species_names <- levels(iris$Species)
+colors <- c("lightblue", "lightgreen", "mistyrose")
+value_range <- range(iris$Sepal.Length)
+
+old_mfrow <- par("mfrow")
+par(mfrow = c(1, 2))
+
+boxplot(Sepal.Length ~ Species, data = iris, col = colors, xaxt = "n",
+        xlab = "Species", ylab = "Sepal length (cm)", main = "Box plots")
+axis(1, at = seq_along(species_names), labels = species_names,
+     cex.axis = 0.65)
+
+plot(NA, xlim = c(0.5, 3.5), ylim = value_range, xaxt = "n",
+     xlab = "Species", ylab = "Sepal length (cm)", main = "Violin plots")
+axis(1, at = seq_along(species_names), labels = species_names,
+     cex.axis = 0.65)
+for (i in seq_along(species_names)) {
+  draw_violin(sepal_by_species[[species_names[i]]], i, colors[i])
+}
+
+par(mfrow = old_mfrow)
+```
+
+The violin shows more of the internal shape, while the box plot gives a more
+direct view of quartiles. A violin outline is smoothed, so small bumps should
+not be overinterpreted, especially in small groups.
+
+**Try it:** replace `Sepal.Length` with `Petal.Length` in the grouped summaries
+and plots. Which species become easier to distinguish?
