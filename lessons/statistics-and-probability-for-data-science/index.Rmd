@@ -1,0 +1,32 @@
+---
+title: "Statistics and Probability for Data Science"
+description: "DS14270: deck-aligned mathematics followed by executable R."
+output: html_document
+toc: false
+---
+
+## SD01 — Statistical Thinking
+
+Source deck: Samer El Kababji, **SD01 — Statistical Thinking**.
+These companions turn applicable ideas into mathematics followed immediately
+by R code. Simulations extend the concepts and are labeled as fictional.
+The four displayed loan records are transcribed from the deck.
+
+| Companion | Focus |
+|---|---|
+| [SD01-02: Data Matrices and Variables](SD01-02-data-matrices-and-variables.Rmd) | Rows, columns, variable types, and shared-cause association |
+| [SD01-04: Covariates, Confounding, Association, and Causation](SD01-04-covariates-confounding-and-causation.Rmd) | Group comparisons without regression |
+| [SD01-05: Populations and Sampling](SD01-05-populations-and-sampling.Rmd) | Simple, stratified, cluster, multistage, and convenience samples |
+
+## Run the companions
+
+Open any `.Rmd` file in RStudio and run its R chunks from top to bottom, or
+use **Knit** to create HTML. Every lesson is independent and uses base R.
+Rendering requires `knitr` and `rmarkdown`. From this folder:
+
+```{r render-example, eval=FALSE}
+rmarkdown::render("SD01-02-data-matrices-and-variables.Rmd")
+```
+
+The separate [Advanced Statistical Modeling](../advanced-statistical-modeling/index.qmd)
+course contains the existing logistic and mixed-effects regression lessons.

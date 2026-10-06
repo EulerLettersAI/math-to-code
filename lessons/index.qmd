@@ -4,6 +4,28 @@ description: "Executable mathematical lessons from EulerLettersAI."
 toc: false
 ---
 
+## Statistics courses
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [Statistics and Probability for Data Science](statistics-and-probability-for-data-science/index.Rmd)
+
+DS14270 deck companions, starting with SD01 — Statistical Thinking.
+Three R Markdown lessons connect introductory statistical ideas to executable R.
+
+**Prerequisites:** basic algebra; introductory R is explained in the examples.
+:::
+
+::: {.lesson-card}
+### [Advanced Statistical Modeling](advanced-statistical-modeling/)
+
+Logistic and mixed-effects regression: binary outcomes, odds ratios, p-values,
+and patients clustered within clinics.
+
+**Prerequisites:** introductory statistics and R.
+:::
+:::
+
 ## Machine learning
 
 ::: {.lesson-grid}
@@ -15,14 +37,6 @@ A four-part series from two-feature SVM margin geometry to a side-by-side compar
 **Prerequisites:** vectors, inner products, and basic Python.
 :::
 
-::: {.lesson-card}
-### [Logistic and Mixed-Effects Regression](logistic-mixed-effects/)
-
-A two-part medical example covering binary outcomes, odds ratios, p-values,
-clinical interpretation, and patients clustered within clinics.
-
-**Prerequisites:** basic algebra and introductory R.
-:::
 :::
 
 More lessons will be added as independent, downloadable notebooks.

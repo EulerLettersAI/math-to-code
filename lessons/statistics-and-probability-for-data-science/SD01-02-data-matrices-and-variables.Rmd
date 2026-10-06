@@ -1,0 +1,140 @@
+---
+title: "Data Matrices, Variable Types, and Association"
+subtitle: "SD01 — Statistical Thinking"
+author: "EulerLettersAI"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD01-02-data-matrices-and-variables.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD01 — Statistical Thinking*.
+Equations and teaching simulations below extend the deck's concepts; they are
+not additional observations from the deck. Each file runs independently using
+base R, with knitr/R Markdown needed only for rendering.
+
+## Rows are observations; columns are variables
+
+For $n$ observations and $p$ numeric variables, a data matrix has entries
+
+$$
+X=(x_{ij})\in\mathbb{R}^{n\times p},\qquad
+x_{ij}=\text{value of variable }j\text{ for observation }i.
+$$
+
+An R data frame can also contain categorical columns. The next cell transcribes
+the four loan records visible in the deck (original row labels 1, 2, 3, 50).
+These are an excerpt, not the complete `loan50` dataset or a random sample.
+
+```{r loan-excerpt}
+loans <- data.frame(
+  loan_amount = c(7500, 25000, 14500, 3000),
+  interest_rate = c(7.34, 9.43, 6.08, 7.96),
+  term = c(36L, 60L, 36L, 36L),
+  grade = ordered(c("A", "B", "A", "A"), levels = LETTERS[1:7]),
+  state = factor(c("MD", "OH", "MO", "CA")),
+  total_income = c(70000, 254000, 80000, 34000),
+  homeownership = factor(c("rent", "mortgage", "mortgage", "rent")),
+  row.names = c("1", "2", "3", "50")
+)
+loans
+loans["2", ]                 # one observational unit
+loans$term                   # one variable
+X <- as.matrix(loans[c("loan_amount", "interest_rate", "total_income")])
+dim(X)
+X[2, 1]                      # x_21: second displayed record, first variable
+```
+
+Do not convert the entire mixed-type data frame to a numeric matrix: factor
+codes would not represent meaningful amounts or distances.
+
+## Numeric, nominal, and ordinal variables
+
+A discrete variable takes values in a countable set, such as a whole number of
+months. A continuous measurement is modeled on an interval of real numbers,
+even when recorded with rounding. Nominal categories have no inherent order;
+ordinal categories have an order without necessarily equal spacing.
+
+$$
+\text{Term}\in\{1,2,3,\ldots\},\qquad
+\text{Grade}\in\{A\prec B\prec\cdots\prec G\}.
+$$
+
+Here $\prec$ denotes category order, not a numerical gap. The statistical type
+of a variable is distinct from its R storage class.
+
+```{r variable-types}
+data.frame(
+  variable = names(loans),
+  R_class = vapply(loans, function(z) paste(class(z), collapse = "/"), ""),
+  statistical_type = c("numerical (amount)", "numerical (rate)",
+                       "numerical discrete", "categorical ordinal",
+                       "categorical nominal", "numerical (amount)",
+                       "categorical nominal")
+)
+is.ordered(loans$grade)
+levels(loans$homeownership)
+```
+
+## Summarize a column according to its type
+
+For numeric values, the sample mean is $\bar x=n^{-1}\sum_i x_i$.
+For category $c$, its relative frequency is
+$\widehat p_c=n^{-1}\sum_i\mathbf{1}(x_i=c)$.
+
+```{r column-summaries}
+mean(loans$loan_amount)
+prop.table(table(loans$homeownership))
+```
+
+These summarize only the four displayed records; they cannot characterize all
+borrowers or all 50 loans.
+
+## Association does not establish a causal link
+
+For paired numeric variables, sample correlation is
+
+$$
+r=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}
+{\sqrt{\sum_i(x_i-\bar x)^2\sum_i(y_i-\bar y)^2}}.
+$$
+
+The deck's sunscreen and ice cream example can arise from a shared cause:
+temperature. The following fictional sales include small day-to-day changes
+$u$ and $v$ in addition to the temperature effect:
+
+$$
+X=20+3T+u,\qquad Y=10+4T+v.
+$$
+
+Neither sales equation uses the other product's sales.
+
+```{r shared-cause}
+set.seed(1101)
+temperature <- seq(15, 35, length.out = 100)
+sunscreen_variation <- rep(c(-3, 2, 0, 4, -2), length.out = 100)
+ice_cream_variation <- rep(c(2, -4, 3, -1, 0), length.out = 100)
+sunscreen <- 20 + 3 * temperature + sunscreen_variation
+ice_cream <- 10 + 4 * temperature + ice_cream_variation
+x_centered <- sunscreen - mean(sunscreen)
+y_centered <- ice_cream - mean(ice_cream)
+r_formula <- sum(x_centered * y_centered) /
+  sqrt(sum(x_centered^2) * sum(y_centered^2))
+c(formula = r_formula, R_correlation = cor(sunscreen, ice_cream))
+plot(sunscreen, ice_cream, pch = 19,
+     xlab = "Simulated sunscreen sales", ylab = "Simulated ice cream sales")
+```
+
+A strong correlation alone cannot tell us whether changing sunscreen sales
+would change ice cream sales. Also, zero correlation does not generally imply
+independence; correlation describes linear association.

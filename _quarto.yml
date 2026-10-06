@@ -49,19 +49,34 @@ website:
               href: lessons/optimization-primal-dual/1.0-simple-optimization.ipynb
             - text: "2. Primal and Dual Problems"
               href: lessons/optimization-primal-dual/2.0-primal-and-dual.ipynb
-    - id: logistic-mixed-effects
-      title: "Logistic and Mixed-Effects Regression"
+    - id: statistics-and-probability-for-data-science
+      title: "Statistics and Probability for Data Science"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "Course overview"
+          href: lessons/statistics-and-probability-for-data-science/index.Rmd
+        - section: "SD01 — Statistical Thinking"
+          contents:
+            - text: "Data Matrices, Variable Types, and Association"
+              href: lessons/statistics-and-probability-for-data-science/SD01-02-data-matrices-and-variables.Rmd
+            - text: "Covariates, Confounding, Association, and Causation"
+              href: lessons/statistics-and-probability-for-data-science/SD01-04-covariates-confounding-and-causation.Rmd
+            - text: "Populations and Sampling Designs"
+              href: lessons/statistics-and-probability-for-data-science/SD01-05-populations-and-sampling.Rmd
+    - id: advanced-statistical-modeling
+      title: "Advanced Statistical Modeling"
       style: floating
       collapse-level: 2
       contents:
         - text: "Lesson overview"
-          href: lessons/logistic-mixed-effects/index.qmd
+          href: lessons/advanced-statistical-modeling/index.qmd
         - section: "Lessons"
           contents:
             - text: "1. Logistic Regression and p-values"
-              href: lessons/logistic-mixed-effects/1-logistic-regression.Rmd
+              href: lessons/advanced-statistical-modeling/1-logistic-regression.Rmd
             - text: "2. Mixed-Effects Logistic Regression"
-              href: lessons/logistic-mixed-effects/2-mixed-effects-logistic-regression.Rmd
+              href: lessons/advanced-statistical-modeling/2-mixed-effects-logistic-regression.Rmd
     - id: power-flow-state-estimation
       title: "Power Flow and State Estimation"
       style: floating

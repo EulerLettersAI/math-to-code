@@ -1,0 +1,184 @@
+---
+title: "Populations and Sampling Designs"
+subtitle: "SD01 — Statistical Thinking"
+author: "EulerLettersAI"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD01-05-populations-and-sampling.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD01 — Statistical Thinking*.
+Equations and teaching simulations below extend the deck's concepts; they are
+not additional observations from the deck. Each file runs independently using
+base R, with knitr/R Markdown needed only for rendering.
+
+## Define the population and its target quantity
+
+A sample is a subset of a population. The drug question in the deck targets
+people with severe heart disease; it is not restricted to the one anecdotal
+patient. For a computational sampling example, use a fictional league of
+players, where teams are groups and salary is measured in thousands of dollars.
+No real league salaries are used.
+
+For a finite population of size $N$, its mean is
+
+$$
+\mu=\frac{1}{N}\sum_{i=1}^N y_i.
+$$
+
+```{r finite-population}
+set.seed(1801)
+team_sizes <- rep(40L, 10)
+team <- rep(seq_along(team_sizes), team_sizes)
+salary <- 50 + 10 * team + rgamma(length(team), shape = 4, scale = 5)
+population <- data.frame(id = seq_along(team), team, salary)
+N <- nrow(population)
+mu <- mean(population$salary)
+c(population_size = N, population_mean = mu)
+```
+
+This known population lets us compare samples with a truth that is usually
+unknown in practice.
+
+## Simple random sampling
+
+A simple random sample of $n$ distinct people gives each person inclusion
+probability $\pi_i=n/N$. Its mean estimates $\mu$:
+
+$$
+\bar y=\frac{1}{n}\sum_{i\in s}y_i,\qquad E(\bar y)=\mu.
+$$
+
+```{r simple-random-sample}
+n <- 80
+srs <- population[sample.int(N, n, replace = FALSE), ]
+c(sample_size = nrow(srs), sample_mean = mean(srs$salary), population_mean = mu)
+```
+
+Under this design, the estimated standard error includes a finite-population
+correction:
+
+$$
+\widehat{\operatorname{SE}}(\bar y)
+=\sqrt{\left(1-\frac{n}{N}\right)\frac{s^2}{n}},\qquad
+s^2=\frac{\sum_{i\in s}(y_i-\bar y)^2}{n-1}.
+$$
+
+```{r srs-standard-error}
+sqrt((1 - n / N) * var(srs$salary) / n)
+```
+
+## Stratified sampling: include every stratum
+
+Treat team as a stratum and sample within every team. If stratum $h$ has
+population size $N_h$, its weight is $W_h=N_h/N$. The estimator is
+
+$$
+\widehat\mu_{\mathrm{strat}}=\sum_{h=1}^H W_h\bar y_h.
+$$
+
+```{r stratified-sample}
+strata <- split(population, population$team)
+stratified <- do.call(rbind, lapply(strata, function(d) {
+  d[sample.int(nrow(d), 8, replace = FALSE), ]
+}))
+stratum_means <- tapply(stratified$salary, stratified$team, mean)
+weights <- table(population$team) / N
+stratified_mean <- sum(as.numeric(weights) * as.numeric(stratum_means))
+c(sample_size = nrow(stratified), weighted_mean = stratified_mean)
+```
+
+With equal team sizes and eight sampled per team, the ordinary sample mean
+also equals the weighted mean. With unequal team sizes and equal allocation,
+use the population weights rather than averaging strata equally.
+
+## Cluster sampling: include everyone in selected clusters
+
+Now treat team as a cluster. Select $m$ teams from $H$ teams and include all
+players on those teams. Each person's inclusion probability is $m/H$.
+For known population size $N$, a design-unbiased estimator is
+
+$$
+\widehat\mu_{\mathrm{cluster}}
+=\frac{H}{mN}\sum_{h\in C}\sum_{i\in h}y_i.
+$$
+
+```{r cluster-sample}
+H <- length(strata)
+m <- 2
+selected_teams <- sample(seq_len(H), m, replace = FALSE)
+cluster_sample <- population[population$team %in% selected_teams, ]
+cluster_mean <- H / (m * N) * sum(cluster_sample$salary)
+c(selected_teams = selected_teams, sample_size = nrow(cluster_sample),
+  estimated_mean = cluster_mean)
+```
+
+Equal cluster sizes make this estimator equal to the sample mean here. Players
+on one team share a salary component, so 80 clustered observations need not
+contain as much information as 80 simple-random-sample observations. The SRS
+standard-error formula above does not apply to this clustered design.
+
+## Multistage sampling: sample within selected clusters
+
+Select $m$ teams, then select $k$ players from each selected team of size $N_h$.
+The person's inclusion probability and an inverse-probability estimator are
+
+$$
+\pi_{hi}=\frac{m}{H}\frac{k}{N_h},\qquad
+\widehat\mu_{\mathrm{multi}}
+=\frac{1}{N}\sum_{h\in C}\sum_{i\in s_h}\frac{y_{hi}}{\pi_{hi}}.
+$$
+
+```{r multistage-sample}
+k <- 10
+multistage <- do.call(rbind, lapply(selected_teams, function(h) {
+  d <- strata[[as.character(h)]]
+  sampled <- d[sample.int(nrow(d), k, replace = FALSE), ]
+  sampled$inclusion_probability <- (m / H) * (k / nrow(d))
+  sampled
+}))
+multistage_mean <- sum(multistage$salary / multistage$inclusion_probability) / N
+c(sample_size = nrow(multistage), estimated_mean = multistage_mean)
+```
+
+## Convenience sampling can introduce bias
+
+Taking players only from the first two teams gives zero inclusion probability
+to everyone else. Repeating that procedure cannot remove its systematic bias.
+For comparison, repeated SRS estimates fluctuate around the population mean:
+
+$$
+\operatorname{Bias}(\widehat\mu)=E(\widehat\mu)-\mu.
+$$
+
+```{r bias-versus-variation}
+convenience <- population[population$team %in% c(1, 2), ]
+repeated_srs <- replicate(1000,
+  mean(population$salary[sample.int(N, 80, replace = FALSE)]))
+c(population_mean = mu, convenience_mean = mean(convenience$salary),
+  average_srs_mean = mean(repeated_srs),
+  simulated_srs_bias = mean(repeated_srs) - mu)
+hist(repeated_srs, breaks = 25, xlab = "Mean from an SRS of 80 players",
+     main = "Sampling variation with a known population")
+abline(v = mu, col = "steelblue", lwd = 2)
+abline(v = mean(convenience$salary), col = "tomato", lwd = 2)
+legend("topright", c("Population mean", "Convenience mean"),
+       col = c("steelblue", "tomato"), lwd = 2)
+```
+
+Random selection reduces selection bias under the sampling design, but
+nonresponse or incomplete population coverage can still bias the final data.
+
+**Try it:** select only one cluster. Explain why its mean can differ greatly
+from the population mean even though the cluster was selected randomly.

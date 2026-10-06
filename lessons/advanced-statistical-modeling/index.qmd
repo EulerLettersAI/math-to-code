@@ -1,8 +1,10 @@
 ---
-title: "Logistic and Mixed-Effects Regression"
+title: "Advanced Statistical Modeling"
 description: "A two-part medical example about binary outcomes, p-values, and clustered data."
 toc: false
 ---
+
+## Logistic and Mixed-Effects Regression
 
 This lesson follows the same fictional medical study from an ordinary logistic
 regression to a mixed-effects logistic regression. The outcome is whether a

@@ -1,0 +1,167 @@
+---
+title: "Covariates, Confounding, Association, and Causation"
+subtitle: "SD01 — Statistical Thinking"
+author: "EulerLettersAI"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD01-04-covariates-confounding-and-causation.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD01 — Statistical Thinking*.
+
+This lesson uses a small fictional example to translate the ideas in the deck
+into R. It uses group averages rather than a regression model.
+
+## Response, treatment, and covariate
+
+Suppose we want to know whether a new medication reduces systolic blood
+pressure after eight weeks.
+
+- The **response** is blood pressure after eight weeks.
+- The **treatment** is the medication received: new or standard.
+- A **covariate** is another recorded characteristic, such as age group.
+
+The table below is constructed for teaching. Each row describes a group of
+patients rather than an individual patient.
+
+```{r teaching-data}
+blood_pressure <- data.frame(
+  medication = c("Standard", "Standard", "New", "New"),
+  age_group = c("Younger", "Older", "Younger", "Older"),
+  patients = c(20, 80, 90, 10),
+  mean_bp = c(130, 140, 125, 135)
+)
+blood_pressure
+```
+
+Age group is a covariate because it is an additional variable that may help us
+understand differences in blood pressure.
+
+## Comparing the two medication groups
+
+The overall mean for a medication group is a weighted average. If group $j$
+contains $n_j$ patients and has mean blood pressure $\bar y_j$, then
+
+$$
+\bar y=\frac{\sum_j n_j\bar y_j}{\sum_j n_j}.
+$$
+
+```{r overall-comparison}
+overall_means <- aggregate(
+  cbind(weighted_bp = blood_pressure$mean_bp * blood_pressure$patients,
+        patients = blood_pressure$patients),
+  by = list(medication = blood_pressure$medication),
+  FUN = sum
+)
+overall_means$mean_bp <- overall_means$weighted_bp / overall_means$patients
+overall_means
+
+overall_difference <- with(
+  overall_means,
+  mean_bp[medication == "New"] - mean_bp[medication == "Standard"]
+)
+overall_difference
+```
+
+The new-medication group has an average blood pressure 12 mmHg lower than the
+standard-medication group. This is an **association** in the observed data. It
+does not yet tell us how much of the difference was caused by the medication.
+
+## How age can confuse the comparison
+
+The treatment groups have very different age compositions.
+
+```{r age-composition}
+age_counts <- xtabs(patients ~ medication + age_group, data = blood_pressure)
+age_counts
+prop.table(age_counts, margin = 1)
+```
+
+Most patients receiving the standard medication are older, while most
+patients receiving the new medication are younger. Older patients also have
+higher blood pressure in both medication groups. Age is therefore connected
+to both:
+
+1. which medication patients received; and
+2. their blood pressure.
+
+In this example, age is a **confounder**. It mixes the medication comparison
+with an age comparison.
+
+## Compare similar patients
+
+We can compare medications separately within each age group:
+
+$$
+\text{difference within an age group}
+=\bar y_{\text{New}}-\bar y_{\text{Standard}}.
+$$
+
+```{r within-age-comparisons}
+younger <- subset(blood_pressure, age_group == "Younger")
+older <- subset(blood_pressure, age_group == "Older")
+
+within_age <- data.frame(
+  age_group = c("Younger", "Older"),
+  difference = c(
+    younger$mean_bp[younger$medication == "New"] -
+      younger$mean_bp[younger$medication == "Standard"],
+    older$mean_bp[older$medication == "New"] -
+      older$mean_bp[older$medication == "Standard"]
+  )
+)
+within_age
+```
+
+Within both age groups, the difference is only −5 mmHg. The larger overall
+difference of −12 mmHg partly reflected the unequal age composition.
+
+```{r visualize-comparisons}
+bp_matrix <- xtabs(mean_bp ~ medication + age_group, data = blood_pressure)
+barplot(bp_matrix, beside = TRUE, ylim = c(0, 150),
+        col = c("steelblue", "tomato"),
+        ylab = "Mean systolic blood pressure (mmHg)",
+        legend.text = rownames(bp_matrix),
+        args.legend = list(x = "topleft"))
+```
+
+This simple separation by age is useful for explaining confounding. In a real
+study, many covariates may matter at the same time, and some age groups may
+contain very few patients. More advanced statistical methods are then needed.
+
+## Association and causation
+
+Two variables are **associated** when their values tend to differ together.
+An association can be measured from observational data, but it does not by
+itself show that changing one variable will change the other.
+
+A **causal effect** asks a different question: what would happen to the same
+kind of patients under the new medication compared with the standard
+medication? We cannot give both medications to the same person under identical
+conditions, so study design matters.
+
+In a randomized experiment, chance assigns the treatment. This helps make the
+treatment groups similar in age and other characteristics before treatment.
+An observational study can reveal useful associations, but differences between
+the groups may provide other explanations for the result.
+
+The lesson from this example is:
+
+- compare similar groups when possible;
+- look for variables connected to both the treatment and response; and
+- do not describe an observed association as a causal effect without support
+  from the study design and assumptions.
+
+**Try it:** change the number of older and younger patients so both medication
+groups have the same age composition. Recalculate the overall difference.
