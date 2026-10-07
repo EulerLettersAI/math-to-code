@@ -92,6 +92,20 @@ For numeric values, the sample mean is $\bar x=n^{-1}\sum_i x_i$.
 For category $c$, its relative frequency is
 $\widehat p_c=n^{-1}\sum_i\mathbf{1}(x_i=c)$.
 
+**Worked examples using the four displayed records.** For loan amount, the
+summation means adding the four amounts and dividing by four:
+
+$$
+\bar x=\frac{7500+25000+14500+3000}{4}=12500.
+$$
+
+For just the category "rent", the indicator $\mathbf{1}(x_i=c)$ is 1 for a
+matching record and 0 otherwise:
+
+$$
+\widehat p_{\text{rent}}=\frac{1+0+0+1}{4}=0.5.
+$$
+
 ```{r column-summaries}
 mean(loans$loan_amount)
 prop.table(table(loans$homeownership))
@@ -108,6 +122,19 @@ $$
 r=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}
 {\sqrt{\sum_i(x_i-\bar x)^2\sum_i(y_i-\bar y)^2}}.
 $$
+
+**Worked example — one small set of paired values.** Suppose
+$x=(1,2,3)$ and $y=(2,4,3)$, so $\bar x=2$ and $\bar y=3$.
+The deviations are $(-1,0,1)$ and $(-1,1,0)$. Expanding each sum gives
+
+$$
+r=\frac{(-1)(-1)+(0)(1)+(1)(0)}
+{\sqrt{[(-1)^2+0^2+1^2][(-1)^2+1^2+0^2]}}
+=\frac{1}{\sqrt{2\times2}}=0.5.
+$$
+
+The numerator adds paired deviation products; the denominator uses the sum
+of squared deviations for each variable.
 
 The deck's sunscreen and ice cream example can arise from a shared cause:
 temperature. The following fictional sales include small day-to-day changes

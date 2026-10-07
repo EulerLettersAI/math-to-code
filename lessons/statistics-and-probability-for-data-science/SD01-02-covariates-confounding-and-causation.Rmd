@@ -57,6 +57,23 @@ $$
 \bar y=\frac{\sum_j n_j\bar y_j}{\sum_j n_j}.
 $$
 
+**Worked example — younger patients only.** The same formula can pool the
+medication subgroups within one age group. There are 20 younger patients on
+standard medication with a mean of 130 mmHg, and 90 on new medication with a
+mean of 125 mmHg:
+
+$$
+\bar y_{\text{Younger}}
+=\frac{20\times130+90\times125}{20+90}
+=\frac{2600+11250}{110}
+\approx125.91\text{ mmHg}.
+$$
+
+Here $j$ runs over the two medications: multiply each subgroup mean by its
+patient count, add those products, then divide by the total patient count.
+This pools younger patients across medications; the code below instead pools
+age groups within each medication to compare treatments.
+
 ```{r overall-comparison}
 overall_means <- aggregate(
   cbind(weighted_bp = blood_pressure$mean_bp * blood_pressure$patients,
