@@ -4,7 +4,41 @@ description: "Executable mathematical lessons from EulerLettersAI."
 toc: false
 ---
 
-## Statistics courses
+## Machine Learning
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [SVM: Classical and Quantum Kernel Classifiers](svm-classical-vs-quantum/)
+
+A four-part series from two-feature SVM margin geometry to a side-by-side comparison of classical and quantum kernels.
+
+**Prerequisites:** vectors, inner products, and basic Python.
+:::
+
+:::
+
+## Power Engineering
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [Optimization: Primal and Dual](optimization-primal-dual/)
+
+A two-part lesson that starts with a simple constrained minimization problem and then derives its Lagrangian dual.
+
+**Prerequisites:** algebra, derivatives, and basic Python.
+:::
+
+::: {.lesson-card}
+### [Power Flow and State Estimation](power-flow-state-estimation/)
+
+A three-part pandapower lesson comparing AC load flow with WLS state
+estimation, then exploring measurement observability on the same five-bus grid.
+
+**Prerequisites:** complex numbers, basic circuits, probability, and linear algebra.
+:::
+:::
+
+## Statistics & Probability
 
 ::: {.lesson-grid}
 ::: {.lesson-card}
@@ -18,6 +52,11 @@ ideas to executable R.
 **Prerequisites:** basic algebra; introductory R is explained in the examples.
 :::
 
+:::
+
+## Advanced Statistics
+
+::: {.lesson-grid}
 ::: {.lesson-card}
 ### [Advanced Statistical Modeling](advanced-statistical-modeling/)
 
@@ -28,42 +67,4 @@ and patients clustered within clinics.
 :::
 :::
 
-## Machine learning
-
-::: {.lesson-grid}
-::: {.lesson-card}
-### [SVM: Classical and Quantum Kernel Classifiers](svm-classical-vs-quantum/)
-
-A four-part series from two-feature SVM margin geometry to a side-by-side comparison of classical and quantum kernels.
-
-**Prerequisites:** vectors, inner products, and basic Python.
-:::
-
-:::
-
 More lessons will be added as independent, downloadable notebooks.
-
-## Optimization
-
-::: {.lesson-grid}
-::: {.lesson-card}
-### [Optimization: Primal and Dual](optimization-primal-dual/)
-
-A two-part lesson that starts with a simple constrained minimization problem and then derives its Lagrangian dual.
-
-**Prerequisites:** algebra, derivatives, and basic Python.
-:::
-:::
-
-## Power systems
-
-::: {.lesson-grid}
-::: {.lesson-card}
-### [Power Flow and State Estimation](power-flow-state-estimation/)
-
-A three-part pandapower lesson comparing AC load flow with WLS state
-estimation, then exploring measurement observability on the same five-bus grid.
-
-**Prerequisites:** complex numbers, basic circuits, probability, and linear algebra.
-:::
-:::
