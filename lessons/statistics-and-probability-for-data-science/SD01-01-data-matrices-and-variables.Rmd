@@ -32,6 +32,11 @@ X=(x_{ij})\in\mathbb{R}^{n\times p},\qquad
 x_{ij}=\text{value of variable }j\text{ for observation }i.
 $$
 
+**Worked example — reading a matrix entry.** With the three numeric columns
+used below, there are $n=4$ rows and $p=3$ columns, so $X$ is a $4\times3$
+matrix. The entry $x_{21}=25000$ is the loan amount in the second displayed
+record; $x_{22}=9.43$ is that record's interest rate.
+
 An R data frame can also contain categorical columns. The next cell transcribes
 the four loan records visible in the deck (original row labels 1, 2, 3, 50).
 These are an excerpt, not the complete `loan50` dataset or a random sample.
@@ -143,6 +148,16 @@ $u$ and $v$ in addition to the temperature effect:
 $$
 X=20+3T+u,\qquad Y=10+4T+v.
 $$
+
+**Worked example — substitute one day's values.** For $T=20$, $u=2$, and
+$v=-4$:
+
+$$
+X=20+3(20)+2=82,\qquad Y=10+4(20)-4=86.
+$$
+
+A warmer day raises both predicted sales through $T$, even though neither
+formula contains the other sales variable.
 
 Neither sales equation uses the other product's sales.
 

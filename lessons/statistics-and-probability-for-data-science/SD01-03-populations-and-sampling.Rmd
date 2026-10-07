@@ -234,6 +234,18 @@ $$
 \operatorname{Bias}(\widehat\mu)=E(\widehat\mu)-\mu.
 $$
 
+**Worked example — average over all possible samples.** Suppose a tiny
+population has mean $\mu=10$, and a sampling procedure has two equally likely
+possible samples whose estimates are 11 and 13. Then
+
+$$
+E(\widehat\mu)=\tfrac12(11)+\tfrac12(13)=12,\qquad
+\operatorname{Bias}(\widehat\mu)=12-10=2.
+$$
+
+The bias is the average error over the sampling procedure, rather than the
+error of just one observed sample.
+
 ```{r bias-versus-variation}
 convenience <- population[population$team %in% c(1, 2), ]
 repeated_srs <- replicate(1000,

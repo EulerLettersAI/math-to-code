@@ -125,6 +125,10 @@ $$
 =\bar y_{\text{New}}-\bar y_{\text{Standard}}.
 $$
 
+**Worked example — compare within each age group.** For younger patients,
+$125-130=-5$ mmHg; for older patients, $135-140=-5$ mmHg. A negative
+difference means the new-medication group has lower average blood pressure.
+
 ```{r within-age-comparisons}
 younger <- subset(blood_pressure, age_group == "Younger")
 older <- subset(blood_pressure, age_group == "Older")

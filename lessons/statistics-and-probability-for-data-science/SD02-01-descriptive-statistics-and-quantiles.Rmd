@@ -42,6 +42,16 @@ $$
 \bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
 $$
 
+**Worked example — eight deliveries.** For the values used below,
+
+$$
+\bar{x}=\frac{12+15+11+14+13+18+16+12}{8}
+=\frac{111}{8}=13.875\text{ minutes}.
+$$
+
+The summation adds all eight delivery times; dividing by eight gives their
+average.
+
 ```{r sample-mean}
 delivery_minutes <- c(12, 15, 11, 14, 13, 18, 16, 12)
 n <- length(delivery_minutes)
@@ -70,6 +80,18 @@ If the values are a sample of size $n$, sample variance is
 $$
 s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
 $$
+
+**Worked example — the same three values, two interpretations.** Take
+$x=(2,4,6)$, with mean $(2+4+6)/3=4$. The squared deviations sum to
+
+$$
+(2-4)^2+(4-4)^2+(6-4)^2=4+0+4=8.
+$$
+
+If these three values are the entire population, $\sigma^2=8/3\approx2.667$.
+If they are a sample, $s^2=8/(3-1)=4$. Their sample standard deviation is
+$s=\sqrt{4}=2$, in the original units. The denominator changes with the
+population or sample interpretation.
 
 Base R's `var()` computes sample variance, so its denominator is $n-1$.
 
@@ -101,6 +123,10 @@ $$
 \widehat p=\frac{x}{n}.
 $$
 
+**Worked example — defective items.** Two defective items among ten give
+$\widehat p=2/10=0.20=20\%$. In indicator notation, the same calculation is
+$(0+0+1+0+0+1+0+0+0+0)/10=0.20$.
+
 In R, logical values behave like 1 for `TRUE` and 0 for `FALSE` when averaged.
 
 ```{r proportion}
@@ -126,6 +152,11 @@ $$
 
 For odd $n$, the median is the middle ordered value. For even $n$, it is the
 mean of the two middle ordered values.
+
+**Worked example — find the middle after sorting.** For
+$(2,4,7,10,12,15,18,20,25)$, $n=9$ and the middle position is
+$(9+1)/2=5$, so the median is $x_{(5)}=12$. For $(3,5,8,9,14,21)$,
+$n=6$ and the two middle positions are 3 and 4, giving $(8+9)/2=8.5$.
 
 ```{r median}
 odd_values <- c(2, 4, 7, 10, 12, 15, 18, 20, 25)
@@ -169,6 +200,22 @@ $$
 
 When $g=0$, the quantile is exactly the observed value $x_{(j)}$. This method
 is `type = 7` in R's `quantile()` function.
+
+**Worked example — interpolate the first quartile.** Use the six ordered
+values $(3,5,8,9,14,21)$ and $p=0.25$:
+
+$$
+h=1+(6-1)(0.25)=2.25,\qquad j=2,\qquad g=0.25,
+$$
+
+$$
+Q_1=x_{(2)}+0.25(x_{(3)}-x_{(2)})
+=5+0.25(8-5)=5.75.
+$$
+
+The fractional position is one quarter of the way from the second value to
+the third. Similarly, for $Q_3$, $h=1+5(0.75)=4.75$, so
+$Q_3=9+0.75(14-9)=12.75$.
 
 ```{r linear-quantile-function}
 linear_quantile <- function(values, p) {

@@ -31,6 +31,10 @@ $$
 (x_i,y_i).
 $$
 
+**Worked example — one flower, one point.** The first iris record has
+sepal length 5.1 cm and petal length 1.4 cm. Its point is
+$(x_1,y_1)=(5.1,1.4)$: move to 5.1 horizontally and 1.4 vertically.
+
 The horizontal position represents one numerical variable and the vertical
 position represents another. Here each point is one iris flower.
 
@@ -73,6 +77,13 @@ $$
 n_c=\sum_{i=1}^{n}\mathbf{1}(z_i=c),\qquad
 \widehat p_c=\frac{n_c}{n}.
 $$
+
+**Worked example — category indicators and proportions.** In the tiny
+sequence (rent, own, rent, mortgage, rent), the indicators for rent are
+$(1,0,1,0,1)$, so $n_{\text{rent}}=1+0+1+0+1=3$ and
+$\widehat p_{\text{rent}}=3/5=0.60$. In the larger dataset below, the same
+rule gives $38/100=0.38$ for rent, $47/100=0.47$ for mortgage, and
+$15/100=0.15$ for own; the proportions sum to 1.
 
 The following homeownership data are fictional.
 
@@ -117,6 +128,19 @@ $$
 (\text{minimum},Q_1,\text{median},Q_3,\text{maximum}).
 $$
 
+**Worked example — summarize one group.** Suppose one category has ordered
+values $(3,5,8,9,14,21)$. With `type = 7` quartiles, its five-number summary is
+
+$$
+(3,\ 5.75,\ 8.5,\ 12.75,\ 21).
+$$
+
+The minimum and maximum are the endpoints, the median is $(8+9)/2=8.5$,
+and the quartiles interpolate at positions 2.25 and 4.75. Repeat the
+calculation separately for each category. Box-plot whiskers reach the most
+extreme observations within their outlier fences; they need not equal the
+minimum and maximum when outliers are present.
+
 ```{r grouped-summaries}
 sepal_by_species <- split(iris$Sepal.Length, iris$Species)
 
@@ -145,6 +169,22 @@ they hide many details of the shape inside each group.
 A violin plot uses a smooth density estimate $\widehat f_g(y)$ for each group
 $g$. At height $y$, the violin width is proportional to
 $\widehat f_g(y)$. Wider sections indicate values that occur more densely.
+
+**Worked example — convert density to width.** The helper below scales each
+violin's largest density to a half-width of 0.38:
+
+$$
+\text{half-width}(y)=0.38\,
+\frac{\widehat f_g(y)}{\max_t\widehat f_g(t)}.
+$$
+
+If the maximum estimated density in one group is 0.8 and the density at a
+particular height is 0.4, its half-width there is
+$0.38(0.4/0.8)=0.19$. Around a category centered at 2, the left and right
+edges are $2-0.19=1.81$ and $2+0.19=2.19$. These density values are
+illustrative; each group's actual estimates come from `density()`.
+Because each violin is scaled by its own maximum, equal widths across groups
+do not necessarily mean equal absolute densities.
 
 The helper below draws the violin shapes using base R's `density()` function.
 The dot in each violin is the group median.

@@ -43,6 +43,15 @@ $$
 f(a)=\sum_{i=1}^{n}\mathbf{1}(x_i=a).
 $$
 
+**Worked example — count a matching value.** For a tiny dataset
+$(5,6,6,8)$ and $a=6$, the indicators are $(0,1,1,0)$:
+
+$$
+f(6)=0+1+1+0=2.
+$$
+
+Two dots therefore stack at 6.
+
 ```{r dot-plot}
 frequencies <- table(interest_rate)
 frequencies
@@ -67,6 +76,15 @@ $B_k$, its frequency is
 $$
 f_k=\sum_{i=1}^{n}\mathbf{1}(x_i\in B_k).
 $$
+
+**Worked example — count values in a bin.** For $(5,6,6,8)$, take the bin
+$B_k=[6,8)$: include 6 but exclude 8. Then
+
+$$
+f_k=0+1+1+0=2.
+$$
+
+The value 8 goes into the next bin. This matches `right = FALSE` below.
 
 ```{r histogram}
 hist(interest_rate, breaks = seq(4, 28, by = 2), right = FALSE,
@@ -93,11 +111,32 @@ $$
 z_i=\frac{x_i-\bar{x}}{s}.
 $$
 
+**Worked example — standardize a small dataset.** Take $x=(1,1,4)$.
+Its mean is $\bar{x}=2$ and its sample variance is
+$[(-1)^2+(-1)^2+2^2]/(3-1)=3$, giving $s=\sqrt{3}$:
+
+$$
+z_1=z_2=\frac{1-2}{\sqrt{3}}\approx-0.57735,\qquad
+z_3=\frac{4-2}{\sqrt{3}}\approx1.15470.
+$$
+
+The last observation is about 1.15 sample standard deviations above the mean.
+
 The skewness formula used in the deck is the average cubed standardized value:
 
 $$
 g_1=\frac{1}{n}\sum_{i=1}^{n}z_i^3.
 $$
+
+**Worked example — cube, add, and average.** Using the same three
+standardized values, keep the exact fractions until the last step:
+
+$$
+g_1=\frac{(-1/\sqrt{3})^3+(-1/\sqrt{3})^3+(2/\sqrt{3})^3}{3}
+=\frac{2}{3\sqrt{3}}\approx0.38490.
+$$
+
+The positive result reflects the longer right tail of $(1,1,4)$.
 
 Negative values suggest a longer left tail, values near zero suggest a roughly
 symmetric shape, and positive values suggest a longer right tail.
@@ -118,6 +157,18 @@ Using the same standardized values, the kurtosis formula in the deck is
 $$
 g_2=\frac{1}{n}\sum_{i=1}^{n}z_i^4.
 $$
+
+**Worked example — fourth powers of the same values.** For $x=(1,1,4)$,
+
+$$
+g_2=\frac{(-1/\sqrt{3})^4+(-1/\sqrt{3})^4+(2/\sqrt{3})^4}{3}
+=\frac{1/9+1/9+16/9}{3}=\frac{2}{3}\approx0.66667.
+$$
+
+Under this lesson's convention, excess kurtosis is
+$g_2-3=2/3-3=-7/3\approx-2.33333$. This tiny example illustrates the
+arithmetic; it is too small to support a reliable description of population
+tails.
 
 Large fourth powers give unusual observations in the tails substantial weight.
 
@@ -177,6 +228,23 @@ $$
 \text{lower fence}=Q_1-1.5(IQR),\qquad
 \text{upper fence}=Q_3+1.5(IQR).
 $$
+
+**Worked example — calculate the fences.** For the six ordered values
+$(3,5,8,9,14,21)$, the `type = 7` quartiles are $Q_1=5.75$ and $Q_3=12.75$:
+
+$$
+IQR=12.75-5.75=7,
+$$
+
+$$
+\text{lower fence}=5.75-1.5(7)=-4.75,\qquad
+\text{upper fence}=12.75+1.5(7)=23.25.
+$$
+
+All six observations lie within these fences. The whiskers reach the observed
+values 3 and 21, rather than the fence positions. A new observation at 30
+would exceed these fixed fences; adding it to the dataset would require
+recalculating the quartiles and fences.
 
 Values beyond the fences are shown separately as suspected outliers. A value
 flagged by this rule is not automatically an error.
