@@ -1,0 +1,299 @@
+---
+title: "Bayes Decision Rules and Naïve Bayes"
+subtitle: "SD03a — Probabilities"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD03a-03-bayes-decisions-and-naive-bayes.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD03a — Probabilities*.
+
+This lesson connects the deck's probability notation to maximum-likelihood,
+maximum-a-posteriori, and naïve Bayes classification. The practice questions
+and the reusable R functions extend the deck's worked example.
+
+## Five related probabilities
+
+Let $Y$ be a class and $X$ be observed evidence.
+
+| Expression | Name | Interpretation |
+|---|---|---|
+| $P(Y)$ | Prior | Belief about class $Y$ before observing $X$ |
+| $P(X)$ | Marginal or evidence | Overall probability of observing $X$ |
+| $P(X\cap Y)$ | Joint | Probability that $X$ and $Y$ occur together |
+| $P(X\mid Y)$ | Likelihood | Probability of observing $X$ if $Y$ is true |
+| $P(Y\mid X)$ | Posterior | Updated probability of $Y$ after observing $X$ |
+
+Bayes' theorem connects them:
+
+$$
+P(Y\mid X)=\frac{P(X\mid Y)P(Y)}{P(X)}.
+$$
+
+For classification, $X$ is fixed after a new observation arrives. Therefore
+$P(X)$ is the same for every candidate class and does not affect which class
+has the largest posterior.
+
+## Maximum likelihood and maximum a posteriori
+
+For a binary class $Y\in\{0,1\}$, the **maximum-likelihood** rule chooses
+
+$$
+\widehat y_{\mathrm{ML}}
+=\underset{y\in\{0,1\}}{\arg\max}\;P(X\mid Y=y).
+$$
+
+It compares how likely the evidence is under each class and does not include
+the class prior.
+
+The **maximum-a-posteriori** rule chooses
+
+$$
+\widehat y_{\mathrm{MAP}}
+=\underset{y\in\{0,1\}}{\arg\max}\;P(Y=y\mid X).
+$$
+
+Using Bayes' theorem and removing the common positive denominator $P(X)$,
+
+$$
+\widehat y_{\mathrm{MAP}}
+=\underset{y\in\{0,1\}}{\arg\max}\;
+P(X\mid Y=y)P(Y=y).
+$$
+
+ML and MAP agree when the priors are equal. With unequal priors, MAP favors a
+more common class unless the likelihood provides enough contrary evidence.
+
+## The naïve Bayes assumption
+
+Suppose the evidence contains features $X=(X_1,\ldots,X_p)$. Directly
+estimating every joint likelihood can require many observations. Naïve Bayes
+assumes the features are conditionally independent within each class:
+
+$$
+P(X_1=x_1,\ldots,X_p=x_p\mid Y=y)
+=\prod_{j=1}^{p}P(X_j=x_j\mid Y=y).
+$$
+
+The resulting MAP score for class $y$ is
+
+$$
+\operatorname{score}(y)
+=P(Y=y)\prod_{j=1}^{p}P(X_j=x_j\mid Y=y).
+$$
+
+These scores are proportional to posterior probabilities. To obtain
+normalized posteriors, divide each score by the sum of all class scores.
+
+## Worked example: spam classification
+
+The deck uses two binary word indicators:
+
+- $O=1$ if the word **offer** appears;
+- $F=1$ if the word **free** appears;
+- $Y=1$ for Spam and $Y=0$ for NotSpam.
+
+The training data are
+
+| Observation | $O$ | $F$ | $Y$ |
+|---:|---:|---:|---:|
+| 1 | 1 | 1 | 1 |
+| 2 | 1 | 0 | 1 |
+| 3 | 0 | 1 | 0 |
+| 4 | 0 | 0 | 0 |
+| 5 | 1 | 1 | 0 |
+
+```{r spam-data}
+email <- data.frame(
+  offer = c(1, 1, 0, 0, 1),
+  free = c(1, 0, 1, 0, 1),
+  spam = c(1, 1, 0, 0, 0)
+)
+email
+```
+
+### Step 1: estimate the priors
+
+Two of the five emails are Spam and three are NotSpam:
+
+$$
+P(Y=1)=\frac25=0.4,
+\qquad
+P(Y=0)=\frac35=0.6.
+$$
+
+### Step 2: estimate feature likelihoods
+
+Among the two Spam observations,
+
+$$
+P(O=1\mid Y=1)=\frac22=1,
+\qquad
+P(F=0\mid Y=1)=\frac12=0.5.
+$$
+
+Among the three NotSpam observations,
+
+$$
+P(O=1\mid Y=0)=\frac13,
+\qquad
+P(F=0\mid Y=0)=\frac13.
+$$
+
+```{r spam-estimates}
+classes <- c(NotSpam = 0, Spam = 1)
+
+priors <- vapply(classes, function(y) mean(email$spam == y), numeric(1))
+P_offer_1 <- vapply(
+  classes,
+  function(y) mean(email$offer[email$spam == y] == 1),
+  numeric(1)
+)
+P_free_0 <- vapply(
+  classes,
+  function(y) mean(email$free[email$spam == y] == 0),
+  numeric(1)
+)
+
+rbind(prior = priors,
+      P_offer_1_given_class = P_offer_1,
+      P_free_0_given_class = P_free_0)
+```
+
+### Step 3: classify a new email
+
+Consider a new email with $O=1$ and $F=0$. Under the naïve Bayes assumption,
+the class likelihoods are
+
+$$
+P(O=1,F=0\mid Y=1)
+=P(O=1\mid Y=1)P(F=0\mid Y=1)
+=1(0.5)=0.5,
+$$
+
+$$
+P(O=1,F=0\mid Y=0)
+=P(O=1\mid Y=0)P(F=0\mid Y=0)
+=\frac13\frac13=\frac19\approx0.111.
+$$
+
+Because $0.5>0.111$, the ML rule predicts Spam.
+
+For MAP, multiply each likelihood by its prior:
+
+$$
+\operatorname{score}(1)=0.5(0.4)=0.20,
+$$
+
+$$
+\operatorname{score}(0)=\frac19(0.6)\approx0.0667.
+$$
+
+MAP also predicts Spam. Normalizing the two scores gives
+
+$$
+P(Y=1\mid O=1,F=0)
+=\frac{0.20}{0.20+0.0667}=0.75.
+$$
+
+```{r ml-map-prediction}
+likelihood <- P_offer_1 * P_free_0
+map_score <- likelihood * priors
+posterior <- map_score / sum(map_score)
+
+data.frame(
+  class = names(classes),
+  likelihood = likelihood,
+  prior = priors,
+  MAP_score = map_score,
+  posterior = posterior,
+  row.names = NULL
+)
+
+ML_prediction <- names(which.max(likelihood))
+MAP_prediction <- names(which.max(map_score))
+c(ML = ML_prediction, MAP = MAP_prediction)
+```
+
+## A reusable binary naïve Bayes calculation
+
+The helper below computes unsmoothed naïve Bayes scores for any binary feature
+vector whose columns match the training data.
+
+```{r naive-bayes-helper}
+predict_binary_naive_bayes <- function(features, outcome, new_observation) {
+  class_values <- sort(unique(outcome))
+  prior <- vapply(class_values,
+                  function(y) mean(outcome == y),
+                  numeric(1))
+
+  class_likelihood <- vapply(class_values, function(y) {
+    class_rows <- features[outcome == y, , drop = FALSE]
+    feature_probabilities <- vapply(seq_along(new_observation), function(j) {
+      mean(class_rows[[j]] == new_observation[j])
+    }, numeric(1))
+    prod(feature_probabilities)
+  }, numeric(1))
+
+  score <- prior * class_likelihood
+  data.frame(
+    class = class_values,
+    prior = prior,
+    likelihood = class_likelihood,
+    score = score,
+    posterior = score / sum(score)
+  )
+}
+
+predict_binary_naive_bayes(
+  features = email[c("offer", "free")],
+  outcome = email$spam,
+  new_observation = c(offer = 1, free = 0)
+)
+```
+
+This small dataset contains zero estimated probabilities, such as
+$P(O=0\mid Y=1)=0$. In larger applications, smoothing is commonly used to
+avoid making an entire class score zero because one feature value was absent
+from a limited training sample.
+
+## Practice questions
+
+1. Using the deck's email data, compute the ML likelihoods for a new email with
+   $O=0$ and $F=1$. Which class is predicted?
+2. Compute the ML likelihoods and MAP scores for $O=1$ and $F=1$. Do the two
+   rules agree?
+3. For the original new email, $O=1$ and $F=0$, verify the normalized Spam
+   posterior of $0.75$.
+4. Suppose the class priors change but the feature likelihoods do not. Which
+   decision rule is unaffected: ML or MAP? Explain.
+5. State the conditional-independence assumption made when replacing
+   $P(O,F\mid Y)$ with a product.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. For Spam, $P(O=0,F=1\mid Y=1)=0(0.5)=0$. For NotSpam, it is
+   $(2/3)(2/3)=4/9$. ML predicts NotSpam.
+2. The Spam likelihood is $1(0.5)=0.5$ and its MAP score is $0.5(0.4)=0.20$.
+   The NotSpam likelihood is $(1/3)(2/3)=2/9$ and its MAP score is
+   $(2/9)(0.6)\approx0.133$. Both rules predict Spam.
+3. The scores are $0.20$ and $0.0667$. Thus
+   $0.20/(0.20+0.0667)=0.75$.
+4. ML is unaffected because it compares only $P(X\mid Y=y)$. MAP includes
+   $P(Y=y)$ and can change when the priors change.
+5. Offer and Free are assumed conditionally independent given the class:
+   $P(O,F\mid Y)=P(O\mid Y)P(F\mid Y)$.
+:::

@@ -87,6 +87,14 @@ website:
               href: lessons/statistics-and-probability-for-data-science/SD02-02-shape-and-univariate-plots.Rmd
             - text: "Comparing Variables with Plots"
               href: lessons/statistics-and-probability-for-data-science/SD02-03-comparing-variables-with-plots.Rmd
+        - section: "SD03a — Probabilities"
+          contents:
+            - text: "Sample Spaces, Events, and Probability Rules"
+              href: lessons/statistics-and-probability-for-data-science/SD03a-01-sample-spaces-and-probability-rules.Rmd
+            - text: "Conditional Probability, Bayes' Theorem, and Independence"
+              href: lessons/statistics-and-probability-for-data-science/SD03a-02-conditional-probability-bayes-and-independence.Rmd
+            - text: "Bayes Decision Rules and Naïve Bayes"
+              href: lessons/statistics-and-probability-for-data-science/SD03a-03-bayes-decisions-and-naive-bayes.Rmd
     - id: advanced-statistical-modeling
       title: "Advanced Statistical Modeling"
       style: floating

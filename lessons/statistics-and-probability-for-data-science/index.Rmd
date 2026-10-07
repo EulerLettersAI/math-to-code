@@ -29,6 +29,16 @@ Source deck: Samer El Kababji, **SD02 — Exploratory Data Analysis**.
 | [SD02-02: Shape and Univariate Plots](SD02-02-shape-and-univariate-plots.Rmd) | Dot plots, histograms, skewness, kurtosis, modes, and box plots |
 | [SD02-03: Comparing Variables with Plots](SD02-03-comparing-variables-with-plots.Rmd) | Scatter plots, categorical bar plots, grouped box plots, and violin plots |
 
+## SD03a — Probabilities
+
+Source deck: Samer El Kababji, **SD03a — Probabilities**.
+
+| Companion | Focus |
+|---|---|
+| [SD03a-01: Sample Spaces, Events, and Probability Rules](SD03a-01-sample-spaces-and-probability-rules.Rmd) | Outcomes, events, complements, set operations, axioms, and addition rules |
+| [SD03a-02: Conditional Probability, Bayes' Theorem, and Independence](SD03a-02-conditional-probability-bayes-and-independence.Rmd) | Conditioning, total probability, Bayes updates, and independent events |
+| [SD03a-03: Bayes Decision Rules and Naïve Bayes](SD03a-03-bayes-decisions-and-naive-bayes.Rmd) | Prior, likelihood, posterior, ML and MAP rules, and binary naïve Bayes |
+
 ## Run the companions
 
 Open any `.Rmd` file in RStudio and run its R chunks from top to bottom, or

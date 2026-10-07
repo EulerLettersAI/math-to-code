@@ -1,0 +1,316 @@
+---
+title: "Conditional Probability, Bayes' Theorem, and Independence"
+subtitle: "SD03a — Probabilities"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD03a-02-conditional-probability-bayes-and-independence.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD03a — Probabilities*.
+
+This lesson develops the deck's conditional-probability, Bayes, and
+independence calculations. The practice questions and the extra computational
+checks extend the deck's concepts.
+
+## Conditional probability
+
+Conditional probability restricts attention to outcomes for which a given
+event has occurred. If $P(B)>0$, then
+
+$$
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+$$
+
+Rearranging gives the multiplication rule:
+
+$$
+P(A\cap B)=P(A\mid B)P(B)=P(B\mid A)P(A).
+$$
+
+The denominator $P(B)$ changes the reference population from the entire
+sample space to event $B$.
+
+## Worked example: production lines
+
+The deck describes two production lines, $A$ and $A^c$, and two outcomes,
+defective $B$ and nondefective $B^c$. The counts are
+
+| Production line | Defective $B$ | Nondefective $B^c$ | Total |
+|---|---:|---:|---:|
+| $A$ | 2 | 6 | 8 |
+| $A^c$ | 1 | 9 | 10 |
+| Total | 3 | 15 | 18 |
+
+For a randomly selected component,
+
+$$
+P(A)=\frac8{18}=\frac49,
+$$
+
+whereas among the three defective components,
+
+$$
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}
+=\frac{2/18}{3/18}=\frac23.
+$$
+
+```{r production-lines}
+production <- matrix(
+  c(2, 6,
+    1, 9),
+  nrow = 2,
+  byrow = TRUE,
+  dimnames = list(line = c("A", "A_complement"),
+                  outcome = c("defective", "nondefective"))
+)
+
+P_A <- sum(production["A", ]) / sum(production)
+P_B <- sum(production[, "defective"]) / sum(production)
+P_A_and_B <- production["A", "defective"] / sum(production)
+P_A_given_B <- P_A_and_B / P_B
+
+production
+c(P_A = P_A, P_B = P_B, P_A_and_B = P_A_and_B,
+  P_A_given_B = P_A_given_B)
+```
+
+The unconditional probability $P(A)$ and conditional probability
+$P(A\mid B)$ answer different questions and need not be equal.
+
+## The law of total probability
+
+Suppose $A_1,\ldots,A_k$ are mutually exclusive and exhaustive:
+
+$$
+A_i\cap A_j=\varnothing\quad(i\neq j),
+\qquad
+\bigcup_{i=1}^{k}A_i=S.
+$$
+
+They partition the sample space. Any event $B$ can therefore be divided into
+the disjoint pieces $B\cap A_1,\ldots,B\cap A_k$, giving
+
+$$
+P(B)=\sum_{i=1}^{k}P(B\cap A_i)
+=\sum_{i=1}^{k}P(B\mid A_i)P(A_i).
+$$
+
+## Bayes' theorem
+
+For a partition $A_1,\ldots,A_k$ and an event $B$ with $P(B)>0$,
+
+$$
+P(A_j\mid B)
+=\frac{P(B\mid A_j)P(A_j)}
+{\displaystyle\sum_{i=1}^{k}P(B\mid A_i)P(A_i)}.
+$$
+
+$P(A_j)$ is the **prior** probability. After observing $B$,
+$P(A_j\mid B)$ is the **posterior** probability. The likelihood
+$P(B\mid A_j)$ measures how compatible the observation is with $A_j$.
+
+## Worked example: DVD-player repairs
+
+An electronics store's DVD-player sales are 50% brand 1, 30% brand 2, and
+20% brand 3. The respective probabilities of requiring warranty repair are
+25%, 20%, and 10%.
+
+Let $A_j$ denote brand $j$ and let $B$ denote warranty repair. The priors and
+likelihoods are
+
+$$
+\begin{array}{c|ccc}
+&A_1&A_2&A_3\\ \hline
+P(A_j)&0.50&0.30&0.20\\
+P(B\mid A_j)&0.25&0.20&0.10
+\end{array}
+$$
+
+The joint probability of brand 1 and repair is
+
+$$
+P(A_1\cap B)=P(B\mid A_1)P(A_1)=0.25(0.50)=0.125.
+$$
+
+The marginal repair probability is
+
+$$
+P(B)=0.25(0.50)+0.20(0.30)+0.10(0.20)=0.205.
+$$
+
+Given that a player needs repair, the posterior probability that it is brand
+1 is
+
+$$
+P(A_1\mid B)=\frac{0.125}{0.205}\approx0.610.
+$$
+
+```{r dvd-bayes}
+brand_prior <- c(brand_1 = 0.50, brand_2 = 0.30, brand_3 = 0.20)
+repair_given_brand <- c(brand_1 = 0.25, brand_2 = 0.20, brand_3 = 0.10)
+
+joint_repair <- brand_prior * repair_given_brand
+P_repair <- sum(joint_repair)
+posterior_brand_given_repair <- joint_repair / P_repair
+
+data.frame(
+  brand = names(brand_prior),
+  prior = brand_prior,
+  repair_likelihood = repair_given_brand,
+  joint_with_repair = joint_repair,
+  posterior_given_repair = posterior_brand_given_repair,
+  row.names = NULL
+)
+```
+
+## Worked example: missing aircraft
+
+Let $A$ mean that a missing aircraft is discovered and $B$ mean that it has an
+emergency locator. The deck gives
+
+$$
+P(A)=0.70,
+\qquad
+P(B\mid A)=0.60,
+\qquad
+P(B^c\mid A^c)=0.90.
+$$
+
+Consequently, $P(A^c)=0.30$, $P(B^c\mid A)=0.40$, and
+$P(B\mid A^c)=0.10$. The marginal probability of a locator is
+
+$$
+P(B)=0.60(0.70)+0.10(0.30)=0.45.
+$$
+
+If the aircraft has a locator, the probability that it is not discovered is
+
+$$
+P(A^c\mid B)=\frac{P(B\mid A^c)P(A^c)}{P(B)}
+=\frac{0.10(0.30)}{0.45}\approx0.067.
+$$
+
+If it has no locator, the probability that it is discovered is
+
+$$
+P(A\mid B^c)
+=\frac{P(B^c\mid A)P(A)}{P(B^c)}
+=\frac{0.40(0.70)}{1-0.45}
+\approx0.509.
+$$
+
+```{r aircraft-bayes}
+P_discovered <- 0.70
+P_not_discovered <- 1 - P_discovered
+P_locator_given_discovered <- 0.60
+P_locator_given_not_discovered <- 0.10
+
+P_locator <-
+  P_locator_given_discovered * P_discovered +
+  P_locator_given_not_discovered * P_not_discovered
+
+P_not_discovered_given_locator <-
+  P_locator_given_not_discovered * P_not_discovered / P_locator
+
+P_discovered_given_no_locator <-
+  (1 - P_locator_given_discovered) * P_discovered / (1 - P_locator)
+
+c(P_locator = P_locator,
+  P_not_discovered_given_locator = P_not_discovered_given_locator,
+  P_discovered_given_no_locator = P_discovered_given_no_locator)
+```
+
+## Independence
+
+Events $A$ and $B$ are independent if knowing that one occurred does not
+change the probability of the other. When the relevant conditional
+probabilities are defined,
+
+$$
+P(A\mid B)=P(A)
+$$
+
+is equivalent to the symmetric product rule
+
+$$
+P(A\cap B)=P(A)P(B).
+$$
+
+Given another event or variable $Y$, conditional independence is expressed as
+
+$$
+P(A\cap B\mid Y)=P(A\mid Y)P(B\mid Y).
+$$
+
+Mutual exclusivity and independence describe different relationships. If
+$A$ and $B$ are disjoint and both have positive probability, then observing
+$A$ makes $B$ impossible. Such events are dependent, not independent.
+
+## Worked example: boiler relief valves
+
+A boiler has five identical relief valves. Each valve opens on demand with
+probability $0.96$, and the valves operate independently.
+
+The complement of "at least one opens" is "none opens," so
+
+$$
+P(\text{at least one opens})=1-(1-0.96)^5
+=1-(0.04)^5\approx0.999999898.
+$$
+
+The complement of "at least one fails" is "all open," so
+
+$$
+P(\text{at least one fails})=1-(0.96)^5\approx0.1846.
+$$
+
+```{r boiler-valves}
+number_of_valves <- 5
+P_open <- 0.96
+
+P_at_least_one_opens <- 1 - (1 - P_open)^number_of_valves
+P_at_least_one_fails <- 1 - P_open^number_of_valves
+
+c(P_at_least_one_opens = P_at_least_one_opens,
+  P_at_least_one_fails = P_at_least_one_fails)
+```
+
+## Practice questions
+
+1. From the production table, compute $P(B\mid A)$ and explain its
+   denominator.
+2. In the DVD example, find $P(A_2\mid B)$ and $P(A_3\mid B)$.
+3. A supplier provides 70% of a factory's parts and has a 2% defect rate. A
+   second supplier provides 30% and has a 5% defect rate. Find the overall
+   defect probability and the probability that a defective part came from the
+   second supplier.
+4. If $P(C)=0.4$, $P(D)=0.5$, and $P(C\cap D)=0.2$, are $C$ and $D$
+   independent?
+5. Two events have positive probabilities and are mutually exclusive. Can
+   they be independent? Justify your answer mathematically.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. $P(B\mid A)=2/8=1/4$. The denominator is 8 because conditioning restricts
+   the table to components from line $A$.
+2. $P(A_2\mid B)=0.060/0.205\approx0.293$ and
+   $P(A_3\mid B)=0.020/0.205\approx0.098$.
+3. $P(D)=0.70(0.02)+0.30(0.05)=0.029$. The posterior probability is
+   $P(S_2\mid D)=0.30(0.05)/0.029\approx0.517$.
+4. Yes. $P(C)P(D)=0.4(0.5)=0.2=P(C\cap D)$.
+5. No. Mutual exclusivity gives $P(C\cap D)=0$, but independence would
+   require $P(C\cap D)=P(C)P(D)>0$.
+:::
