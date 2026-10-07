@@ -18,7 +18,7 @@ website:
     type: overlay
   sidebar:
     - id: svm-classical-vs-quantum
-      title: "Machine Learning"
+      title: "SVM: Classical and Quantum Kernels"
       style: floating
       collapse-level: 2
       contents:
@@ -36,23 +36,28 @@ website:
           contents:
             - text: "1.1 Margin Geometry"
               href: lessons/svm-classical-vs-quantum/1.1-margin-geometry.ipynb
-    - id: power-engineering
-      title: "Power Engineering"
+    - id: optimization-primal-dual
+      title: "Optimization: Primal and Dual"
       style: floating
       collapse-level: 2
       contents:
-        - section: "Optimization: Primal and Dual"
+        - text: "Lesson overview"
+          href: lessons/optimization-primal-dual/index.qmd
+        - section: "Notebooks"
           contents:
-            - text: "Lesson overview"
-              href: lessons/optimization-primal-dual/index.qmd
             - text: "1. A Simple Optimization Problem"
               href: lessons/optimization-primal-dual/1.0-simple-optimization.ipynb
             - text: "2. Primal and Dual Problems"
               href: lessons/optimization-primal-dual/2.0-primal-and-dual.ipynb
-        - section: "Power Flow and State Estimation"
+    - id: power-flow-state-estimation
+      title: "Power Flow and State Estimation"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "Lesson overview"
+          href: lessons/power-flow-state-estimation/index.qmd
+        - section: "Notebooks"
           contents:
-            - text: "Lesson overview"
-              href: lessons/power-flow-state-estimation/index.qmd
             - text: "1. Power-Flow Analysis"
               href: lessons/power-flow-state-estimation/1.0-power-flow-analysis.ipynb
             - text: "2. WLS State Estimation"
@@ -60,7 +65,7 @@ website:
             - text: "3. State-Estimation Observability"
               href: lessons/power-flow-state-estimation/3.0-state-estimation-observability.ipynb
     - id: statistics-and-probability-for-data-science
-      title: "Statistics & Probability"
+      title: "Statistics and Probability for Data Science"
       style: floating
       collapse-level: 2
       contents:
@@ -83,7 +88,7 @@ website:
             - text: "Comparing Variables with Plots"
               href: lessons/statistics-and-probability-for-data-science/SD02-03-comparing-variables-with-plots.Rmd
     - id: advanced-statistical-modeling
-      title: "Advanced Statistics"
+      title: "Advanced Statistical Modeling"
       style: floating
       collapse-level: 2
       contents:
