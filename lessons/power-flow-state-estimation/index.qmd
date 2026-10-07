@@ -1,6 +1,7 @@
 ---
 title: "Power Flow and State Estimation"
 description: "A three-part pandapower lesson using the IEEE 14-bus benchmark."
+author: "Samer El Kababji"
 toc: false
 ---
 

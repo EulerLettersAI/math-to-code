@@ -1,7 +1,7 @@
 ---
 title: "Logistic Regression and p-values"
 subtitle: "A medical example with 30-day recovery"
-author: "EulerLettersAI"
+author: "Samer El Kababji"
 format:
   html:
     code-links:

@@ -1,6 +1,7 @@
 ---
 title: "Statistics and Probability for Data Science"
 description: "DS14270: deck-aligned mathematics followed by executable R."
+author: "Samer El Kababji"
 output: html_document
 toc: false
 ---

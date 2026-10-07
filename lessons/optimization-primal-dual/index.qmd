@@ -1,6 +1,7 @@
 ---
 title: "Optimization: Primal and Dual"
 description: "A two-part lesson from constrained minimization to Lagrangian duality."
+author: "Samer El Kababji"
 toc: false
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Covariates, Confounding, Association, and Causation"
 subtitle: "SD01 — Statistical Thinking"
-author: "EulerLettersAI"
+author: "Samer El Kababji"
 output:
   html_document:
     toc: true

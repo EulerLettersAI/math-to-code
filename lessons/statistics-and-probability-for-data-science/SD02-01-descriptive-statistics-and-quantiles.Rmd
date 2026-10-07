@@ -1,7 +1,7 @@
 ---
 title: "Descriptive Statistics and Quantiles"
 subtitle: "SD02 — Exploratory Data Analysis"
-author: "EulerLettersAI"
+author: "Samer El Kababji"
 output:
   html_document:
     toc: true

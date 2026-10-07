@@ -1,7 +1,7 @@
 ---
 title: "Mixed-Effects Logistic Regression"
 subtitle: "Accounting for patients grouped within clinics"
-author: "EulerLettersAI"
+author: "Samer El Kababji"
 format:
   html:
     code-links:

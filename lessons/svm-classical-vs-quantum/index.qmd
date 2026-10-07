@@ -1,6 +1,7 @@
 ---
 title: "SVM: Classical and Quantum Kernel Classifiers"
 description: "A four-part series: from margin geometry to a side-by-side comparison of classical and quantum kernels."
+author: "Samer El Kababji"
 toc: false
 ---
 

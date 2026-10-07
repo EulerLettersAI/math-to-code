@@ -1,6 +1,7 @@
 ---
 title: "Advanced Statistical Modeling"
 description: "A two-part medical example about binary outcomes, p-values, and clustered data."
+author: "Samer El Kababji"
 toc: false
 ---
 
@@ -30,4 +31,3 @@ intercept, and compare the result with the ordinary logistic model.
 **Prerequisites:** [1. Logistic Regression and p-values](1-logistic-regression.Rmd).
 :::
 :::
-
