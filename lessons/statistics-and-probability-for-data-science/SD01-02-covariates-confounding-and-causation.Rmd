@@ -50,29 +50,41 @@ understand differences in blood pressure.
 
 ## Comparing the two medication groups
 
-The overall mean for a medication group is a weighted average. If group $j$
-contains $n_j$ patients and has mean blood pressure $\bar y_j$, then
+The overall mean blood pressure for each medication combines its younger and
+older patients. Each age group contributes according to its patient count:
 
 $$
 \bar y=\frac{\sum_j n_j\bar y_j}{\sum_j n_j}.
 $$
 
-**Worked example — younger patients only.** The same formula can pool the
-medication subgroups within one age group. There are 20 younger patients on
-standard medication with a mean of 130 mmHg, and 90 on new medication with a
-mean of 125 mmHg:
+Here $j$ runs over the age groups within one medication, $n_j$ is the patient
+count, and $\bar y_j$ is that age group's mean blood pressure. Apply the
+equation separately for New and Standard.
+
+**Worked example — comparing medications.** For New, combine 90 younger
+patients with a mean of 125 mmHg and 10 older patients with a mean of 135 mmHg:
 
 $$
-\bar y_{\text{Younger}}
-=\frac{20\times130+90\times125}{20+90}
-=\frac{2600+11250}{110}
-\approx125.91\text{ mmHg}.
+\bar y_{\text{New}}
+=\frac{90\times125+10\times135}{90+10}
+=\frac{12600}{100}
+=126\text{ mmHg}.
 $$
 
-Here $j$ runs over the two medications: multiply each subgroup mean by its
-patient count, add those products, then divide by the total patient count.
-This pools younger patients across medications; the code below instead pools
-age groups within each medication to compare treatments.
+For Standard, combine 20 younger patients with a mean of 130 mmHg and 80 older
+patients with a mean of 140 mmHg:
+
+$$
+\bar y_{\text{Standard}}
+=\frac{20\times130+80\times140}{20+80}
+=\frac{13800}{100}
+=138\text{ mmHg}.
+$$
+
+These calculations produce the table below: `weighted_bp` is the numerator,
+`patients` is the denominator, and `mean_bp` is their quotient. Younger and
+older patients are combined within each medication, giving one row for New
+and one for Standard.
 
 ```{r overall-comparison}
 overall_means <- aggregate(
