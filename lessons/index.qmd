@@ -4,6 +4,20 @@ description: "Executable mathematical lessons from EulerLettersAI."
 toc: false
 ---
 
+```{=html}
+<script>
+(() => {
+  const topicRoutes = {
+    "#power-engineering": "power-engineering/index.html",
+    "#probability-statistics": "probability-statistics/index.html",
+    "#machine-learning": "machine-learning/index.html"
+  };
+  const destination = topicRoutes[window.location.hash];
+  if (destination) window.location.replace(destination);
+})();
+</script>
+```
+
 ## Power Engineering {#power-engineering}
 
 ::: {.lesson-grid}

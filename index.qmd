@@ -14,7 +14,7 @@ Mathematical lessons paired with executable code, organized into three fields.
 
 ```{=html}
 <nav class="topic-grid" aria-label="Math to Code topics">
-  <a class="topic-card topic-card--power" href="lessons/power-engineering/" aria-label="Explore Power Engineering lessons">
+  <a class="topic-card topic-card--power" href="lessons/power-engineering/index.html" aria-label="Explore Power Engineering lessons">
     <img src="assets/topics/power-engineering.webp" alt="" aria-hidden="true" />
     <span class="topic-card__shade" aria-hidden="true"></span>
     <span class="topic-card__content">
@@ -24,7 +24,7 @@ Mathematical lessons paired with executable code, organized into three fields.
     </span>
   </a>
 
-  <a class="topic-card topic-card--statistics" href="lessons/probability-statistics/" aria-label="Explore Probability and Statistics lessons">
+  <a class="topic-card topic-card--statistics" href="lessons/probability-statistics/index.html" aria-label="Explore Probability and Statistics lessons">
     <img src="assets/topics/probability-statistics.webp" alt="" aria-hidden="true" />
     <span class="topic-card__shade" aria-hidden="true"></span>
     <span class="topic-card__content">
@@ -34,7 +34,7 @@ Mathematical lessons paired with executable code, organized into three fields.
     </span>
   </a>
 
-  <a class="topic-card topic-card--learning" href="lessons/machine-learning/" aria-label="Explore Machine Learning lessons">
+  <a class="topic-card topic-card--learning" href="lessons/machine-learning/index.html" aria-label="Explore Machine Learning lessons">
     <img src="assets/topics/machine-learning.webp" alt="" aria-hidden="true" />
     <span class="topic-card__shade" aria-hidden="true"></span>
     <span class="topic-card__content">
