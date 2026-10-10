@@ -14,37 +14,35 @@ Mathematical lessons paired with executable code, organized into three fields.
 
 ```{=html}
 <nav class="topic-grid" aria-label="Math to Code topics">
-  <a class="topic-card topic-card--power" href="lessons/index.html#power-engineering" aria-label="Explore Power Engineering lessons">
+  <a class="topic-card topic-card--power" href="lessons/power-engineering/" aria-label="Explore Power Engineering lessons">
     <img src="assets/topics/power-engineering.webp" alt="" aria-hidden="true" />
     <span class="topic-card__shade" aria-hidden="true"></span>
     <span class="topic-card__content">
-      <span class="topic-card__eyebrow">Energy systems</span>
-      <span class="topic-card__title">Power<br />Engineering</span>
-      <span class="topic-card__action">Explore lessons <span aria-hidden="true">&#8599;</span></span>
+      <span class="topic-card__title">Power Engineering</span>
+      <span class="topic-card__description">Optimization, power flow and state estimation.</span>
+      <span class="topic-card__arrow" aria-hidden="true">&#8599;</span>
     </span>
   </a>
 
-  <a class="topic-card topic-card--statistics" href="lessons/index.html#probability-statistics" aria-label="Explore Probability and Statistics lessons">
+  <a class="topic-card topic-card--statistics" href="lessons/probability-statistics/" aria-label="Explore Probability and Statistics lessons">
     <img src="assets/topics/probability-statistics.webp" alt="" aria-hidden="true" />
     <span class="topic-card__shade" aria-hidden="true"></span>
     <span class="topic-card__content">
-      <span class="topic-card__eyebrow">From foundations to advanced models</span>
-      <span class="topic-card__title">Probability<br />&amp; Statistics</span>
-      <span class="topic-card__action">Explore lessons <span aria-hidden="true">&#8599;</span></span>
+      <span class="topic-card__title">Probability &amp; Statistics</span>
+      <span class="topic-card__description">Probability, data exploration and advanced statistical models.</span>
+      <span class="topic-card__arrow" aria-hidden="true">&#8599;</span>
     </span>
   </a>
 
-  <a class="topic-card topic-card--learning" href="lessons/index.html#machine-learning" aria-label="Explore Machine Learning lessons">
+  <a class="topic-card topic-card--learning" href="lessons/machine-learning/" aria-label="Explore Machine Learning lessons">
     <img src="assets/topics/machine-learning.webp" alt="" aria-hidden="true" />
     <span class="topic-card__shade" aria-hidden="true"></span>
     <span class="topic-card__content">
-      <span class="topic-card__eyebrow">Models, kernels &amp; classifiers</span>
-      <span class="topic-card__title">Machine<br />Learning</span>
-      <span class="topic-card__action">Explore lessons <span aria-hidden="true">&#8599;</span></span>
+      <span class="topic-card__title">Machine Learning</span>
+      <span class="topic-card__description">Support vector machines and classical–quantum kernels.</span>
+      <span class="topic-card__arrow" aria-hidden="true">&#8599;</span>
     </span>
   </a>
 </nav>
 ```
-
-<p class="topic-footnote">Select a topic to see all of its lessons.</p>
 :::

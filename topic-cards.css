@@ -1,0 +1,237 @@
+/* A separate filename ensures the redesigned topic cards are not hidden by a
+   cached copy of the long-lived navigation stylesheet. */
+.topic-home {
+  box-sizing: border-box;
+  width: min(calc(100% - 40px), 1040px) !important;
+  margin: 0 auto !important;
+  padding: clamp(34px, 4vw, 56px) 0 64px !important;
+}
+
+.topic-intro {
+  width: 100% !important;
+  margin: 0 0 24px !important;
+}
+
+.topic-intro .topic-kicker {
+  margin: 0 0 8px !important;
+  color: #d7b56d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.topic-intro h1 {
+  max-width: none !important;
+  margin: 0 !important;
+  color: #f5fbf8;
+  font-size: clamp(2rem, 3.2vw, 3.15rem) !important;
+  font-weight: 750;
+  letter-spacing: -0.04em !important;
+  line-height: 1.05 !important;
+}
+
+.topic-intro > p:last-child {
+  max-width: 680px !important;
+  margin: 12px 0 0 !important;
+  color: rgba(242, 251, 247, 0.7);
+  font-size: 1rem !important;
+  line-height: 1.55;
+}
+
+.topic-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  width: 100% !important;
+  max-width: 1000px;
+  margin: 0 !important;
+}
+
+.topic-card,
+.topic-card:last-child {
+  position: relative;
+  display: grid !important;
+  grid-column: auto !important;
+  min-width: 0;
+  aspect-ratio: 3 / 2 !important;
+  overflow: hidden;
+  color: #fff !important;
+  border: 1px solid rgba(220, 246, 233, 0.2);
+  border-radius: 18px !important;
+  background: #07110d;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+  text-decoration: none !important;
+  isolation: isolate;
+  transform: translateZ(0);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.topic-card img,
+.topic-card__shade,
+.topic-card__content {
+  grid-area: 1 / 1;
+}
+
+.topic-card img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: cover;
+  transition: transform 380ms ease, filter 180ms ease;
+}
+
+.topic-card__shade {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(1, 10, 7, 0.08) 12%, rgba(1, 10, 7, 0.28) 48%, rgba(1, 10, 7, 0.94) 100%),
+    linear-gradient(90deg, rgba(1, 18, 13, 0.32), transparent 75%);
+  pointer-events: none;
+}
+
+.topic-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 18px;
+}
+
+.topic-card__title {
+  display: block;
+  max-width: calc(100% - 28px);
+  color: #fff;
+  font-size: clamp(1.15rem, 1.55vw, 1.45rem) !important;
+  font-weight: 780;
+  letter-spacing: -0.025em !important;
+  line-height: 1.08 !important;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.62);
+}
+
+.topic-card__description {
+  display: block;
+  max-width: 28ch;
+  margin-top: 7px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+}
+
+.topic-card__arrow {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  color: #092219;
+  border-radius: 50%;
+  background: rgba(239, 217, 159, 0.94);
+  font-size: 0.9rem;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.22);
+}
+
+.topic-card:hover,
+.topic-card:focus-visible {
+  border-color: rgba(215, 181, 109, 0.8);
+  box-shadow: 0 21px 42px rgba(0, 0, 0, 0.38);
+  transform: translateY(-4px);
+}
+
+.topic-card:hover img,
+.topic-card:focus-visible img {
+  filter: saturate(1.05) brightness(1.04);
+  transform: scale(1.035);
+}
+
+.topic-card:focus-visible {
+  outline: 3px solid #72d8ad;
+  outline-offset: 4px;
+}
+
+/* Pages reached from the cards contain lessons for one topic only. */
+.topic-lesson-page {
+  box-sizing: border-box;
+  width: min(calc(100% - 40px), 920px);
+  margin: 0 auto;
+  padding: 46px 0 72px;
+}
+
+.topic-back {
+  display: inline-block;
+  margin-bottom: 26px;
+  color: #efd99f !important;
+  font-size: 0.85rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.topic-lesson-page h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  letter-spacing: -0.045em;
+}
+
+.topic-lesson-page > p {
+  max-width: 680px;
+  color: rgba(242, 251, 247, 0.72);
+  font-size: 1.05rem;
+}
+
+.topic-lesson-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 34px;
+}
+
+.topic-lesson-card {
+  padding: 22px;
+  border: 1px solid rgba(242, 251, 247, 0.14);
+  border-radius: 16px;
+  background: #103b2f;
+}
+
+.topic-lesson-card h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.topic-lesson-card h3 a {
+  color: #f5fbf8;
+  text-decoration: none;
+}
+
+.topic-lesson-card p {
+  margin-bottom: 0;
+  color: rgba(242, 251, 247, 0.7);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 760px) {
+  .topic-home {
+    width: min(calc(100% - 28px), 620px) !important;
+  }
+
+  .topic-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .topic-card,
+  .topic-card:last-child {
+    aspect-ratio: 16 / 9 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topic-card,
+  .topic-card img {
+    transition: none;
+  }
+}

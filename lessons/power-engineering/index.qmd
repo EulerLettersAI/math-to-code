@@ -1,0 +1,30 @@
+---
+pagetitle: "Power Engineering | Math to Code"
+page-layout: full
+toc: false
+---
+
+::: {.topic-lesson-page}
+[&#8592; All topics](../../index.qmd){.topic-back}
+
+# Power Engineering
+
+Build mathematical and computational intuition for optimization, power-flow
+analysis, state estimation and measurement observability.
+
+::: {.topic-lesson-grid}
+::: {.topic-lesson-card}
+### [Optimization: Primal and Dual](../optimization-primal-dual/)
+
+Constrained minimization and the Lagrangian dual, developed from a simple
+worked problem.
+:::
+
+::: {.topic-lesson-card}
+### [Power Flow and State Estimation](../power-flow-state-estimation/)
+
+AC load flow, weighted least-squares state estimation and observability on a
+five-bus grid.
+:::
+:::
+:::

@@ -1,0 +1,23 @@
+---
+pagetitle: "Machine Learning | Math to Code"
+page-layout: full
+toc: false
+---
+
+::: {.topic-lesson-page}
+[&#8592; All topics](../../index.qmd){.topic-back}
+
+# Machine Learning
+
+Explore classification through support vector machines, margin geometry and
+classical and quantum kernels.
+
+::: {.topic-lesson-grid}
+::: {.topic-lesson-card}
+### [SVM: Classical and Quantum Kernel Classifiers](../svm-classical-vs-quantum/)
+
+A four-part progression from two-feature SVM geometry to a comparison of
+classical and quantum kernels.
+:::
+:::
+:::

@@ -1,0 +1,29 @@
+---
+pagetitle: "Probability & Statistics | Math to Code"
+page-layout: full
+toc: false
+---
+
+::: {.topic-lesson-page}
+[&#8592; All topics](../../index.qmd){.topic-back}
+
+# Probability & Statistics
+
+Move from statistical thinking and exploratory analysis through probability,
+Bayesian decisions and advanced regression models.
+
+::: {.topic-lesson-grid}
+::: {.topic-lesson-card}
+### [Statistics and Probability for Data Science](../statistics-and-probability-for-data-science/index.Rmd)
+
+Statistical thinking, exploratory data analysis, probability rules, Bayes'
+theorem and naïve Bayes.
+:::
+
+::: {.topic-lesson-card}
+### [Advanced Statistical Modeling](../advanced-statistical-modeling/)
+
+Logistic and mixed-effects regression for binary outcomes and clustered data.
+:::
+:::
+:::
