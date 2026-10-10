@@ -3,39 +3,48 @@ page-layout: full
 toc: false
 ---
 
-::: {.hero}
-# See the mathematics. Run the idea.
+::: {.topic-home}
+::: {.topic-intro}
+<p class="topic-kicker">Math to Code</p>
 
-Short, executable lessons that connect mathematical notation to working code—one concept and one experiment at a time.
+# Choose a topic. Explore the ideas.
 
-[Browse all lessons](lessons/index.qmd){.btn .btn-primary .btn-lg}
-[Browse the source](https://github.com/EulerLettersAI/math-to-code){.btn .btn-outline-secondary .btn-lg}
+Mathematical lessons paired with executable code, organized into three fields.
 :::
 
-## How each lesson works
+```{=html}
+<nav class="topic-grid" aria-label="Math to Code topics">
+  <a class="topic-card topic-card--power" href="lessons/index.html#power-engineering" aria-label="Explore Power Engineering lessons">
+    <img src="assets/topics/power-engineering.webp" alt="" aria-hidden="true" />
+    <span class="topic-card__shade" aria-hidden="true"></span>
+    <span class="topic-card__content">
+      <span class="topic-card__eyebrow">Energy systems</span>
+      <span class="topic-card__title">Power<br />Engineering</span>
+      <span class="topic-card__action">Explore lessons <span aria-hidden="true">&#8599;</span></span>
+    </span>
+  </a>
 
-::: {.lesson-grid}
-::: {.lesson-card}
-### 1. Read
+  <a class="topic-card topic-card--statistics" href="lessons/index.html#probability-statistics" aria-label="Explore Probability and Statistics lessons">
+    <img src="assets/topics/probability-statistics.webp" alt="" aria-hidden="true" />
+    <span class="topic-card__shade" aria-hidden="true"></span>
+    <span class="topic-card__content">
+      <span class="topic-card__eyebrow">From foundations to advanced models</span>
+      <span class="topic-card__title">Probability<br />&amp; Statistics</span>
+      <span class="topic-card__action">Explore lessons <span aria-hidden="true">&#8599;</span></span>
+    </span>
+  </a>
 
-Build intuition from equations, diagrams, and carefully defined notation.
+  <a class="topic-card topic-card--learning" href="lessons/index.html#machine-learning" aria-label="Explore Machine Learning lessons">
+    <img src="assets/topics/machine-learning.webp" alt="" aria-hidden="true" />
+    <span class="topic-card__shade" aria-hidden="true"></span>
+    <span class="topic-card__content">
+      <span class="topic-card__eyebrow">Models, kernels &amp; classifiers</span>
+      <span class="topic-card__title">Machine<br />Learning</span>
+      <span class="topic-card__action">Explore lessons <span aria-hidden="true">&#8599;</span></span>
+    </span>
+  </a>
+</nav>
+```
+
+<p class="topic-footnote">Select a topic to see all of its lessons.</p>
 :::
-
-::: {.lesson-card}
-### 2. Run
-
-Execute the code cell immediately after the mathematical concept.
-:::
-
-::: {.lesson-card}
-### 3. Change
-
-Download the source, vary its assumptions, and investigate what happens.
-:::
-:::
-
-## A multidisciplinary collection
-
-Euler Letters AI is multidisciplinary, so this collection comprises independent
-lessons on miscellaneous topics rather than following a single curriculum. Each
-lesson connects its mathematical formulation directly to executable code.

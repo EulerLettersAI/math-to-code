@@ -4,20 +4,7 @@ description: "Executable mathematical lessons from EulerLettersAI."
 toc: false
 ---
 
-## Machine Learning
-
-::: {.lesson-grid}
-::: {.lesson-card}
-### [SVM: Classical and Quantum Kernel Classifiers](svm-classical-vs-quantum/)
-
-A four-part series from two-feature SVM margin geometry to a side-by-side comparison of classical and quantum kernels.
-
-**Prerequisites:** vectors, inner products, and basic Python.
-:::
-
-:::
-
-## Power Engineering
+## Power Engineering {#power-engineering}
 
 ::: {.lesson-grid}
 ::: {.lesson-card}
@@ -36,27 +23,22 @@ estimation, then exploring measurement observability on the same five-bus grid.
 
 **Prerequisites:** complex numbers, basic circuits, probability, and linear algebra.
 :::
+
 :::
 
-## Statistics & Probability
+## Probability & Statistics {#probability-statistics}
 
 ::: {.lesson-grid}
 ::: {.lesson-card}
 ### [Statistics and Probability for Data Science](statistics-and-probability-for-data-science/index.Rmd)
 
 DS14270 deck companions covering statistical thinking, exploratory data
-analysis, and probability.
-Nine R Markdown lessons across SD01, SD02, and SD03a connect introductory
-statistical ideas to executable R.
+analysis, and probability. Nine R Markdown lessons across SD01, SD02, and
+SD03a connect introductory statistical ideas to executable R.
 
 **Prerequisites:** basic algebra; introductory R is explained in the examples.
 :::
 
-:::
-
-## Advanced Statistics
-
-::: {.lesson-grid}
 ::: {.lesson-card}
 ### [Advanced Statistical Modeling](advanced-statistical-modeling/)
 
@@ -64,6 +46,18 @@ Logistic and mixed-effects regression: binary outcomes, odds ratios, p-values,
 and patients clustered within clinics.
 
 **Prerequisites:** introductory statistics and R.
+:::
+:::
+
+## Machine Learning {#machine-learning}
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [SVM: Classical and Quantum Kernel Classifiers](svm-classical-vs-quantum/)
+
+A four-part series from two-feature SVM margin geometry to a side-by-side comparison of classical and quantum kernels.
+
+**Prerequisites:** vectors, inner products, and basic Python.
 :::
 :::
 
