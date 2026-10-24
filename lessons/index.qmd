@@ -47,8 +47,10 @@ estimation, then exploring measurement observability on the same five-bus grid.
 ### [Statistics and Probability for Data Science](statistics-and-probability-for-data-science/index.Rmd)
 
 DS14270 deck companions covering statistical thinking, exploratory data
-analysis, and probability. Nine R Markdown lessons across SD01, SD02, and
-SD03a connect introductory statistical ideas to executable R.
+analysis, probability, random variables, discrete and continuous
+distributions, sampling distributions, and inference. Twenty-five R Markdown
+lessons across SD01, SD02, SD03a, SD04, SD05, SD06, and SD07 connect the
+mathematics to executable R.
 
 **Prerequisites:** basic algebra; introductory R is explained in the examples.
 :::

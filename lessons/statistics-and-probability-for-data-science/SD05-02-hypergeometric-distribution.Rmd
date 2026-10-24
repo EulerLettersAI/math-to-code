@@ -1,0 +1,159 @@
+---
+title: "The Hypergeometric Distribution"
+subtitle: "SD05 — Discrete Distributions"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD05-02-hypergeometric-distribution.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD05 — Discrete Distributions*.
+
+The hypergeometric distribution counts successes in sampling **without
+replacement**. The mathematics below is paired with base R and the deck's
+tagged-animal and light-bulb examples.
+
+## Sampling from a finite population
+
+Let a population contain $N$ objects, of which $M$ are successes. Draw $n$
+objects without replacement and let $X$ be the number of successes drawn.
+Then
+
+$$
+P(X=x)=\frac{\binom Mx\binom{N-M}{n-x}}{\binom Nn},
+$$
+
+where
+
+$$
+\max(0,n-N+M)\leq x\leq\min(n,M).
+$$
+
+```{r hypergeometric-pmf}
+N <- 25
+M <- 5
+n <- 10
+x <- 0:min(n, M)
+
+formula_pmf <- choose(M, x) * choose(N - M, n - x) / choose(N, n)
+R_pmf <- dhyper(x, m = M, n = N - M, k = n)
+
+data.frame(x, formula_pmf, R_pmf)
+sum(R_pmf)
+```
+
+In R, `m` is the number of successes, `n` is the number of failures, and `k`
+is the sample size. Those argument names differ from the mathematical symbols.
+
+## Tagged-animal example
+
+Among $N=25$ animals, $M=5$ are tagged. If $n=10$ are recaptured, then
+
+$$
+P(X=2)=\frac{\binom52\binom{20}8}{\binom{25}{10}}\approx0.385.
+$$
+
+```{r tagged-animal-example}
+p_exactly_2 <- dhyper(2, m = 5, n = 20, k = 10)
+p_at_most_2 <- phyper(2, m = 5, n = 20, k = 10)
+components <- dhyper(0:2, m = 5, n = 20, k = 10)
+
+c(P_X_equals_2 = p_exactly_2, P_X_at_most_2 = p_at_most_2)
+data.frame(x = 0:2, probability = components)
+```
+
+The terms for $X=0,1,2$ are approximately $0.057$, $0.257$, and $0.385$;
+their sum is approximately $0.699$.
+
+## Mean, variance, and finite-population correction
+
+For $X\sim\operatorname{Hypergeometric}(N,M,n)$,
+
+$$
+E(X)=n\frac MN,
+$$
+
+and
+
+$$
+\operatorname{Var}(X)=
+\frac{N-n}{N-1}\,n\frac MN\left(1-\frac MN\right).
+$$
+
+The factor $(N-n)/(N-1)$ is the **finite-population correction**. It reduces
+variance because draws without replacement are dependent.
+
+```{r hypergeometric-moments}
+finite_population_correction <- (N - n) / (N - 1)
+mu <- n * M / N
+variance <- finite_population_correction * n * (M / N) * (1 - M / N)
+
+c(mean = mu, variance = variance, sd = sqrt(variance))
+```
+
+## Binomial approximation
+
+When the population is large compared with the sample, sampling without
+replacement changes the success probability only slightly. A binomial model
+with $p=M/N$ can then approximate the hypergeometric model.
+
+The deck considers $N=10000$ bulbs, $M=200$ defective bulbs, and a sample of
+$n=5$ bulbs. For exactly two defective bulbs,
+
+```{r bulb-binomial-approximation}
+N <- 10000
+M <- 200
+n <- 5
+p <- M / N
+
+c(
+  hypergeometric = dhyper(2, m = M, n = N - M, k = n),
+  binomial = dbinom(2, size = n, prob = p)
+)
+```
+
+The two values are about $0.00377$ because the sampling fraction is only
+$5/10000$.
+
+## Simulation check (fictional extension)
+
+```{r hypergeometric-simulation}
+set.seed(14270)
+simulated_X <- rhyper(100000, m = 5, n = 20, k = 10)
+
+c(
+  simulated_P_X_at_most_2 = mean(simulated_X <= 2),
+  exact_P_X_at_most_2 = phyper(2, 5, 20, 10),
+  simulated_mean = mean(simulated_X),
+  theoretical_mean = 10 * 5 / 25
+)
+```
+
+## Practice questions
+
+1. A lot has 40 devices, 8 defective. If 6 are sampled without replacement,
+   find $P(X=2)$.
+2. Find $P(X\leq1)$.
+3. Compute $E(X)$ and $\operatorname{Var}(X)$.
+4. Explain why a binomial model is not exact here.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. `dhyper(2, 8, 32, 6)` gives approximately $0.2623$.
+2. `phyper(1, 8, 32, 6)` gives approximately $0.6558$.
+3. $E(X)=1.2$ and $\operatorname{Var}(X)=(34/39)(6)(0.2)(0.8)\approx0.837$.
+4. Without replacement, one draw changes the success probability for the next
+   draw, so the trials are dependent.
+:::

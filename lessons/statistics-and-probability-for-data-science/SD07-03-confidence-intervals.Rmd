@@ -1,0 +1,209 @@
+---
+title: "Confidence Intervals"
+subtitle: "SD07 — Sampling Distributions and Inference"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD07-03-confidence-intervals.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD07 — Sampling Distributions and Inference*.
+
+A confidence interval combines a point estimate with a margin of error. This
+lesson implements the deck's z, t, and proportion intervals in base R.
+
+## Confidence is a property of the method
+
+A two-sided interval has the form
+
+$$
+\text{estimate}\ \pm\ \text{critical value}\times\text{standard error}.
+$$
+
+A 95% confidence procedure captures the fixed population parameter in 95% of
+intervals over repeated samples under its assumptions. After one interval is
+computed, it either contains the parameter or it does not.
+
+## Mean with known population standard deviation
+
+When $\sigma$ is known, a $(1-\alpha)$ confidence interval for $\mu$ is
+
+$$
+\bar x\pm z_{\alpha/2}\frac{\sigma}{\sqrt n},
+$$
+
+where $P(Z\leq z_{\alpha/2})=1-\alpha/2$.
+
+The deck gives $\bar x=66.12$, $\sigma=10.411$, $n=15$, and 95% confidence.
+
+```{r known-sigma-z-interval}
+x_bar <- 66.12
+sigma <- 10.411
+n <- 15
+confidence <- 0.95
+alpha <- 1 - confidence
+
+z_star <- qnorm(1 - alpha / 2)
+standard_error <- sigma / sqrt(n)
+margin_error <- z_star * standard_error
+z_interval <- x_bar + c(-1, 1) * margin_error
+
+c(
+  z_star = z_star,
+  standard_error = standard_error,
+  margin_error = margin_error,
+  lower = z_interval[1],
+  upper = z_interval[2]
+)
+```
+
+R gives about $(60.85,71.39)$, matching the deck after rounding.
+
+## Mean with unknown population standard deviation
+
+When $\sigma$ is unknown and replaced by the sample standard deviation $s$,
+use the t distribution with $n-1$ degrees of freedom:
+
+$$
+\bar x\pm t_{\alpha/2,n-1}\frac{s}{\sqrt n}.
+$$
+
+For $\bar x=66.12$, $s=9.21$, $n=15$, and 95% confidence:
+
+```{r unknown-sigma-t-interval}
+x_bar <- 66.12
+s <- 9.21
+n <- 15
+alpha <- 0.05
+
+t_star <- qt(1 - alpha / 2, df = n - 1)
+standard_error <- s / sqrt(n)
+margin_error <- t_star * standard_error
+t_interval <- x_bar + c(-1, 1) * margin_error
+
+c(
+  t_star = t_star,
+  standard_error = standard_error,
+  margin_error = margin_error,
+  lower = t_interval[1],
+  upper = t_interval[2]
+)
+```
+
+The result is about $(61.02,71.22)$. The t critical value is larger than 1.96
+because estimating $\sigma$ introduces uncertainty.
+
+## Confidence interval for a population proportion
+
+For $x$ successes in $n$ independent observations,
+
+$$
+\widehat p=\frac xn.
+$$
+
+The deck's large-sample z interval is
+
+$$
+\widehat p\pm z_{\alpha/2}
+\sqrt{\frac{\widehat p(1-\widehat p)}n}.
+$$
+
+The normal approximation condition is
+
+$$
+n\widehat p\geq10
+\quad\text{and}\quad
+n(1-\widehat p)\geq10.
+$$
+
+```{r proportion-z-interval}
+successes <- 84
+n <- 120
+p_hat <- successes / n
+z_star <- qnorm(0.975)
+standard_error <- sqrt(p_hat * (1 - p_hat) / n)
+margin_error <- z_star * standard_error
+proportion_interval <- p_hat + c(-1, 1) * margin_error
+
+c(
+  p_hat = p_hat,
+  successes = n * p_hat,
+  failures = n * (1 - p_hat),
+  lower = proportion_interval[1],
+  upper = proportion_interval[2]
+)
+```
+
+This interval is sometimes called the Wald interval. Near 0 or 1, especially
+with small samples, alternatives such as the Wilson interval perform better.
+
+## What changes interval width?
+
+For a fixed confidence level, the margin of error shrinks like $1/\sqrt n$.
+For fixed $n$, demanding more confidence increases the critical value and
+widens the interval.
+
+```{r interval-width-comparison}
+confidence_levels <- c(0.90, 0.95, 0.99)
+sample_sizes <- c(25, 100, 400)
+
+comparison <- expand.grid(
+  confidence = confidence_levels,
+  n = sample_sizes
+)
+comparison$margin_error <- with(
+  comparison,
+  qnorm(1 - (1 - confidence) / 2) * 10 / sqrt(n)
+)
+comparison
+```
+
+## Repeated-interval interpretation (fictional extension)
+
+```{r confidence-coverage-simulation}
+set.seed(14270)
+mu <- 50
+sigma <- 10
+n <- 25
+repetitions <- 10000
+
+sample_means <- replicate(
+  repetitions,
+  mean(rnorm(n, mean = mu, sd = sigma))
+)
+margin_error <- qnorm(0.975) * sigma / sqrt(n)
+covered <- (sample_means - margin_error <= mu) &
+  (mu <= sample_means + margin_error)
+
+mean(covered)
+```
+
+## Practice questions
+
+1. Find a 95% z interval when $\bar x=40$, $\sigma=6$, and $n=36$.
+2. Find a 95% t interval when $\bar x=40$, $s=6$, and $n=36$.
+3. In a sample of 200 people, 130 respond yes. Find the 95% proportion
+   interval and check the approximation condition.
+4. What happens to a z-interval's margin of error if $n$ is quadrupled?
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. $40\pm1.96(1)$, or approximately $(38.04,41.96)$.
+2. With 35 degrees of freedom, `qt(0.975, 35)` is about 2.030, giving
+   approximately $(37.97,42.03)$.
+3. $\widehat p=0.65$ and the interval is approximately $(0.584,0.716)$.
+   There are 130 successes and 70 failures, so both counts exceed 10.
+4. It is halved because $\sqrt{4n}=2\sqrt n$.
+:::

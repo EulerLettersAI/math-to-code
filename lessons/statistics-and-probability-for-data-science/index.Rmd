@@ -39,6 +39,50 @@ Source deck: Samer El Kababji, **SD03a — Probabilities**.
 | [SD03a-02: Conditional Probability, Bayes' Theorem, and Independence](SD03a-02-conditional-probability-bayes-and-independence.Rmd) | Conditioning, total probability, Bayes updates, and independent events |
 | [SD03a-03: Bayes Decision Rules and Naïve Bayes](SD03a-03-bayes-decisions-and-naive-bayes.Rmd) | Prior, likelihood, posterior, ML and MAP rules, and binary naïve Bayes |
 
+## SD04 — Random Variables
+
+Source deck: Samer El Kababji, **SD04 — Random Variables**.
+
+| Companion | Focus |
+|---|---|
+| [SD04-01: Random Variables, PMFs, PDFs, and CDFs](SD04-01-random-variables-pmf-pdf-and-cdf.Rmd) | Discrete and continuous random variables, probability functions, and cumulative distributions |
+| [SD04-02: Expectation, Variance, and Quantiles](SD04-02-expectation-variance-and-quantiles.Rmd) | Moments, standard deviation, percentiles, quartiles, and exponential-distribution calculations |
+| [SD04-03: Properties of Expectation, Variance, and Standardization](SD04-03-properties-and-standardization.Rmd) | Linear transformations, sums of variables, covariance terms, and z-scores |
+| [SD04-04: Joint Random Variables, Covariance, and Correlation](SD04-04-joint-random-variables-covariance-and-correlation.Rmd) | Joint and marginal PMFs, independence, covariance, and linear correlation |
+
+## SD05 — Discrete Distributions
+
+Source deck: Samer El Kababji, **SD05 — Discrete Distributions**.
+
+| Companion | Focus |
+|---|---|
+| [SD05-01: Bernoulli and Binomial Distributions](SD05-01-bernoulli-and-binomial-distributions.Rmd) | Bernoulli trials, binomial counts, cumulative probabilities, and moments |
+| [SD05-02: The Hypergeometric Distribution](SD05-02-hypergeometric-distribution.Rmd) | Sampling without replacement, finite-population correction, and binomial approximation |
+| [SD05-03: The Negative Binomial Distribution](SD05-03-negative-binomial-distribution.Rmd) | Failures before a fixed number of successes, counting conventions, and moments |
+| [SD05-04: The Poisson Distribution](SD05-04-poisson-distribution.Rmd) | Event counts, interval scaling, moments, and binomial approximation |
+
+## SD06 — Continuous Distributions
+
+Source deck: Samer El Kababji, **SD06 — Continuous Distributions**.
+
+| Companion | Focus |
+|---|---|
+| [SD06-01: Uniform Distribution and Monte Carlo Simulation](SD06-01-uniform-distribution-and-monte-carlo.Rmd) | Uniform probabilities, moments, random generation, and Monte Carlo estimation |
+| [SD06-02: Exponential and Gamma Distributions](SD06-02-exponential-and-gamma-distributions.Rmd) | Waiting times, survival probabilities, gamma parameterizations, and event processes |
+| [SD06-03: Weibull Distribution and Survival](SD06-03-weibull-distribution-and-survival.Rmd) | Lifetime probabilities, survival and hazard functions, shape, scale, and moments |
+| [SD06-04: Normal Distribution and Z-Scores](SD06-04-normal-distribution-and-z-scores.Rmd) | Normal probabilities, standardization, empirical rule, quantiles, and linear combinations |
+
+## SD07 — Sampling Distributions and Inference
+
+Source deck: Samer El Kababji, **SD07 — Sampling Distributions and Inference**.
+
+| Companion | Focus |
+|---|---|
+| [SD07-01: Sample Means and the Central Limit Theorem](SD07-01-sample-means-and-central-limit-theorem.Rmd) | Sampling distributions, standard error, exact normal results, and the CLT |
+| [SD07-02: Point Estimation and Sampling Error](SD07-02-point-estimation-and-sampling-error.Rmd) | Estimators, estimates, sampling error, standard error, unbiasedness, and variance estimation |
+| [SD07-03: Confidence Intervals](SD07-03-confidence-intervals.Rmd) | z and t intervals for means, proportion intervals, margin of error, and coverage |
+| [SD07-04: Maximum Likelihood Estimation](SD07-04-maximum-likelihood-estimation.Rmd) | Likelihood, log-likelihood, and Poisson and exponential MLE derivations |
+
 ## Run the companions
 
 Open any `.Rmd` file in RStudio and run its R chunks from top to bottom, or

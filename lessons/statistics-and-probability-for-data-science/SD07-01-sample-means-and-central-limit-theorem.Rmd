@@ -1,0 +1,217 @@
+---
+title: "Sample Means and the Central Limit Theorem"
+subtitle: "SD07 — Sampling Distributions and Inference"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD07-01-sample-means-and-central-limit-theorem.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD07 — Sampling Distributions and Inference*.
+
+This lesson distinguishes observations from sample means, derives the sample
+mean's center and spread, and uses the central limit theorem (CLT).
+
+## The sample mean is a random variable
+
+For an i.i.d. sample $X_1,\ldots,X_n$ from a population with mean $\mu$ and
+variance $\sigma^2$,
+
+$$
+\overline X=\frac1n\sum_{i=1}^nX_i.
+$$
+
+Different random samples produce different values of $\overline X$. Its
+distribution across all possible samples is the **sampling distribution**.
+
+```{r one-weibull-sample}
+set.seed(14270)
+sample_size <- 10
+one_sample <- rweibull(sample_size, shape = 2, scale = 5)
+
+c(sample_mean = mean(one_sample), sample_sd = sd(one_sample))
+```
+
+The deck introduces a Weibull population with shape 2 and scale 5. Its
+population moments are
+
+$$
+\mu=5\Gamma(1+1/2)\approx4.4311,
+$$
+
+$$
+\sigma^2=5^2\left[\Gamma(2)-\Gamma(1.5)^2\right]\approx5.365.
+$$
+
+```{r weibull-population-moments}
+shape <- 2
+scale <- 5
+mu <- scale * gamma(1 + 1 / shape)
+variance <- scale^2 * (
+  gamma(1 + 2 / shape) - gamma(1 + 1 / shape)^2
+)
+
+c(mean = mu, variance = variance, sd = sqrt(variance))
+```
+
+## Mean, variance, and standard error
+
+Linearity of expectation gives
+
+$$
+E(\overline X)
+=\frac1n\sum_{i=1}^nE(X_i)=\mu.
+$$
+
+Independence makes the variances add:
+
+$$
+\operatorname{Var}(\overline X)
+=\frac1{n^2}\sum_{i=1}^n\operatorname{Var}(X_i)
+=\frac{\sigma^2}{n}.
+$$
+
+The standard deviation of the sampling distribution is the **standard
+error**:
+
+$$
+\operatorname{SE}(\overline X)=\frac{\sigma}{\sqrt n}.
+$$
+
+```{r standard-error-by-sample-size}
+n <- c(1, 5, 10, 30, 100)
+data.frame(
+  sample_size = n,
+  expected_sample_mean = mu,
+  standard_error = sqrt(variance) / sqrt(n)
+)
+```
+
+## Exact result for a normal population
+
+If every $X_i\sim N(\mu,\sigma^2)$ independently, then for every sample size
+
+$$
+\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right).
+$$
+
+```{r exact-normal-sample-mean}
+mu_normal <- 20
+sigma_normal <- 6
+n <- 9
+
+c(
+  sample_mean_mean = mu_normal,
+  sample_mean_variance = sigma_normal^2 / n,
+  sample_mean_sd = sigma_normal / sqrt(n)
+)
+```
+
+## Central limit theorem
+
+For i.i.d. observations with finite mean and variance, as $n$ increases,
+
+$$
+\frac{\overline X-\mu}{\sigma/\sqrt n}
+\overset{d}{\longrightarrow}N(0,1).
+$$
+
+Equivalently, for sufficiently large $n$,
+
+$$
+\overline X\ \dot\sim\
+N\left(\mu,\frac{\sigma^2}{n}\right),
+$$
+
+even when the population is not normal. The deck uses $n\geq30$ as a common
+rule of thumb, not a guarantee for every population.
+
+```{r clt-weibull-simulation, fig.width=8, fig.height=4}
+set.seed(14270)
+repetitions <- 20000
+sample_sizes <- c(2, 30)
+
+old_par <- par(mfrow = c(1, 2))
+for (n in sample_sizes) {
+  sample_means <- replicate(
+    repetitions,
+    mean(rweibull(n, shape = 2, scale = 5))
+  )
+  hist(
+    sample_means, probability = TRUE, breaks = 40,
+    col = "grey80", border = "white",
+    main = paste("Weibull means, n =", n), xlab = "Sample mean"
+  )
+  curve(
+    dnorm(x, mean = mu, sd = sqrt(variance / n)),
+    add = TRUE, col = "steelblue", lwd = 2
+  )
+}
+par(old_par)
+```
+
+## Deck example: impurity in chemical batches
+
+The population has mean 4.0 g and standard deviation 1.5 g. For $n=50$,
+
+$$
+\operatorname{SE}(\overline X)=\frac{1.5}{\sqrt{50}}\approx0.2121.
+$$
+
+The CLT gives
+
+$$
+P(3.5\leq\overline X\leq3.8)
+\approx
+\Phi\left(\frac{3.8-4}{1.5/\sqrt{50}}\right)
+-\Phi\left(\frac{3.5-4}{1.5/\sqrt{50}}\right).
+$$
+
+```{r impurity-clt-example}
+mu <- 4
+sigma <- 1.5
+n <- 50
+se <- sigma / sqrt(n)
+z_lower <- (3.5 - mu) / se
+z_upper <- (3.8 - mu) / se
+
+c(
+  standard_error = se,
+  z_lower = z_lower,
+  z_upper = z_upper,
+  probability = pnorm(z_upper) - pnorm(z_lower),
+  rounded_table_probability = pnorm(-0.94) - pnorm(-2.36)
+)
+```
+
+R's unrounded calculation is about $0.1649$; the deck's rounded z-table
+calculation is $0.1645$.
+
+## Practice questions
+
+1. A population has $\mu=80$, $\sigma=12$. For samples of size 36, find
+   $E(\overline X)$ and $\operatorname{SE}(\overline X)$.
+2. Approximate $P(78\leq\overline X\leq83)$.
+3. What happens to the standard error if $n$ is multiplied by 4?
+4. When is the sampling distribution of the mean exactly normal rather than
+   approximately normal?
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. The mean is 80 and the standard error is $12/\sqrt{36}=2$.
+2. `pnorm(83, 80, 2) - pnorm(78, 80, 2)` gives approximately $0.7745$.
+3. It is divided by $\sqrt4=2$.
+4. When the population itself is normal, assuming an independent sample.
+:::

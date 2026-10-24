@@ -1,0 +1,364 @@
+---
+title: "Properties of Expectation, Variance, and Standardization"
+subtitle: "SD04 — Random Variables"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD04-03-properties-and-standardization.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD04 — Random Variables*.
+
+This lesson develops the deck's transformation and addition rules for
+expectation and variance, shows where covariance enters a sum, and proves the
+mean-zero, unit-variance result for standardization. Exact finite
+distributions keep the mathematical identities visible in the code.
+
+## Linearity of expectation
+
+For constants $a$ and $b$,
+
+$$
+E(aX+b)=aE(X)+b.
+$$
+
+More generally, expectation is additive whether or not the variables are
+independent:
+
+$$
+E(X+Y)=E(X)+E(Y).
+$$
+
+### Worked example: transforming breakdown cost
+
+Suppose $X$ is a breakdown cost with
+
+| $x$ | 50 | 200 | 350 |
+|---:|---:|---:|---:|
+| $P(X=x)$ | 0.3 | 0.2 | 0.5 |
+
+and a revised charge is $Y=1.15X+20$. Since $E(X)=230$,
+
+$$
+E(Y)=E(1.15X+20)=1.15(230)+20=284.5.
+$$
+
+```{r expectation-linear-transformation}
+x <- c(50, 200, 350)
+p_x <- c(0.3, 0.2, 0.5)
+y <- 1.15 * x + 20
+
+E_X <- sum(x * p_x)
+E_Y_direct <- sum(y * p_x)
+E_Y_rule <- 1.15 * E_X + 20
+
+c(E_X = E_X,
+  E_Y_direct = E_Y_direct,
+  E_Y_rule = E_Y_rule)
+stopifnot(isTRUE(all.equal(E_Y_direct, E_Y_rule)))
+```
+
+## Scaling and shifting variance
+
+Adding a constant changes location but not spread, while multiplying by $a$
+multiplies every deviation from the mean by $a$. Therefore
+
+$$
+\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X).
+$$
+
+For the revised charge,
+
+$$
+\operatorname{Var}(Y)
+=(1.15)^2\operatorname{Var}(X)
+=(1.15)^2(17{,}100)=22{,}614.75.
+$$
+
+```{r variance-linear-transformation}
+variance_X <- sum((x - E_X)^2 * p_x)
+variance_Y_direct <- sum((y - E_Y_direct)^2 * p_x)
+variance_Y_rule <- 1.15^2 * variance_X
+
+c(
+  variance_X = variance_X,
+  variance_Y_direct = variance_Y_direct,
+  variance_Y_rule = variance_Y_rule,
+  standard_deviation_Y = sqrt(variance_Y_rule)
+)
+stopifnot(isTRUE(all.equal(variance_Y_direct, variance_Y_rule)))
+```
+
+The sign of $a$ does not affect variance because $a$ is squared. The standard
+deviation follows
+
+$$
+\operatorname{SD}(aX+b)=|a|\operatorname{SD}(X).
+$$
+
+```{r standard-deviation-scaling}
+a <- -2
+b <- 1000
+transformed_x <- a * x + b
+
+SD_direct <- sqrt(sum(
+  (transformed_x - sum(transformed_x * p_x))^2 * p_x
+))
+SD_rule <- abs(a) * sqrt(variance_X)
+
+c(SD_direct = SD_direct, SD_rule = SD_rule)
+```
+
+## Variance of a sum
+
+Expectation always adds, but variance must account for how two variables move
+together:
+
+$$
+\operatorname{Var}(X+Y)
+=\operatorname{Var}(X)+\operatorname{Var}(Y)
++2\operatorname{Cov}(X,Y).
+$$
+
+If $X$ and $Y$ are independent, their covariance is 0, so
+
+$$
+\operatorname{Var}(X+Y)
+=\operatorname{Var}(X)+\operatorname{Var}(Y).
+$$
+
+### Independent example: two fair dice
+
+Let $X$ and $Y$ be the results of two independent fair dice. Each has
+
+$$
+E(X)=E(Y)=3.5,
+\qquad
+\operatorname{Var}(X)=\operatorname{Var}(Y)=\frac{35}{12}.
+$$
+
+Hence
+
+$$
+E(X+Y)=7,
+\qquad
+\operatorname{Var}(X+Y)=\frac{35}{6}.
+$$
+
+```{r independent-dice-sum}
+dice <- expand.grid(X = 1:6, Y = 1:6)
+dice$probability <- 1 / nrow(dice)
+dice$sum <- with(dice, X + Y)
+
+weighted_mean <- function(value, probability) {
+  sum(value * probability)
+}
+
+weighted_variance <- function(value, probability) {
+  center <- weighted_mean(value, probability)
+  sum((value - center)^2 * probability)
+}
+
+c(
+  E_sum = weighted_mean(dice$sum, dice$probability),
+  Var_sum = weighted_variance(dice$sum, dice$probability),
+  Var_X_plus_Var_Y =
+    weighted_variance(dice$X, dice$probability) +
+    weighted_variance(dice$Y, dice$probability)
+)
+```
+
+### Dependent example: adding a variable to itself
+
+Let $Y=X$. Then $X+Y=2X$, and
+
+$$
+\operatorname{Cov}(X,Y)=\operatorname{Var}(X).
+$$
+
+The general rule gives
+
+$$
+\operatorname{Var}(X+Y)
+=\operatorname{Var}(X)+\operatorname{Var}(X)
++2\operatorname{Var}(X)
+=4\operatorname{Var}(X),
+$$
+
+not $2\operatorname{Var}(X)$.
+
+```{r dependent-sum}
+Y_same_as_X <- x
+sum_value <- x + Y_same_as_X
+
+c(
+  direct = weighted_variance(sum_value, p_x),
+  independence_rule_wrong_here = 2 * variance_X,
+  covariance_rule = variance_X + variance_X + 2 * variance_X,
+  scaling_rule = 2^2 * variance_X
+)
+```
+
+## Linear combinations of several variables
+
+For constants $a_1,\ldots,a_n$ and $b$,
+
+$$
+E\left(b+\sum_{i=1}^n a_iX_i\right)
+=b+\sum_{i=1}^n a_iE(X_i).
+$$
+
+The general variance formula is
+
+$$
+\operatorname{Var}\left(\sum_{i=1}^n a_iX_i\right)
+=\sum_{i=1}^n a_i^2\operatorname{Var}(X_i)
++2\sum_{i<j}a_i a_j\operatorname{Cov}(X_i,X_j).
+$$
+
+When all variables are mutually independent, every covariance term is 0.
+For three independent fair dice and $T=X_1+X_2+X_3$,
+
+$$
+E(T)=3(3.5)=10.5,
+\qquad
+\operatorname{Var}(T)=3\left(\frac{35}{12}\right)=\frac{35}{4}.
+$$
+
+```{r three-independent-dice}
+three_dice <- expand.grid(X1 = 1:6, X2 = 1:6, X3 = 1:6)
+three_dice$probability <- 1 / nrow(three_dice)
+three_dice$total <- rowSums(three_dice[c("X1", "X2", "X3")])
+
+c(
+  E_total = weighted_mean(
+    three_dice$total,
+    three_dice$probability
+  ),
+  Var_total = weighted_variance(
+    three_dice$total,
+    three_dice$probability
+  ),
+  Var_sum_rule = 3 * 35 / 12
+)
+```
+
+## Standardization (z-scoring)
+
+If $X$ has mean $\mu$ and positive standard deviation $\sigma$, define
+
+$$
+Z=\frac{X-\mu}{\sigma}.
+$$
+
+By linearity of expectation,
+
+$$
+E(Z)
+=E\left(\frac1\sigma X-\frac\mu\sigma\right)
+=\frac1\sigma E(X)-\frac\mu\sigma
+=0.
+$$
+
+By the variance transformation rule,
+
+$$
+\operatorname{Var}(Z)
+=\operatorname{Var}\left(\frac1\sigma X-\frac\mu\sigma\right)
+=\frac1{\sigma^2}\operatorname{Var}(X)
+=1.
+$$
+
+Thus standardization changes the center and scale but preserves which
+outcomes are more or less likely.
+
+```{r exact-standardization}
+mu_X <- weighted_mean(x, p_x)
+sigma_X <- sqrt(weighted_variance(x, p_x))
+z <- (x - mu_X) / sigma_X
+
+data.frame(
+  X = x,
+  probability = p_x,
+  Z = z
+)
+
+c(
+  E_Z = weighted_mean(z, p_x),
+  Var_Z = weighted_variance(z, p_x),
+  SD_Z = sqrt(weighted_variance(z, p_x))
+)
+```
+
+A z-score states how many standard deviations a value is above or below its
+distribution mean. For the $350 breakdown cost,
+
+$$
+z=\frac{350-230}{\sqrt{17{,}100}}\approx0.918.
+$$
+
+```{r one-z-score}
+z_350 <- (350 - mu_X) / sigma_X
+z_350
+```
+
+## Computational check with a fictional simulation
+
+The identities above concern population distributions. A finite simulation
+will usually satisfy them only approximately. The differences shrink as the
+simulation size grows.
+
+```{r standardization-simulation}
+set.seed(14270)
+simulated_cost <- sample(
+  x,
+  size = 100000,
+  replace = TRUE,
+  prob = p_x
+)
+simulated_z <- (simulated_cost - mu_X) / sigma_X
+
+c(
+  simulated_mean_Z = mean(simulated_z),
+  simulated_population_variance_Z = mean(
+    (simulated_z - mean(simulated_z))^2
+  )
+)
+```
+
+R's `var()` uses denominator $n-1$ to estimate a population variance from a
+sample. The direct calculation above uses denominator $n$ because it is
+checking the empirical distribution of all simulated values.
+
+## Practice questions
+
+1. If $E(X)=8$ and $\operatorname{Var}(X)=9$, find the mean and variance of
+   $Y=5-2X$.
+2. Let independent variables $X$ and $Y$ have variances 4 and 7. Find
+   $\operatorname{Var}(3X-2Y)$.
+3. Repeat Question 2 when $\operatorname{Cov}(X,Y)=1.5$.
+4. If $X$ and $Y$ are dependent, does $E(X+Y)=E(X)+E(Y)$ still hold?
+5. Prove that standardization gives $\operatorname{SD}(Z)=1$.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. $E(Y)=5-2(8)=-11$ and
+   $\operatorname{Var}(Y)=(-2)^2(9)=36$.
+2. Independence gives $3^2(4)+(-2)^2(7)=64$.
+3. Add $2(3)(-2)(1.5)=-18$, giving variance $64-18=46$.
+4. Yes. Linearity of expectation does not require independence.
+5. Since $\operatorname{Var}(Z)=1$, its standard deviation is
+   $\sqrt{1}=1$.
+:::

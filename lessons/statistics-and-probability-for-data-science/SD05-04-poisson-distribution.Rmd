@@ -1,0 +1,163 @@
+---
+title: "The Poisson Distribution"
+subtitle: "SD05 — Discrete Distributions"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD05-04-poisson-distribution.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD05 — Discrete Distributions*.
+
+The Poisson distribution models counts of events in a fixed interval when the
+events occur independently at a stable average rate.
+
+## Probability mass function
+
+If $X\sim\operatorname{Poisson}(\mu)$, then
+
+$$
+P(X=x)=e^{-\mu}\frac{\mu^x}{x!},
+\qquad x=0,1,2,\ldots,
+$$
+
+where $\mu>0$ is the expected count per interval.
+
+```{r poisson-pmf}
+mu <- 2.4
+x <- 0:10
+
+formula_pmf <- exp(-mu) * mu^x / factorial(x)
+R_pmf <- dpois(x, lambda = mu)
+
+data.frame(x, formula_pmf, R_pmf)
+```
+
+## Tile-defect example
+
+If a tile has an average of $\mu=2.4$ defects, then
+
+$$
+P(X=0)=e^{-2.4}\approx0.0907.
+$$
+
+The probability of at least four defects is easiest through the complement:
+
+$$
+P(X\geq4)=1-P(X\leq3)\approx0.2213.
+$$
+
+```{r tile-defect-example}
+c(
+  no_defects = dpois(0, lambda = 2.4),
+  at_least_four = ppois(3, lambda = 2.4, lower.tail = FALSE),
+  complement_check = 1 - ppois(3, lambda = 2.4)
+)
+```
+
+Using `lower.tail = FALSE` avoids manually subtracting from 1 and can be more
+accurate for very small upper-tail probabilities.
+
+## Mean and variance
+
+The Poisson parameter controls both center and spread:
+
+$$
+E(X)=\mu,\qquad
+\operatorname{Var}(X)=\mu,\qquad
+\operatorname{SD}(X)=\sqrt{\mu}.
+$$
+
+```{r poisson-moments}
+mu <- 2.4
+c(mean = mu, variance = mu, sd = sqrt(mu))
+```
+
+Equality of the mean and variance is a distinctive Poisson property. Strong
+overdispersion or underdispersion in observed counts can signal that a simple
+Poisson model is inadequate.
+
+## Changing the interval
+
+If the rate is 2.4 events per hour, the expected count in $t$ hours is
+$\mu_t=2.4t$.
+
+```{r poisson-time-scaling}
+rate_per_hour <- 2.4
+hours <- c(0.5, 1, 3)
+mu_by_interval <- rate_per_hour * hours
+
+data.frame(
+  hours,
+  expected_count = mu_by_interval,
+  P_no_events = dpois(0, lambda = mu_by_interval)
+)
+```
+
+## Poisson approximation to the binomial
+
+For $X\sim\operatorname{Bin}(n,p)$, if $n$ is large and $p$ is small while
+$np\to\mu$, then
+
+$$
+X\ \dot\sim\ \operatorname{Poisson}(\mu),\qquad \mu=np.
+$$
+
+The deck's practical rule is $n>50$ and $np<5$.
+
+```{r binomial-poisson-approximation}
+n <- 200
+p <- 0.01
+mu <- n * p
+k <- 0:8
+
+comparison <- data.frame(
+  k,
+  binomial = dbinom(k, size = n, prob = p),
+  poisson = dpois(k, lambda = mu)
+)
+comparison$absolute_difference <- abs(comparison$binomial - comparison$poisson)
+comparison
+```
+
+## Simulation check (fictional extension)
+
+```{r poisson-simulation}
+set.seed(14270)
+simulated_counts <- rpois(100000, lambda = 2.4)
+
+c(
+  simulated_mean = mean(simulated_counts),
+  simulated_variance = var(simulated_counts),
+  theoretical_value = 2.4
+)
+```
+
+## Practice questions
+
+1. A help desk averages 3.5 calls per hour. Find $P(X=2)$ in one hour.
+2. Find $P(X\geq5)$ in one hour.
+3. Find the probability of no calls in 30 minutes.
+4. Approximate $P(X=1)$ for $X\sim\operatorname{Bin}(100,0.02)$ with a
+   Poisson distribution.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. `dpois(2, 3.5)` gives approximately $0.1850$.
+2. `ppois(4, 3.5, lower.tail = FALSE)` gives approximately $0.2746$.
+3. The half-hour mean is $1.75$, so the probability is $e^{-1.75}\approx0.1738$.
+4. Use $\mu=np=2$: `dpois(1, 2)` gives approximately $0.2707$ (the exact
+   binomial value is about $0.2707$).
+:::

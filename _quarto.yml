@@ -95,6 +95,46 @@ website:
               href: lessons/statistics-and-probability-for-data-science/SD03a-02-conditional-probability-bayes-and-independence.Rmd
             - text: "Bayes Decision Rules and Naïve Bayes"
               href: lessons/statistics-and-probability-for-data-science/SD03a-03-bayes-decisions-and-naive-bayes.Rmd
+        - section: "SD04 — Random Variables"
+          contents:
+            - text: "Random Variables, PMFs, PDFs, and CDFs"
+              href: lessons/statistics-and-probability-for-data-science/SD04-01-random-variables-pmf-pdf-and-cdf.Rmd
+            - text: "Expectation, Variance, and Quantiles"
+              href: lessons/statistics-and-probability-for-data-science/SD04-02-expectation-variance-and-quantiles.Rmd
+            - text: "Properties of Expectation, Variance, and Standardization"
+              href: lessons/statistics-and-probability-for-data-science/SD04-03-properties-and-standardization.Rmd
+            - text: "Joint Random Variables, Covariance, and Correlation"
+              href: lessons/statistics-and-probability-for-data-science/SD04-04-joint-random-variables-covariance-and-correlation.Rmd
+        - section: "SD05 — Discrete Distributions"
+          contents:
+            - text: "Bernoulli and Binomial Distributions"
+              href: lessons/statistics-and-probability-for-data-science/SD05-01-bernoulli-and-binomial-distributions.Rmd
+            - text: "The Hypergeometric Distribution"
+              href: lessons/statistics-and-probability-for-data-science/SD05-02-hypergeometric-distribution.Rmd
+            - text: "The Negative Binomial Distribution"
+              href: lessons/statistics-and-probability-for-data-science/SD05-03-negative-binomial-distribution.Rmd
+            - text: "The Poisson Distribution"
+              href: lessons/statistics-and-probability-for-data-science/SD05-04-poisson-distribution.Rmd
+        - section: "SD06 — Continuous Distributions"
+          contents:
+            - text: "Uniform Distribution and Monte Carlo Simulation"
+              href: lessons/statistics-and-probability-for-data-science/SD06-01-uniform-distribution-and-monte-carlo.Rmd
+            - text: "Exponential and Gamma Distributions"
+              href: lessons/statistics-and-probability-for-data-science/SD06-02-exponential-and-gamma-distributions.Rmd
+            - text: "Weibull Distribution and Survival"
+              href: lessons/statistics-and-probability-for-data-science/SD06-03-weibull-distribution-and-survival.Rmd
+            - text: "Normal Distribution and Z-Scores"
+              href: lessons/statistics-and-probability-for-data-science/SD06-04-normal-distribution-and-z-scores.Rmd
+        - section: "SD07 — Sampling Distributions and Inference"
+          contents:
+            - text: "Sample Means and the Central Limit Theorem"
+              href: lessons/statistics-and-probability-for-data-science/SD07-01-sample-means-and-central-limit-theorem.Rmd
+            - text: "Point Estimation and Sampling Error"
+              href: lessons/statistics-and-probability-for-data-science/SD07-02-point-estimation-and-sampling-error.Rmd
+            - text: "Confidence Intervals"
+              href: lessons/statistics-and-probability-for-data-science/SD07-03-confidence-intervals.Rmd
+            - text: "Maximum Likelihood Estimation"
+              href: lessons/statistics-and-probability-for-data-science/SD07-04-maximum-likelihood-estimation.Rmd
     - id: advanced-statistical-modeling
       title: "Advanced Statistical Modeling"
       style: floating

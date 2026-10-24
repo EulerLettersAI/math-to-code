@@ -1,0 +1,188 @@
+---
+title: "Exponential and Gamma Distributions"
+subtitle: "SD06 — Continuous Distributions"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD06-02-exponential-and-gamma-distributions.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD06 — Continuous Distributions*.
+
+The Poisson distribution counts events; the exponential and gamma
+distributions measure how long we wait for those events.
+
+## Exponential waiting time
+
+For rate $\lambda>0$, $X\sim\operatorname{Exp}(\lambda)$ has density and CDF
+
+$$
+f(x)=\lambda e^{-\lambda x},\qquad
+F(x)=1-e^{-\lambda x},\qquad x\geq0.
+$$
+
+Its survival probability is
+
+$$
+P(X>x)=e^{-\lambda x}.
+$$
+
+```{r exponential-density-cdf}
+lambda <- 0.5
+x <- c(0, 1, 2, 4)
+
+data.frame(
+  x,
+  density = dexp(x, rate = lambda),
+  CDF = pexp(x, rate = lambda),
+  survival = pexp(x, rate = lambda, lower.tail = FALSE)
+)
+```
+
+The exponential moments are
+
+$$
+E(X)=\frac1\lambda,
+\qquad
+\operatorname{Var}(X)=\frac1{\lambda^2}.
+$$
+
+```{r exponential-moments}
+lambda <- 0.5
+c(mean = 1 / lambda, variance = 1 / lambda^2, sd = 1 / lambda)
+```
+
+## Exponential examples
+
+For calls arriving at rate 3 per hour, the probability the next call arrives
+within an hour is
+
+$$
+P(X<1)=1-e^{-3}\approx0.9502.
+$$
+
+For a pipeline failure time with rate $0.5$ per year,
+
+$$
+P(X>2)=e^{-0.5(2)}=e^{-1}\approx0.3679.
+$$
+
+```{r exponential-examples}
+c(
+  call_within_one_hour = pexp(1, rate = 3),
+  pipeline_survives_two_years = pexp(2, rate = 0.5, lower.tail = FALSE)
+)
+```
+
+## Gamma waiting time
+
+The gamma distribution measures the total wait to a later event. In the
+shape-rate parameterization,
+
+$$
+f(x)=\frac{\lambda^\alpha}{\Gamma(\alpha)}
+x^{\alpha-1}e^{-\lambda x},\qquad x\geq0.
+$$
+
+With scale $\beta=1/\lambda$, the same density is
+
+$$
+f(x)=\frac{1}{\Gamma(\alpha)\beta^\alpha}
+x^{\alpha-1}e^{-x/\beta}.
+$$
+
+The moments are
+
+$$
+E(X)=\frac\alpha\lambda=\alpha\beta,
+\qquad
+\operatorname{Var}(X)=\frac\alpha{\lambda^2}=\alpha\beta^2.
+$$
+
+```{r gamma-parameterizations}
+alpha <- 3
+lambda <- 0.5
+beta <- 1 / lambda
+x <- seq(0, 15, length.out = 301)
+
+max(abs(
+  dgamma(x, shape = alpha, rate = lambda) -
+    dgamma(x, shape = alpha, scale = beta)
+))
+c(mean = alpha / lambda, variance = alpha / lambda^2)
+```
+
+Do not supply both `rate` and `scale` to R. State which convention is being
+used whenever gamma parameters are reported.
+
+## Time to the third component failure
+
+A machine fails after its third internal component failure. If failures arrive
+at rate $0.5$ per hour, then $X\sim\operatorname{Gamma}(3,\text{rate}=0.5)$.
+For integer shape,
+
+$$
+F(x)=1-e^{-\lambda x}
+\sum_{j=0}^{\alpha-1}\frac{(\lambda x)^j}{j!}.
+$$
+
+At $x=4$ hours,
+
+$$
+P(X<4)=1-e^{-2}\left(1+2+\frac{2^2}{2!}\right)
+\approx0.3233.
+$$
+
+```{r gamma-machine-example}
+manual <- 1 - exp(-2) * sum(2^(0:2) / factorial(0:2))
+built_in <- pgamma(4, shape = 3, rate = 0.5)
+
+c(manual = manual, R = built_in)
+```
+
+## Relationship among the three distributions
+
+- Poisson: number of events in a fixed interval.
+- Exponential: wait to the first event.
+- Gamma with integer shape $\alpha$: wait to the $\alpha$th event.
+
+```{r gamma-simulation-extension}
+set.seed(14270)
+wait_to_third <- rgamma(100000, shape = 3, rate = 0.5)
+
+c(
+  simulated_mean = mean(wait_to_third),
+  theoretical_mean = 6,
+  simulated_P_less_than_4 = mean(wait_to_third < 4),
+  exact_P_less_than_4 = pgamma(4, 3, rate = 0.5)
+)
+```
+
+## Practice questions
+
+1. If $X\sim\operatorname{Exp}(2)$, find $P(X>1.5)$ and $E(X)$.
+2. If $Y\sim\operatorname{Gamma}(4,\text{rate}=2)$, find its mean and
+   variance.
+3. Find $P(Y\leq3)$.
+4. Express the same gamma distribution using a scale parameter.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. $P(X>1.5)=e^{-3}\approx0.0498$ and $E(X)=0.5$.
+2. The mean is $4/2=2$ and the variance is $4/2^2=1$.
+3. `pgamma(3, shape = 4, rate = 2)` gives approximately $0.8488$.
+4. The scale is $\beta=1/2=0.5$, so use
+   `Gamma(shape = 4, scale = 0.5)`.
+:::

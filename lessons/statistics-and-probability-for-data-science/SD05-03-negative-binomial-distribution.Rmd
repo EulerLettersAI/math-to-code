@@ -1,0 +1,148 @@
+---
+title: "The Negative Binomial Distribution"
+subtitle: "SD05 — Discrete Distributions"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD05-03-negative-binomial-distribution.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD05 — Discrete Distributions*.
+
+The negative binomial distribution reverses the binomial stopping rule: fix
+the number of successes and count how many failures occur first.
+
+## Counting failures before the rth success
+
+In independent Bernoulli trials with constant success probability $p$, let
+$X$ be the number of failures before the $r$th success. Then
+
+$$
+P(X=x)=\binom{x+r-1}{r-1}p^r(1-p)^x,
+\qquad x=0,1,2,\ldots.
+$$
+
+The last trial must be the $r$th success. Among the preceding $x+r-1$ trials,
+choose the positions of the other $r-1$ successes.
+
+```{r negative-binomial-pmf}
+r <- 5
+p <- 0.20
+x <- 0:20
+
+formula_pmf <- choose(x + r - 1, r - 1) * p^r * (1 - p)^x
+R_pmf <- dnbinom(x, size = r, prob = p)
+
+head(data.frame(failures = x, formula_pmf, R_pmf), 8)
+sum(R_pmf)
+```
+
+The displayed sum is less than 1 only because the infinite support was
+truncated at 20 failures.
+
+## Pediatrician recruitment example
+
+A pediatrician asks couples to participate until 5 agree. Each couple agrees
+with probability $p=0.20$. If exactly 15 couples are asked, there were 10
+failures before the fifth success:
+
+$$
+P(X=10)=\binom{14}{4}(0.2)^5(0.8)^{10}\approx0.034.
+$$
+
+```{r pediatrician-example}
+r <- 5
+p <- 0.20
+failures <- 15 - r
+
+c(
+  formula = choose(14, 4) * p^5 * (1 - p)^10,
+  R = dnbinom(failures, size = r, prob = p),
+  at_most_15_couples = pnbinom(failures, size = r, prob = p)
+)
+```
+
+The probability that the fifth agreement arrives by the 15th couple is
+$P(X\leq10)\approx0.164$.
+
+## Mean and variance
+
+For this failures-before-successes convention,
+
+$$
+E(X)=\frac{r(1-p)}p,
+\qquad
+\operatorname{Var}(X)=\frac{r(1-p)}{p^2}.
+$$
+
+If instead $T=X+r$ counts the **total number of trials** through the $r$th
+success, then $E(T)=r/p$ and $\operatorname{Var}(T)=\operatorname{Var}(X)$.
+
+```{r negative-binomial-moments}
+r <- 5
+p <- 0.20
+
+mean_failures <- r * (1 - p) / p
+variance_failures <- r * (1 - p) / p^2
+
+c(
+  mean_failures = mean_failures,
+  mean_total_trials = mean_failures + r,
+  variance = variance_failures,
+  sd = sqrt(variance_failures)
+)
+```
+
+## Quantiles and a simulation check (fictional extension)
+
+```{r negative-binomial-quantiles-simulation}
+# Failures needed so there is at least 90% probability of having r successes
+q90_failures <- qnbinom(0.90, size = 5, prob = 0.20)
+q90_total_trials <- q90_failures + 5
+
+set.seed(14270)
+simulated_failures <- rnbinom(100000, size = 5, prob = 0.20)
+
+c(
+  q90_failures = q90_failures,
+  q90_total_trials = q90_total_trials,
+  simulated_mean = mean(simulated_failures),
+  theoretical_mean = 5 * 0.8 / 0.2
+)
+```
+
+## Do not confuse the counting conventions
+
+Base R's `dnbinom()`, `pnbinom()`, `qnbinom()`, and `rnbinom()` count failures
+before `size` successes. If a question gives the total trial number $t$,
+convert it with $x=t-r$.
+
+## Practice questions
+
+1. A sale occurs with probability $0.25$ on each independent call. Find the
+   probability of exactly 8 failures before the third sale.
+2. Find the probability that the third sale occurs by the 11th call.
+3. Find the expected number and variance of failures before the third sale.
+4. Find the expected total number of calls through the third sale.
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. `dnbinom(8, size = 3, prob = 0.25)` gives approximately $0.0704$.
+2. The condition is $X\leq8$, so `pnbinom(8, 3, 0.25)` gives approximately
+   $0.5448$.
+3. The mean is $3(0.75)/0.25=9$ and the variance is
+   $3(0.75)/0.25^2=36$.
+4. Add the three successes: $E(T)=9+3=12$ calls.
+:::

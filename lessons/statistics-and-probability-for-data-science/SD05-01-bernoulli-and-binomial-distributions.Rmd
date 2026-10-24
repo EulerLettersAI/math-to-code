@@ -1,0 +1,173 @@
+---
+title: "Bernoulli and Binomial Distributions"
+subtitle: "SD05 — Discrete Distributions"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD05-01-bernoulli-and-binomial-distributions.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD05 — Discrete Distributions*.
+
+This lesson develops Bernoulli trials and their binomial sum. Each formula is
+followed by executable base R, including the deck's coin and credit-card
+examples. Simulations are labeled as extensions.
+
+## One Bernoulli trial
+
+A Bernoulli random variable records failure or success:
+
+$$
+X\in\{0,1\},\qquad P(X=1)=p,\qquad P(X=0)=1-p.
+$$
+
+Its moments are
+
+$$
+E(X)=p,\qquad \operatorname{Var}(X)=p(1-p).
+$$
+
+```{r bernoulli-pmf-and-moments}
+p <- 0.20
+x <- 0:1
+probability <- c(1 - p, p)
+
+mean_X <- sum(x * probability)
+variance_X <- sum((x - mean_X)^2 * probability)
+
+data.frame(x, probability)
+c(mean = mean_X, variance = variance_X)
+```
+
+For example, if a visitor buys a desktop computer with probability $0.20$,
+then the purchase indicator has mean $0.20$ and variance $0.16$.
+
+## From Bernoulli trials to a binomial count
+
+Suppose there are $n$ trials, each trial has two outcomes, the trials are
+independent, and the success probability $p$ is constant. The total number of
+successes
+
+$$
+X=X_1+\cdots+X_n
+$$
+
+has a binomial distribution, written $X\sim\operatorname{Bin}(n,p)$, with PMF
+
+$$
+P(X=k)=\binom nkp^k(1-p)^{n-k},\qquad k=0,1,\ldots,n.
+$$
+
+```{r binomial-pmf}
+n <- 5
+p <- 0.5
+k <- 0:n
+pmf <- choose(n, k) * p^k * (1 - p)^(n - k)
+
+data.frame(k, formula = pmf, R = dbinom(k, size = n, prob = p))
+sum(pmf)
+```
+
+For five fair coin tosses, the probability of exactly three heads is
+
+$$
+P(X=3)=\binom53(0.5)^3(0.5)^2=0.3125.
+$$
+
+```{r five-toss-example}
+choose(5, 3) * 0.5^3 * 0.5^2
+dbinom(3, size = 5, prob = 0.5)
+```
+
+## Cumulative probabilities and quantiles
+
+The binomial CDF adds the masses up to $k$:
+
+$$
+F(k)=P(X\leq k)=\sum_{j=0}^{k}\binom njp^j(1-p)^{n-j}.
+$$
+
+```{r binomial-cdf-and-quantile}
+# At most 3 heads in 5 fair tosses
+pbinom(3, size = 5, prob = 0.5)
+
+# Smallest k for which P(X <= k) is at least 0.90
+qbinom(0.90, size = 5, prob = 0.5)
+```
+
+## Mean and variance
+
+Because a binomial variable is a sum of independent Bernoulli variables,
+
+$$
+E(X)=np,\qquad
+\operatorname{Var}(X)=np(1-p),\qquad
+\operatorname{SD}(X)=\sqrt{np(1-p)}.
+$$
+
+In the deck's credit-card example, 10 customers independently pay by credit
+card with probability $0.75$. Thus
+
+$$
+E(X)=7.5,\qquad \operatorname{Var}(X)=1.875,
+\qquad \operatorname{SD}(X)\approx1.37.
+$$
+
+The integer counts within one standard deviation of the mean are 7 and 8.
+
+```{r credit-card-example}
+n <- 10
+p <- 0.75
+mu <- n * p
+variance <- n * p * (1 - p)
+sigma <- sqrt(variance)
+within_one_sd <- (0:n)[abs((0:n) - mu) <= sigma]
+
+c(mean = mu, variance = variance, sd = sigma)
+within_one_sd
+sum(dbinom(within_one_sd, size = n, prob = p))
+```
+
+## Simulation check (fictional extension)
+
+```{r binomial-simulation}
+set.seed(14270)
+simulated_counts <- rbinom(100000, size = 10, prob = 0.75)
+
+c(
+  simulated_mean = mean(simulated_counts),
+  theoretical_mean = 10 * 0.75,
+  simulated_variance = var(simulated_counts),
+  theoretical_variance = 10 * 0.75 * 0.25
+)
+```
+
+## Practice questions
+
+1. For $X\sim\operatorname{Bin}(12,0.30)$, find $P(X=4)$.
+2. For the same variable, find $P(X\leq4)$ and $P(X\geq1)$.
+3. Find its mean and standard deviation.
+4. Which binomial assumption fails if later trials become easier after every
+   success?
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. `dbinom(4, 12, 0.30)` gives approximately $0.2311$.
+2. `pbinom(4, 12, 0.30)` gives approximately $0.7237$, and
+   $P(X\geq1)=1-P(X=0)\approx0.9862$.
+3. $E(X)=3.6$ and $\operatorname{SD}(X)=\sqrt{2.52}\approx1.587$.
+4. The success probability is no longer constant; independence may also be
+   questionable.
+:::

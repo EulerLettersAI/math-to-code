@@ -1,0 +1,193 @@
+---
+title: "Point Estimation and Sampling Error"
+subtitle: "SD07 — Sampling Distributions and Inference"
+author: "Samer El Kababji"
+output:
+  html_document:
+    toc: true
+format:
+  html:
+    code-links:
+      - text: "Download R Markdown"
+        icon: file-earmark-arrow-down
+        href: SD07-02-point-estimation-and-sampling-error.Rmd?download=1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = TRUE)
+```
+
+**Course:** Statistics and Probability for Data Science (DS14270).  
+**Source deck:** Samer El Kababji, *SD07 — Sampling Distributions and Inference*.
+
+This lesson separates estimates, estimators, sampling error, standard error,
+and bias. Those terms answer different questions and should not be used
+interchangeably.
+
+## Parameter, estimator, and estimate
+
+A **parameter** is a fixed but generally unknown population quantity, such as
+$\mu$. An **estimator** is a random rule, such as $\overline X$. After data are
+observed, the numerical result $\bar x$ is a **point estimate**.
+
+```{r one-point-estimate}
+observed_sample <- c(47.2, 65.0, 87.0, 63.4, 68.1,
+                     70.2, 55.3, 79.1, 60.5, 75.0,
+                     58.4, 72.6, 66.9, 69.5, 54.6)
+
+c(
+  point_estimate_of_mean = mean(observed_sample),
+  point_estimate_of_sd = sd(observed_sample)
+)
+```
+
+## Sampling error versus standard error
+
+For one observed sample, the sampling error of the sample mean is
+
+$$
+\bar x-\mu.
+$$
+
+Across repeated random samples, the standard error is the standard deviation
+of the estimator:
+
+$$
+\operatorname{SE}(\overline X)=\frac{\sigma}{\sqrt n}.
+$$
+
+Sampling error is one realized difference and can be positive or negative.
+Standard error describes the typical sampling-to-sampling variability.
+
+The deck considers samples of size $n=15$ from a population with
+$\mu=69.637$ and $\sigma=10.411$.
+
+```{r sampling-versus-standard-error}
+mu <- 69.637
+sigma <- 10.411
+n <- 15
+x_bar <- 66.12
+
+c(
+  observed_sampling_error = x_bar - mu,
+  standard_error = sigma / sqrt(n)
+)
+```
+
+## Repeated sampling (fictional extension)
+
+```{r repeated-sampling}
+set.seed(14270)
+mu <- 69.637
+sigma <- 10.411
+n <- 15
+repetitions <- 50000
+
+sample_means <- replicate(
+  repetitions,
+  mean(rnorm(n, mean = mu, sd = sigma))
+)
+sampling_errors <- sample_means - mu
+
+c(
+  average_estimate = mean(sample_means),
+  average_sampling_error = mean(sampling_errors),
+  empirical_standard_error = sd(sample_means),
+  theoretical_standard_error = sigma / sqrt(n)
+)
+```
+
+Larger samples reduce standard error at the rate $1/\sqrt n$. They do not
+guarantee a small error for every single sample.
+
+## Unbiasedness
+
+An estimator $\widehat\theta$ is unbiased for $\theta$ when
+
+$$
+E(\widehat\theta)=\theta.
+$$
+
+Because $E(\overline X)=\mu$, the sample mean is unbiased for the population
+mean.
+
+```{r unbiased-sample-mean}
+c(
+  target_mu = mu,
+  simulated_expected_x_bar = mean(sample_means),
+  estimated_bias = mean(sample_means) - mu
+)
+```
+
+Unbiasedness is a repeated-sampling property; it does not mean every sample
+mean equals $\mu$.
+
+## Why sample variance divides by n minus 1
+
+The naive variance estimator
+
+$$
+\widetilde S^2=\frac1n\sum_{i=1}^n(X_i-\overline X)^2
+$$
+
+is biased downward. Bessel's correction gives
+
+$$
+S^2=\frac1{n-1}\sum_{i=1}^n(X_i-\overline X)^2,
+\qquad E(S^2)=\sigma^2.
+$$
+
+```{r variance-bias-simulation}
+set.seed(14270)
+n <- 8
+sigma <- 4
+repetitions <- 50000
+
+variance_estimates <- replicate(repetitions, {
+  x <- rnorm(n, mean = 10, sd = sigma)
+  c(
+    divide_by_n = mean((x - mean(x))^2),
+    divide_by_n_minus_1 = var(x)
+  )
+})
+
+c(
+  true_variance = sigma^2,
+  mean_divide_by_n = mean(variance_estimates["divide_by_n", ]),
+  mean_divide_by_n_minus_1 = mean(
+    variance_estimates["divide_by_n_minus_1", ]
+  )
+)
+```
+
+## Bias and precision are different
+
+Bias measures systematic displacement:
+
+$$
+\operatorname{Bias}(\widehat\theta)=E(\widehat\theta)-\theta.
+$$
+
+Precision is related to $\operatorname{Var}(\widehat\theta)$. An unbiased
+estimator may still be noisy, and a slightly biased estimator may be precise.
+
+## Practice questions
+
+1. If $\mu=50$ and an observed sample mean is 53.2, what is the sampling
+   error?
+2. If $\sigma=9$ and $n=81$, what is the standard error?
+3. Does a standard error of 1 imply that every sample mean is within 1 of
+   $\mu$?
+4. Why is `var(x)` in R divided by $n-1$?
+
+::: {.callout-note collapse="true"}
+### Check your answers
+
+1. $53.2-50=3.2$.
+2. $9/\sqrt{81}=1$.
+3. No. Standard error is a standard deviation across repeated samples, not a
+   deterministic bound.
+4. The $n-1$ denominator corrects the downward bias caused by estimating the
+   mean from the same data, making sample variance unbiased under i.i.d.
+   sampling.
+:::

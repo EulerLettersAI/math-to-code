@@ -10,14 +10,17 @@ toc: false
 # Probability & Statistics
 
 Move from statistical thinking and exploratory analysis through probability,
-Bayesian decisions and advanced regression models.
+distributions, sampling-based inference, Bayesian decisions, and advanced
+regression models.
 
 ::: {.topic-lesson-grid}
 ::: {.topic-lesson-card}
 ### [Statistics and Probability for Data Science](../statistics-and-probability-for-data-science/index.Rmd)
 
-Statistical thinking, exploratory data analysis, probability rules, Bayes'
-theorem and naïve Bayes.
+Twenty-five lessons covering statistical thinking, exploratory data analysis,
+probability rules, Bayes' theorem and naïve Bayes, random variables, discrete
+and continuous distributions, the central limit theorem, confidence
+intervals, and maximum likelihood estimation.
 :::
 
 ::: {.topic-lesson-card}
