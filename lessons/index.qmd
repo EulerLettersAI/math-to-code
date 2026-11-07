@@ -63,6 +63,16 @@ and patients clustered within clinics.
 
 **Prerequisites:** introductory statistics and R.
 :::
+
+::: {.lesson-card}
+### [Metrics for Comparing Tabular Datasets](tabular-dataset-comparison-metrics/)
+
+Compare same-schema tables through complete metric-ready representations and
+their original missingness patterns, building toward fidelity, utility, and
+privacy metrics.
+
+**Prerequisites:** basic probability, Python, and data-frame concepts.
+:::
 :::
 
 ## Machine Learning {#machine-learning}

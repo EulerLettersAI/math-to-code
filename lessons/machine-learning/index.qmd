@@ -20,4 +20,15 @@ A four-part progression from two-feature SVM geometry to a comparison of
 classical and quantum kernels.
 :::
 :::
+
+## Related series
+
+::: {.topic-lesson-grid}
+::: {.topic-lesson-card}
+### [Metrics for Comparing Tabular Datasets](../tabular-dataset-comparison-metrics/)
+
+Statistical foundations for dataset fidelity, missingness, predictive utility,
+and record-level privacy metrics.
+:::
+:::
 :::

@@ -1,0 +1,45 @@
+---
+title: "Metrics for Comparing Tabular Datasets"
+description: "Mathematics and code for comparing two same-schema tables through fidelity, missingness, utility, and privacy metrics."
+author: "Samer El Kababji"
+toc: false
+---
+
+This series develops metrics for comparing two tabular datasets, $X$ and $Y$,
+that share a schema but may contain different values and different numbers of
+rows. Neither table is assumed to be real or synthetic.
+
+The introduction separates two views of the tables:
+
+- the original $X,Y$ and their missingness masks $M_X,M_Y$; and
+- complete metric-ready representations $\widetilde X,\widetilde Y$ produced
+  by one shared transformation.
+
+Later lessons will use these views to develop fidelity, missingness, utility,
+and privacy metrics one at a time.
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [0. Comparing $X$ and $Y$: Data Views and Notation](0.0-data-views-and-notation.ipynb)
+
+Construct two small mixed-type tables, expose their missingness masks, and
+follow every column into a shared complete representation.
+
+**Prerequisites:** basic Python and introductory data-frame concepts.
+:::
+:::
+
+## Series roadmap
+
+### Complete metric-ready representations
+
+- **Fidelity:** correlation-matrix difference and average empirical Hellinger
+  distance.
+- **Utility:** independent-holdout AUROC difference.
+- **Privacy:** exact-match rate and distance-to-closest-record
+  membership-inference AUC.
+
+### Original incomplete tables
+
+- **Missingness fidelity:** marginal missingness Hellinger distance, joint
+  missingness Hellinger distance, and the missingness–value dependence gap.

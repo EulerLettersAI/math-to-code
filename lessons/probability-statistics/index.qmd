@@ -28,5 +28,12 @@ intervals, and maximum likelihood estimation.
 
 Logistic and mixed-effects regression for binary outcomes and clustered data.
 :::
+
+::: {.topic-lesson-card}
+### [Metrics for Comparing Tabular Datasets](../tabular-dataset-comparison-metrics/)
+
+Build the mathematics and code for fidelity, missingness, utility, and privacy
+metrics that compare two same-schema tables.
+:::
 :::
 :::
