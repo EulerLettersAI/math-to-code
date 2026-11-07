@@ -1,6 +1,6 @@
 ---
 title: "Metrics for Comparing Tabular Datasets"
-description: "Mathematics and code for comparing two same-schema tables through fidelity, missingness, utility, and privacy metrics."
+description: "Mathematics and code for comparing two same-schema tables through data fidelity, missingness fidelity, utility, and privacy metrics."
 author: "Samer El Kababji"
 toc: false
 ---
@@ -15,17 +15,78 @@ The introduction separates two views of the tables:
 - complete metric-ready representations $\widetilde X,\widetilde Y$ produced
   by one shared transformation.
 
-Later lessons will use these views to develop fidelity, missingness, utility,
-and privacy metrics one at a time.
+Later lessons will use these views to develop data-fidelity,
+missingness-fidelity, utility, and privacy metrics one at a time.
+
+All notebooks construct the example through the same
+[shared Python module](example_data.py), keeping the tables and their derived
+views identical across the series.
 
 ::: {.lesson-grid}
 ::: {.lesson-card}
-### [0. Comparing $X$ and $Y$: Data Views and Notation](0.0-data-views-and-notation.ipynb)
+### [1. Generating and Preparing Example Data](1.0-generating-and-preparing-example-data.ipynb)
 
 Construct two small mixed-type tables, expose their missingness masks, and
-follow every column into a shared complete representation.
+construct their shared complete representation.
 
 **Prerequisites:** basic Python and introductory data-frame concepts.
+:::
+
+::: {.lesson-card}
+### [2. Data Fidelity Metric: Correlation-Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb)
+
+Build the mixed association matrices of $\widetilde X$ and $\widetilde Y$ with
+Pearson correlation, $V^2$, and $\eta^2$, then compare them with the Frobenius
+norm used by SynthEval 1.6.2.
+
+**Prerequisites:** [1. Generating and Preparing Example Data](1.0-generating-and-preparing-example-data.ipynb).
+:::
+
+::: {.lesson-card}
+### [3. Data Fidelity Metric: Average Empirical Hellinger Distance](3.0-data-fidelity-metric-average-empirical-hellinger-distance.ipynb)
+
+Align categorical supports and numerical histograms, calculate one Hellinger
+distance per column, and average them.
+:::
+
+::: {.lesson-card}
+### [4. Missingness Fidelity Metric: Marginal Missingness Hellinger Distance](4.0-missingness-fidelity-metric-marginal-missingness-hellinger-distance.ipynb)
+
+Compare the Bernoulli observed/missing distribution of every incomplete
+column.
+:::
+
+::: {.lesson-card}
+### [5. Missingness Fidelity Metric: Joint Missingness Hellinger Distance](5.0-missingness-fidelity-metric-joint-missingness-hellinger-distance.ipynb)
+
+Compare the empirical distribution of complete row-wise missingness patterns.
+:::
+
+::: {.lesson-card}
+### [6. Missingness Fidelity Metric: Missingness–Value Dependence Gap](6.0-missingness-fidelity-metric-dependence-gap.ipynb)
+
+Use independent-holdout AUROC to test whether $X$ and $Y$ teach the same
+missingness–value dependence.
+:::
+
+::: {.lesson-card}
+### [7. Utility Metric: Independent-Holdout AUROC Difference](7.0-utility-metric-independent-holdout-auroc-difference.ipynb)
+
+Train the same model families on $X$ and $Y$, then score both sides on one
+untouched holdout.
+:::
+
+::: {.lesson-card}
+### [8. Privacy Metric: Exact-Match Rate](8.0-privacy-metric-exact-match-rate.ipynb)
+
+Measure the share of released rows in $Y$ that exactly reproduce a row of $X$.
+:::
+
+::: {.lesson-card}
+### [9. Privacy Metric: Distance-to-Closest-Record Membership-Inference AUC](9.0-privacy-metric-dcr-membership-inference-auc.ipynb)
+
+Use closest-record distance to distinguish training members from independent
+non-members.
 :::
 :::
 
@@ -33,7 +94,7 @@ follow every column into a shared complete representation.
 
 ### Complete metric-ready representations
 
-- **Fidelity:** correlation-matrix difference and average empirical Hellinger
+- **Data fidelity:** correlation-matrix difference and average empirical Hellinger
   distance.
 - **Utility:** independent-holdout AUROC difference.
 - **Privacy:** exact-match rate and distance-to-closest-record

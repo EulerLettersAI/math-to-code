@@ -27,8 +27,8 @@ classical and quantum kernels.
 ::: {.topic-lesson-card}
 ### [Metrics for Comparing Tabular Datasets](../tabular-dataset-comparison-metrics/)
 
-Statistical foundations for dataset fidelity, missingness, predictive utility,
-and record-level privacy metrics.
+Statistical foundations for data fidelity, missingness fidelity, predictive
+utility, and record-level privacy metrics.
 :::
 :::
 :::

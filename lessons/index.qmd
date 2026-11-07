@@ -68,8 +68,8 @@ and patients clustered within clinics.
 ### [Metrics for Comparing Tabular Datasets](tabular-dataset-comparison-metrics/)
 
 Compare same-schema tables through complete metric-ready representations and
-their original missingness patterns, building toward fidelity, utility, and
-privacy metrics.
+their original missingness patterns, building toward data-fidelity,
+missingness-fidelity, utility, and privacy metrics.
 
 **Prerequisites:** basic probability, Python, and data-frame concepts.
 :::

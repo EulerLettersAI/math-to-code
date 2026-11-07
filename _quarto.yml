@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - "lessons/**/*.ipynb"
+    - "lessons/**/*.py"
     - "lessons/**/*.Rmd"
     - requirements.txt
 
@@ -157,8 +158,32 @@ website:
           href: lessons/tabular-dataset-comparison-metrics/index.qmd
         - section: "Foundations"
           contents:
-            - text: "0. Data Views and Notation"
-              href: lessons/tabular-dataset-comparison-metrics/0.0-data-views-and-notation.ipynb
+            - text: "1. Generating and Preparing Example Data"
+              href: lessons/tabular-dataset-comparison-metrics/1.0-generating-and-preparing-example-data.ipynb
+        - section: "Data Fidelity Metrics"
+          contents:
+            - text: "2. Data Fidelity Metric: Correlation-Matrix Difference"
+              href: lessons/tabular-dataset-comparison-metrics/2.0-data-fidelity-metric-correlation-matrix-difference.ipynb
+            - text: "3. Data Fidelity Metric: Average Empirical Hellinger Distance"
+              href: lessons/tabular-dataset-comparison-metrics/3.0-data-fidelity-metric-average-empirical-hellinger-distance.ipynb
+        - section: "Missingness Fidelity Metrics"
+          contents:
+            - text: "4. Missingness Fidelity Metric: Marginal Missingness Hellinger Distance"
+              href: lessons/tabular-dataset-comparison-metrics/4.0-missingness-fidelity-metric-marginal-missingness-hellinger-distance.ipynb
+            - text: "5. Missingness Fidelity Metric: Joint Missingness Hellinger Distance"
+              href: lessons/tabular-dataset-comparison-metrics/5.0-missingness-fidelity-metric-joint-missingness-hellinger-distance.ipynb
+            - text: "6. Missingness Fidelity Metric: Missingness–Value Dependence Gap"
+              href: lessons/tabular-dataset-comparison-metrics/6.0-missingness-fidelity-metric-dependence-gap.ipynb
+        - section: "Utility Metrics"
+          contents:
+            - text: "7. Utility Metric: Independent-Holdout AUROC Difference"
+              href: lessons/tabular-dataset-comparison-metrics/7.0-utility-metric-independent-holdout-auroc-difference.ipynb
+        - section: "Privacy Metrics"
+          contents:
+            - text: "8. Privacy Metric: Exact-Match Rate"
+              href: lessons/tabular-dataset-comparison-metrics/8.0-privacy-metric-exact-match-rate.ipynb
+            - text: "9. Privacy Metric: Distance-to-Closest-Record Membership-Inference AUC"
+              href: lessons/tabular-dataset-comparison-metrics/9.0-privacy-metric-dcr-membership-inference-auc.ipynb
   page-footer:
     left: "© EulerLettersAI"
     center: '<div id="quarto-search" title="Search lessons"></div>'
