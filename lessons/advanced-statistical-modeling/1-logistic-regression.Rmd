@@ -47,7 +47,7 @@ distribution:
 $$
 Y_i\mid p_i \sim \operatorname{Bernoulli}(p_i),
 \qquad
-P(Y_i=y_i)=p_i^{y_i}(1-p_i)^{1-y_i}.
+P(Y_i=y_i)=p_i^{y_i}(1-p_i)^{1-y_i}
 $$
 
 To make the same simulated data useful in Lesson 2, patients also have a clinic
@@ -63,7 +63,7 @@ and the inverse-logit function converts the linear predictor to a probability:
 
 $$
 p_i=\operatorname{logit}^{-1}(\eta_i)
-=\frac{e^{\eta_i}}{1+e^{\eta_i}}.
+=\frac{e^{\eta_i}}{1+e^{\eta_i}}
 $$
 
 The R cell implements these equations. `plogis(eta)` is R's numerically stable
@@ -106,7 +106,7 @@ Before fitting a model, inspect the observed recovery proportions.
 For treatment group $t\in\{0,1\}$, the empirical recovery proportion is
 
 $$
-\widehat p_t=\frac{1}{n_t}\sum_{i:T_i=t}Y_i.
+\widehat p_t=\frac{1}{n_t}\sum_{i:T_i=t}Y_i
 $$
 
 The next cell groups patients by $T_i$ and computes this sample mean.
@@ -152,7 +152,7 @@ or, more conveniently, the log-likelihood is
 
 $$
 \ell(\boldsymbol\beta)
-=\sum_{i=1}^{n}\left[y_i\log(p_i)+(1-y_i)\log(1-p_i)\right].
+=\sum_{i=1}^{n}\left[y_i\log(p_i)+(1-y_i)\log(1-p_i)\right]
 $$
 
 Logistic regression chooses the maximum-likelihood estimate
@@ -186,7 +186,7 @@ $$
 {\operatorname{odds}(Y=1\mid T=0,A)}
 =\frac{e^{\beta_0+\beta_1+\beta_2A}}
 {e^{\beta_0+\beta_2A}}
-=e^{\beta_1}.
+=e^{\beta_1}
 $$
 
 A large-sample 95% Wald interval is first formed on the log-odds scale and then
@@ -196,7 +196,7 @@ $$
 \widehat\beta_k\pm1.96\,SE(\widehat\beta_k)
 \quad\Longrightarrow\quad
 \left[e^{\widehat\beta_k-1.96SE},
-e^{\widehat\beta_k+1.96SE}\right].
+e^{\widehat\beta_k+1.96SE}\right]
 $$
 
 The next cell performs exactly these transformations for every coefficient.
@@ -248,7 +248,7 @@ $$
 then transform it back from log-odds:
 
 $$
-\widehat p(t,a)=\frac{1}{1+e^{-\widehat\eta(t,a)}}.
+\widehat p(t,a)=\frac{1}{1+e^{-\widehat\eta(t,a)}}
 $$
 
 The code uses `type = "response"` to request this inverse-logit transformation
@@ -278,7 +278,7 @@ individual patient.
 For the treatment coefficient, the model tests:
 
 $$
-H_0: \beta_1=0 \quad \text{or equivalently} \quad H_0: OR=1.
+H_0: \beta_1=0 \quad \text{or equivalently} \quad H_0: OR=1
 $$
 
 R reports a two-sided Wald p-value. Informally, it asks:
@@ -304,7 +304,7 @@ not assign a probability to that hypothesis.
 
 For each coefficient, R divides the estimate by its standard error:
 
-$$z=\frac{\widehat\beta}{SE(\widehat\beta)}.$$
+$$z=\frac{\widehat\beta}{SE(\widehat\beta)}$$
 
 It then compares $|z|$ with a standard normal distribution. We can reproduce
 the treatment p-value:
@@ -383,7 +383,7 @@ For the 60-year-old example, the model-based absolute effect is the probability
 difference
 
 $$
-\widehat\Delta_p=\widehat p(T=1,A=0)-\widehat p(T=0,A=0).
+\widehat\Delta_p=\widehat p(T=1,A=0)-\widehat p(T=0,A=0)
 $$
 
 This is different from the odds ratio $e^{\widehat\beta_1}$ and is usually

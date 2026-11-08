@@ -33,7 +33,7 @@ Suppose three welds are inspected in sequence. Write $N$ for nondefective and
 $D$ for defective. Each outcome is a string of length three, so
 
 $$
-S=\{NNN,NND,NDN,NDD,DNN,DND,DDN,DDD\}.
+S=\{NNN,NND,NDN,NDD,DNN,DND,DDN,DDD\}
 $$
 
 There are $2^3=8$ outcomes because each of the three positions has two
@@ -44,7 +44,7 @@ nondefective is the simple event $\{NNN\}$. The compound event that exactly
 two welds are defective is
 
 $$
-A=\{NDD,DND,DDN\}.
+A=\{NDD,DND,DDN\}
 $$
 
 ```{r weld-sample-space}
@@ -73,14 +73,14 @@ $$
 \qquad
 \sum_{i=1}^{n}p_i=1,
 \qquad
-P(O_i)=p_i.
+P(O_i)=p_i
 $$
 
 For any event $E\subseteq S$, add the probabilities of the outcomes it
 contains:
 
 $$
-P(E)=\sum_{O_i\in E}P(O_i).
+P(E)=\sum_{O_i\in E}P(O_i)
 $$
 
 **Worked example — three independent weld results.** If $N$ and $D$ are
@@ -89,7 +89,7 @@ $1/8$. Therefore
 
 $$
 P(A)=P(NDD)+P(DND)+P(DDN)
-=\frac18+\frac18+\frac18=\frac38.
+=\frac18+\frac18+\frac18=\frac38
 $$
 
 ```{r weld-event-probability}
@@ -110,7 +110,7 @@ The complement $A^c$ contains all outcomes in $S$ that are not in $A$:
 $$
 A^c=S\setminus A,
 \qquad
-P(A^c)=1-P(A).
+P(A^c)=1-P(A)
 $$
 
 For the weld event,
@@ -118,7 +118,7 @@ For the weld event,
 $$
 A^c=\{NNN,NND,NDN,DNN,DDD\},
 \qquad
-P(A^c)=1-\frac38=\frac58.
+P(A^c)=1-\frac38=\frac58
 $$
 
 ```{r weld-complement}
@@ -142,7 +142,7 @@ A\cap B=\{\text{outcomes in both }A\text{ and }B\},
 $$
 
 $$
-A\cup B=\{\text{outcomes in }A\text{ or }B\text{ or both}\}.
+A\cup B=\{\text{outcomes in }A\text{ or }B\text{ or both}\}
 $$
 
 Thus, $P(A\cap B)$ is the probability that both events occur, while
@@ -152,14 +152,14 @@ The addition rule prevents outcomes in the intersection from being counted
 twice:
 
 $$
-P(A\cup B)=P(A)+P(B)-P(A\cap B).
+P(A\cup B)=P(A)+P(B)-P(A\cap B)
 $$
 
 If $A\cap B=\varnothing$, the events are **mutually exclusive** or
 **disjoint**, and the rule reduces to
 
 $$
-P(A\cup B)=P(A)+P(B).
+P(A\cup B)=P(A)+P(B)
 $$
 
 ## Worked example: rolling two dice
@@ -169,13 +169,13 @@ Roll two fair six-sided dice. Let
 $$
 A=\{\text{the sum is }6\},
 \qquad
-B=\{\text{at least one die is }6\}.
+B=\{\text{at least one die is }6\}
 $$
 
 There are 36 equally likely ordered outcomes. Event $A$ has five outcomes:
 
 $$
-(1,5),(2,4),(3,3),(4,2),(5,1).
+(1,5),(2,4),(3,3),(4,2),(5,1)
 $$
 
 Event $B$ has $6+6-1=11$ outcomes; $(6,6)$ is subtracted once because it was
@@ -184,7 +184,7 @@ $A\cap B=\varnothing$. Therefore
 
 $$
 P(A\cup B)=\frac5{36}+\frac{11}{36}
-=\frac{16}{36}=\frac49.
+=\frac{16}{36}=\frac49
 $$
 
 ```{r two-dice-example}
@@ -213,7 +213,7 @@ Probability is built from three axioms:
 
 $$
 P\!\left(\bigcup_{i=1}^{\infty}E_i\right)
-=\sum_{i=1}^{\infty}P(E_i).
+=\sum_{i=1}^{\infty}P(E_i)
 $$
 
 These axioms imply useful propositions:

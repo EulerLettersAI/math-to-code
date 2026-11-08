@@ -28,7 +28,7 @@ lesson implements the deck's z, t, and proportion intervals in base R.
 A two-sided interval has the form
 
 $$
-\text{estimate}\ \pm\ \text{critical value}\times\text{standard error}.
+\text{estimate}\ \pm\ \text{critical value}\times\text{standard error}
 $$
 
 A 95% confidence procedure captures the fixed population parameter in 95% of
@@ -76,7 +76,7 @@ When $\sigma$ is unknown and replaced by the sample standard deviation $s$,
 use the t distribution with $n-1$ degrees of freedom:
 
 $$
-\bar x\pm t_{\alpha/2,n-1}\frac{s}{\sqrt n}.
+\bar x\pm t_{\alpha/2,n-1}\frac{s}{\sqrt n}
 $$
 
 For $\bar x=66.12$, $s=9.21$, $n=15$, and 95% confidence:
@@ -109,14 +109,14 @@ because estimating $\sigma$ introduces uncertainty.
 For $x$ successes in $n$ independent observations,
 
 $$
-\widehat p=\frac xn.
+\widehat p=\frac xn
 $$
 
 The deck's large-sample z interval is
 
 $$
 \widehat p\pm z_{\alpha/2}
-\sqrt{\frac{\widehat p(1-\widehat p)}n}.
+\sqrt{\frac{\widehat p(1-\widehat p)}n}
 $$
 
 The normal approximation condition is
@@ -124,7 +124,7 @@ The normal approximation condition is
 $$
 n\widehat p\geq10
 \quad\text{and}\quad
-n(1-\widehat p)\geq10.
+n(1-\widehat p)\geq10
 $$
 
 ```{r proportion-z-interval}

@@ -33,7 +33,7 @@ values of a random variable.
 For a discrete random variable $X$ with possible values $D$ and PMF $p$,
 
 $$
-E(X)=\mu_X=\sum_{x\in D}x p(x).
+E(X)=\mu_X=\sum_{x\in D}x p(x)
 $$
 
 ```{r discrete-expectation-function}
@@ -53,7 +53,7 @@ discrete_expectation(
 For a continuous random variable $X$ with PDF $f$,
 
 $$
-E(X)=\mu_X=\int_{-\infty}^{\infty}x f(x)\,dx.
+E(X)=\mu_X=\int_{-\infty}^{\infty}x f(x)\,dx
 $$
 
 ```{r continuous-expectation-function}
@@ -79,7 +79,7 @@ random variable,
 $$
 \operatorname{Var}(X)
 =\sum_{x\in D}(x-\mu)^2p(x)
-=E(X^2)-\{E(X)\}^2.
+=E(X^2)-\{E(X)\}^2
 $$
 
 For a continuous random variable,
@@ -87,13 +87,13 @@ For a continuous random variable,
 $$
 \operatorname{Var}(X)
 =\int_{-\infty}^{\infty}(x-\mu)^2f(x)\,dx
-=E(X^2)-\{E(X)\}^2.
+=E(X^2)-\{E(X)\}^2
 $$
 
 The **standard deviation** returns to the units of $X$:
 
 $$
-\sigma_X=\sqrt{\operatorname{Var}(X)}.
+\sigma_X=\sqrt{\operatorname{Var}(X)}
 $$
 
 ```{r discrete-moment-function}
@@ -119,7 +119,7 @@ For $0<p<1$, the $p$ quantile is defined by the generalized inverse of the
 CDF:
 
 $$
-Q_p=\inf\{x:F(x)\geq p\}.
+Q_p=\inf\{x:F(x)\geq p\}
 $$
 
 This definition handles both smooth continuous CDFs and jumping discrete
@@ -130,13 +130,13 @@ Q_1=Q_{0.25},
 \qquad
 Q_2=Q_{0.50},
 \qquad
-Q_3=Q_{0.75}.
+Q_3=Q_{0.75}
 $$
 
 The interquartile range is
 
 $$
-\operatorname{IQR}=Q_3-Q_1.
+\operatorname{IQR}=Q_3-Q_1
 $$
 
 For a discrete PMF, the first support value whose cumulative probability
@@ -173,7 +173,7 @@ Let $X$ be a machine-breakdown cost with PMF
 First,
 
 $$
-P(X\geq200)=P(X=200)+P(X=350)=0.2+0.5=0.7.
+P(X\geq200)=P(X=200)+P(X=350)=0.2+0.5=0.7
 $$
 
 ```{r machine-breakdown-event}
@@ -189,7 +189,7 @@ P_at_least_200
 The mean is
 
 $$
-E(X)=50(0.3)+200(0.2)+350(0.5)=230.
+E(X)=50(0.3)+200(0.2)+350(0.5)=230
 $$
 
 The second moment and variance are
@@ -205,7 +205,7 @@ $$
 so
 
 $$
-\operatorname{SD}(X)=\sqrt{17{,}100}\approx130.77.
+\operatorname{SD}(X)=\sqrt{17{,}100}\approx130.77
 $$
 
 ```{r machine-breakdown-moments}
@@ -228,7 +228,7 @@ F(50)=0.3,
 \qquad
 F(200)=0.5,
 \qquad
-F(350)=1.
+F(350)=1
 $$
 
 Using $Q_p=\inf\{x:F(x)\geq p\}$,
@@ -240,7 +240,7 @@ Q_2=200,
 \qquad
 Q_3=350,
 \qquad
-Q_{0.40}=200.
+Q_{0.40}=200
 $$
 
 ```{r machine-breakdown-quantiles}
@@ -280,7 +280,7 @@ $$
 By definition,
 
 $$
-E(X)=\int_0^\infty x\lambda e^{-\lambda x}\,dx.
+E(X)=\int_0^\infty x\lambda e^{-\lambda x}\,dx
 $$
 
 Use integration by parts with $u=x$ and
@@ -316,7 +316,7 @@ A second integration by parts gives
 $$
 E(X^2)=\int_0^\infty x^2\lambda e^{-\lambda x}\,dx
 =2\int_0^\infty xe^{-\lambda x}\,dx
-=\frac{2}{\lambda^2}.
+=\frac{2}{\lambda^2}
 $$
 
 Therefore
@@ -331,7 +331,7 @@ $$
 and
 
 $$
-\operatorname{SD}(X)=\frac1\lambda.
+\operatorname{SD}(X)=\frac1\lambda
 $$
 
 ```{r exponential-moments}
@@ -359,13 +359,13 @@ The CDF is
 
 $$
 F(x)=1-e^{-\lambda x},
-\qquad x\geq0.
+\qquad x\geq0
 $$
 
 Solving $F(Q_p)=p$ gives
 
 $$
-Q_p=-\frac{\log(1-p)}{\lambda}.
+Q_p=-\frac{\log(1-p)}{\lambda}
 $$
 
 Thus
@@ -375,7 +375,7 @@ Q_1=-\frac{\log(0.75)}{\lambda},
 \qquad
 Q_2=-\frac{\log(0.50)}{\lambda},
 \qquad
-Q_3=-\frac{\log(0.25)}{\lambda}.
+Q_3=-\frac{\log(0.25)}{\lambda}
 $$
 
 For $\lambda=0.5$, $Q_1\approx0.5754$.

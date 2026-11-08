@@ -39,7 +39,7 @@ $$
 
 $$
 \operatorname{logit}(p_{ij})
-=-0.40+\log(1.8)T_{ij}-0.035(Age_{ij}-60)+u_j.
+=-0.40+\log(1.8)T_{ij}-0.035(Age_{ij}-60)+u_j
 $$
 
 Using the same random seed and the same equations as Lesson 1 produces exactly
@@ -86,7 +86,7 @@ Compare recovery proportions across clinics:
 For clinic $j$, with $n_j$ patients, the observed clinic recovery proportion is
 
 $$
-\widehat p_j=\frac{1}{n_j}\sum_{i=1}^{n_j}Y_{ij}.
+\widehat p_j=\frac{1}{n_j}\sum_{i=1}^{n_j}Y_{ij}
 $$
 
 The next cell evaluates $n_j$ and $\widehat p_j$ for all ten clinics.
@@ -121,7 +121,7 @@ $$
 
 where patient $i$ belongs to clinic $j$. The new term is
 
-$$u_j \sim N(0, \sigma^2_{clinic}).$$
+$$u_j \sim N(0, \sigma^2_{clinic})$$
 
 The parts play different roles:
 
@@ -146,7 +146,7 @@ Conditional on a clinic effect $u_j$, the contribution of patient $i$ is
 
 $$
 P(Y_{ij}=y_{ij}\mid u_j)
-=p_{ij}^{y_{ij}}(1-p_{ij})^{1-y_{ij}}.
+=p_{ij}^{y_{ij}}(1-p_{ij})^{1-y_{ij}}
 $$
 
 Because $u_j$ is unobserved, the mixed model integrates it out. The marginal
@@ -159,7 +159,7 @@ L(\boldsymbol\beta,\sigma_{clinic})
 \left[\prod_{i=1}^{n_j}
 p_{ij}(u)^{y_{ij}}\{1-p_{ij}(u)\}^{1-y_{ij}}
 \right]
-\phi(u;0,\sigma_{clinic}^2)\,du.
+\phi(u;0,\sigma_{clinic}^2)\,du
 $$
 
 `glmer()` numerically approximates these integrals while estimating the fixed
@@ -200,7 +200,7 @@ $$
 OR_{treatment\mid clinic}
 =\frac{e^{\beta_0+\beta_1+\beta_2A+u_j}}
 {e^{\beta_0+\beta_2A+u_j}}
-=e^{\beta_1}.
+=e^{\beta_1}
 $$
 
 For fixed effect $k$, the cell calculates
@@ -216,7 +216,7 @@ $$
 and the two-sided Wald p-value
 
 $$
-p_k=2\Phi\left(-\left|\frac{\widehat\beta_k}{SE_k}\right|\right).
+p_k=2\Phi\left(-\left|\frac{\widehat\beta_k}{SE_k}\right|\right)
 $$
 
 ```{r mixed-fixed-effects}
@@ -255,7 +255,7 @@ scale:
 
 $$
 \widehat\sigma_{clinic}
-=\sqrt{\widehat{\operatorname{Var}}(u_j)}.
+=\sqrt{\widehat{\operatorname{Var}}(u_j)}
 $$
 
 The following cell extracts these two quantities from `VarCorr()`.
@@ -276,7 +276,7 @@ coefficient (ICC) is
 
 $$
 ICC \approx \frac{\sigma^2_{clinic}}
-{\sigma^2_{clinic}+\pi^2/3}.
+{\sigma^2_{clinic}+\pi^2/3}
 $$
 
 ```{r icc}
@@ -300,7 +300,7 @@ $$
 \left\{
 \log P(\mathbf y_j\mid u_j,\widehat{\boldsymbol\beta})
 +\log\phi(u_j;0,\widehat\sigma_{clinic}^2)
-\right\}.
+\right\}
 $$
 
 The normal-density term penalizes extreme clinic effects. This is the
@@ -329,7 +329,7 @@ To compare like with like, define for each fitted model $m$
 $$
 \widehat{OR}_m=e^{\widehat\beta_{1m}},\qquad
 SE_m=SE(\widehat\beta_{1m}),\qquad
-p_m=2\Phi\left(-\left|\widehat\beta_{1m}/SE_m\right|\right).
+p_m=2\Phi\left(-\left|\widehat\beta_{1m}/SE_m\right|\right)
 $$
 
 The helper function below applies these same equations to `glm` and `glmer`
@@ -384,7 +384,7 @@ Setting the clinic deviation to its population mean, $u_j=0$, gives
 $$
 \widehat p_{typical}(t,a)
 =\operatorname{logit}^{-1}
-\left(\widehat\beta_0+\widehat\beta_1t+\widehat\beta_2a\right).
+\left(\widehat\beta_0+\widehat\beta_1t+\widehat\beta_2a\right)
 $$
 
 In `predict()`, `re.form = NA` excludes all fitted random effects and implements
@@ -446,7 +446,7 @@ $$
 \sigma_0^2 & \sigma_{01}\\
 \sigma_{01} & \sigma_1^2
 \end{pmatrix}
-\right].
+\right]
 $$
 
 Here $u_{0j}$ changes clinic $j$'s baseline, while $u_{1j}$ changes its treatment
@@ -481,7 +481,7 @@ e^{\widehat\beta_1\pm1.96SE_1},\quad
 2\Phi(-|\widehat\beta_1/SE_1|),\quad
 \widehat\sigma_{clinic},\quad
 \frac{\widehat\sigma_{clinic}^2}
-{\widehat\sigma_{clinic}^2+\pi^2/3}.
+{\widehat\sigma_{clinic}^2+\pi^2/3}
 $$
 
 ```{r report-values}

@@ -90,6 +90,18 @@ non-members.
 :::
 :::
 
+**Refreshers**
+
+::: {.lesson-grid}
+::: {.lesson-card}
+### [2.1 Contingency Tables for Categorical Variables](2.1-contingency-tables.ipynb)
+
+Build and interpret the joint-count table for two categorical variables.
+
+**Companion to:** [2. Data Fidelity Metric: Correlation-Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb), Section 2.
+:::
+:::
+
 ## Series roadmap
 
 ### Complete metric-ready representations

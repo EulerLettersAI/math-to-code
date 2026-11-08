@@ -39,14 +39,14 @@ and as a sample in another. The question determines which formula is suitable.
 For observations $x_1,\ldots,x_n$, the sample mean is
 
 $$
-\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i.
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
 $$
 
 **Worked example — eight deliveries.** For the values used below,
 
 $$
 \bar{x}=\frac{12+15+11+14+13+18+16+12}{8}
-=\frac{111}{8}=13.875\text{ minutes}.
+=\frac{111}{8}=13.875\text{ minutes}
 $$
 
 The summation adds all eight delivery times; dividing by eight gives their
@@ -72,20 +72,20 @@ Variance measures average squared distance from the mean. If the values are
 the complete population of size $N$, population variance is
 
 $$
-\sigma^2=\frac{1}{N}\sum_{i=1}^{N}(x_i-\mu)^2.
+\sigma^2=\frac{1}{N}\sum_{i=1}^{N}(x_i-\mu)^2
 $$
 
 If the values are a sample of size $n$, sample variance is
 
 $$
-s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2.
+s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2
 $$
 
 **Worked example — the same three values, two interpretations.** Take
 $x=(2,4,6)$, with mean $(2+4+6)/3=4$. The squared deviations sum to
 
 $$
-(2-4)^2+(4-4)^2+(6-4)^2=4+0+4=8.
+(2-4)^2+(4-4)^2+(6-4)^2=4+0+4=8
 $$
 
 If these three values are the entire population, $\sigma^2=8/3\approx2.667$.
@@ -120,7 +120,7 @@ Suppose $x$ of the $n$ sampled observations have a characteristic. The sample
 proportion is
 
 $$
-\widehat p=\frac{x}{n}.
+\widehat p=\frac{x}{n}
 $$
 
 **Worked example — defective items.** Two defective items among ten give
@@ -147,7 +147,7 @@ c(defective_items = x, sample_size = n_defects,
 First sort the values:
 
 $$
-x_{(1)}\leq x_{(2)}\leq\cdots\leq x_{(n)}.
+x_{(1)}\leq x_{(2)}\leq\cdots\leq x_{(n)}
 $$
 
 For odd $n$, the median is the middle ordered value. For even $n$, it is the
@@ -182,20 +182,20 @@ value than the mean.
 The standard quartiles correspond to
 
 $$
-Q_1=Q(0.25),\qquad Q_2=Q(0.50),\qquad Q_3=Q(0.75).
+Q_1=Q(0.25),\qquad Q_2=Q(0.50),\qquad Q_3=Q(0.75)
 $$
 
 For a target proportion $p$ between 0 and 1, the linear method used here finds
 the fractional position
 
 $$
-h=1+(n-1)p.
+h=1+(n-1)p
 $$
 
 Write $h=j+g$, where $j=\lfloor h\rfloor$ and $0\leq g<1$. Then
 
 $$
-Q(p)=x_{(j)}+g\left(x_{(j+1)}-x_{(j)}\right).
+Q(p)=x_{(j)}+g\left(x_{(j+1)}-x_{(j)}\right)
 $$
 
 When $g=0$, the quantile is exactly the observed value $x_{(j)}$. This method
@@ -210,7 +210,7 @@ $$
 
 $$
 Q_1=x_{(2)}+0.25(x_{(3)}-x_{(2)})
-=5+0.25(8-5)=5.75.
+=5+0.25(8-5)=5.75
 $$
 
 The fractional position is one quarter of the way from the second value to
@@ -248,7 +248,7 @@ For the six-value example, the median position is $h=3.5$, so it lies halfway
 between the third and fourth ordered observations:
 
 $$
-Q_2=8+0.5(9-8)=8.5.
+Q_2=8+0.5(9-8)=8.5
 $$
 
 ```{r interpolated-quartiles}

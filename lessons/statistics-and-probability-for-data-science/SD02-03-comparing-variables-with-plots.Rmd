@@ -28,7 +28,7 @@ built-in `iris` dataset, together with one small fictional categorical dataset.
 For observation $i$, a scatter plot places one point at the coordinate
 
 $$
-(x_i,y_i).
+(x_i,y_i)
 $$
 
 **Worked example — one flower, one point.** The first iris record has
@@ -75,7 +75,7 @@ For category $c$, the frequency and sample proportion are
 
 $$
 n_c=\sum_{i=1}^{n}\mathbf{1}(z_i=c),\qquad
-\widehat p_c=\frac{n_c}{n}.
+\widehat p_c=\frac{n_c}{n}
 $$
 
 **Worked example — category indicators and proportions.** In the tiny
@@ -125,14 +125,14 @@ To compare a numerical variable across groups, compute a separate five-number
 summary for each category:
 
 $$
-(\text{minimum},Q_1,\text{median},Q_3,\text{maximum}).
+(\text{minimum},Q_1,\text{median},Q_3,\text{maximum})
 $$
 
 **Worked example — summarize one group.** Suppose one category has ordered
 values $(3,5,8,9,14,21)$. With `type = 7` quartiles, its five-number summary is
 
 $$
-(3,\ 5.75,\ 8.5,\ 12.75,\ 21).
+(3,\ 5.75,\ 8.5,\ 12.75,\ 21)
 $$
 
 The minimum and maximum are the endpoints, the median is $(8+9)/2=8.5$,
@@ -175,7 +175,7 @@ violin's largest density to a half-width of 0.38:
 
 $$
 \text{half-width}(y)=0.38\,
-\frac{\widehat f_g(y)}{\max_t\widehat f_g(t)}.
+\frac{\widehat f_g(y)}{\max_t\widehat f_g(t)}
 $$
 
 If the maximum estimated density in one group is 0.8 and the density at a

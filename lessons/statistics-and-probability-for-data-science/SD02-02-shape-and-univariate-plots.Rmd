@@ -40,14 +40,14 @@ stacked, so the stack height represents frequency.
 For value $a$, its frequency is
 
 $$
-f(a)=\sum_{i=1}^{n}\mathbf{1}(x_i=a).
+f(a)=\sum_{i=1}^{n}\mathbf{1}(x_i=a)
 $$
 
 **Worked example — count a matching value.** For a tiny dataset
 $(5,6,6,8)$ and $a=6$, the indicators are $(0,1,1,0)$:
 
 $$
-f(6)=0+1+1+0=2.
+f(6)=0+1+1+0=2
 $$
 
 Two dots therefore stack at 6.
@@ -74,14 +74,14 @@ A histogram divides the number line into intervals called **bins**. For bin
 $B_k$, its frequency is
 
 $$
-f_k=\sum_{i=1}^{n}\mathbf{1}(x_i\in B_k).
+f_k=\sum_{i=1}^{n}\mathbf{1}(x_i\in B_k)
 $$
 
 **Worked example — count values in a bin.** For $(5,6,6,8)$, take the bin
 $B_k=[6,8)$: include 6 but exclude 8. Then
 
 $$
-f_k=0+1+1+0=2.
+f_k=0+1+1+0=2
 $$
 
 The value 8 goes into the next bin. This matches `right = FALSE` below.
@@ -108,7 +108,7 @@ c(mean = mean(interest_rate), median = median(interest_rate))
 Using the sample standard deviation $s$, the standardized value is
 
 $$
-z_i=\frac{x_i-\bar{x}}{s}.
+z_i=\frac{x_i-\bar{x}}{s}
 $$
 
 **Worked example — standardize a small dataset.** Take $x=(1,1,4)$.
@@ -117,7 +117,7 @@ $[(-1)^2+(-1)^2+2^2]/(3-1)=3$, giving $s=\sqrt{3}$:
 
 $$
 z_1=z_2=\frac{1-2}{\sqrt{3}}\approx-0.57735,\qquad
-z_3=\frac{4-2}{\sqrt{3}}\approx1.15470.
+z_3=\frac{4-2}{\sqrt{3}}\approx1.15470
 $$
 
 The last observation is about 1.15 sample standard deviations above the mean.
@@ -125,7 +125,7 @@ The last observation is about 1.15 sample standard deviations above the mean.
 The skewness formula used in the deck is the average cubed standardized value:
 
 $$
-g_1=\frac{1}{n}\sum_{i=1}^{n}z_i^3.
+g_1=\frac{1}{n}\sum_{i=1}^{n}z_i^3
 $$
 
 **Worked example — cube, add, and average.** Using the same three
@@ -133,7 +133,7 @@ standardized values, keep the exact fractions until the last step:
 
 $$
 g_1=\frac{(-1/\sqrt{3})^3+(-1/\sqrt{3})^3+(2/\sqrt{3})^3}{3}
-=\frac{2}{3\sqrt{3}}\approx0.38490.
+=\frac{2}{3\sqrt{3}}\approx0.38490
 $$
 
 The positive result reflects the longer right tail of $(1,1,4)$.
@@ -155,14 +155,14 @@ g1
 Using the same standardized values, the kurtosis formula in the deck is
 
 $$
-g_2=\frac{1}{n}\sum_{i=1}^{n}z_i^4.
+g_2=\frac{1}{n}\sum_{i=1}^{n}z_i^4
 $$
 
 **Worked example — fourth powers of the same values.** For $x=(1,1,4)$,
 
 $$
 g_2=\frac{(-1/\sqrt{3})^4+(-1/\sqrt{3})^4+(2/\sqrt{3})^4}{3}
-=\frac{1/9+1/9+16/9}{3}=\frac{2}{3}\approx0.66667.
+=\frac{1/9+1/9+16/9}{3}=\frac{2}{3}\approx0.66667
 $$
 
 Under this lesson's convention, excess kurtosis is
@@ -219,14 +219,14 @@ prominent, stable features rather than every small fluctuation.
 The interquartile range is the distance between the third and first quartiles:
 
 $$
-IQR=Q_3-Q_1.
+IQR=Q_3-Q_1
 $$
 
 The usual outlier fences are
 
 $$
 \text{lower fence}=Q_1-1.5(IQR),\qquad
-\text{upper fence}=Q_3+1.5(IQR).
+\text{upper fence}=Q_3+1.5(IQR)
 $$
 
 **Worked example — calculate the fences.** For the six ordered values
@@ -238,7 +238,7 @@ $$
 
 $$
 \text{lower fence}=5.75-1.5(7)=-4.75,\qquad
-\text{upper fence}=12.75+1.5(7)=23.25.
+\text{upper fence}=12.75+1.5(7)=23.25
 $$
 
 All six observations lie within these fences. The whiskers reach the observed

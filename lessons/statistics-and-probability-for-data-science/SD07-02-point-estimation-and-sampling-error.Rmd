@@ -46,14 +46,14 @@ c(
 For one observed sample, the sampling error of the sample mean is
 
 $$
-\bar x-\mu.
+\bar x-\mu
 $$
 
 Across repeated random samples, the standard error is the standard deviation
 of the estimator:
 
 $$
-\operatorname{SE}(\overline X)=\frac{\sigma}{\sqrt n}.
+\operatorname{SE}(\overline X)=\frac{\sigma}{\sqrt n}
 $$
 
 Sampling error is one realized difference and can be positive or negative.
@@ -105,7 +105,7 @@ guarantee a small error for every single sample.
 An estimator $\widehat\theta$ is unbiased for $\theta$ when
 
 $$
-E(\widehat\theta)=\theta.
+E(\widehat\theta)=\theta
 $$
 
 Because $E(\overline X)=\mu$, the sample mean is unbiased for the population
@@ -134,7 +134,7 @@ is biased downward. Bessel's correction gives
 
 $$
 S^2=\frac1{n-1}\sum_{i=1}^n(X_i-\overline X)^2,
-\qquad E(S^2)=\sigma^2.
+\qquad E(S^2)=\sigma^2
 $$
 
 ```{r variance-bias-simulation}
@@ -165,7 +165,7 @@ c(
 Bias measures systematic displacement:
 
 $$
-\operatorname{Bias}(\widehat\theta)=E(\widehat\theta)-\theta.
+\operatorname{Bias}(\widehat\theta)=E(\widehat\theta)-\theta
 $$
 
 Precision is related to $\operatorname{Var}(\widehat\theta)$. An unbiased

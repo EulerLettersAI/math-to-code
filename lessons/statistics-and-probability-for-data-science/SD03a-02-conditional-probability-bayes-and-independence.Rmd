@@ -30,13 +30,13 @@ Conditional probability restricts attention to outcomes for which a given
 event has occurred. If $P(B)>0$, then
 
 $$
-P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}
 $$
 
 Rearranging gives the multiplication rule:
 
 $$
-P(A\cap B)=P(A\mid B)P(B)=P(B\mid A)P(A).
+P(A\cap B)=P(A\mid B)P(B)=P(B\mid A)P(A)
 $$
 
 The denominator $P(B)$ changes the reference population from the entire
@@ -63,7 +63,7 @@ whereas among the three defective components,
 
 $$
 P(A\mid B)=\frac{P(A\cap B)}{P(B)}
-=\frac{2/18}{3/18}=\frac23.
+=\frac{2/18}{3/18}=\frac23
 $$
 
 ```{r production-lines}
@@ -96,7 +96,7 @@ Suppose $A_1,\ldots,A_k$ are mutually exclusive and exhaustive:
 $$
 A_i\cap A_j=\varnothing\quad(i\neq j),
 \qquad
-\bigcup_{i=1}^{k}A_i=S.
+\bigcup_{i=1}^{k}A_i=S
 $$
 
 They partition the sample space. Any event $B$ can therefore be divided into
@@ -104,7 +104,7 @@ the disjoint pieces $B\cap A_1,\ldots,B\cap A_k$, giving
 
 $$
 P(B)=\sum_{i=1}^{k}P(B\cap A_i)
-=\sum_{i=1}^{k}P(B\mid A_i)P(A_i).
+=\sum_{i=1}^{k}P(B\mid A_i)P(A_i)
 $$
 
 ## Bayes' theorem
@@ -114,7 +114,7 @@ For a partition $A_1,\ldots,A_k$ and an event $B$ with $P(B)>0$,
 $$
 P(A_j\mid B)
 =\frac{P(B\mid A_j)P(A_j)}
-{\displaystyle\sum_{i=1}^{k}P(B\mid A_i)P(A_i)}.
+{\displaystyle\sum_{i=1}^{k}P(B\mid A_i)P(A_i)}
 $$
 
 $P(A_j)$ is the **prior** probability. After observing $B$,
@@ -141,20 +141,20 @@ $$
 The joint probability of brand 1 and repair is
 
 $$
-P(A_1\cap B)=P(B\mid A_1)P(A_1)=0.25(0.50)=0.125.
+P(A_1\cap B)=P(B\mid A_1)P(A_1)=0.25(0.50)=0.125
 $$
 
 The marginal repair probability is
 
 $$
-P(B)=0.25(0.50)+0.20(0.30)+0.10(0.20)=0.205.
+P(B)=0.25(0.50)+0.20(0.30)+0.10(0.20)=0.205
 $$
 
 Given that a player needs repair, the posterior probability that it is brand
 1 is
 
 $$
-P(A_1\mid B)=\frac{0.125}{0.205}\approx0.610.
+P(A_1\mid B)=\frac{0.125}{0.205}\approx0.610
 $$
 
 ```{r dvd-bayes}
@@ -185,21 +185,21 @@ P(A)=0.70,
 \qquad
 P(B\mid A)=0.60,
 \qquad
-P(B^c\mid A^c)=0.90.
+P(B^c\mid A^c)=0.90
 $$
 
 Consequently, $P(A^c)=0.30$, $P(B^c\mid A)=0.40$, and
 $P(B\mid A^c)=0.10$. The marginal probability of a locator is
 
 $$
-P(B)=0.60(0.70)+0.10(0.30)=0.45.
+P(B)=0.60(0.70)+0.10(0.30)=0.45
 $$
 
 If the aircraft has a locator, the probability that it is not discovered is
 
 $$
 P(A^c\mid B)=\frac{P(B\mid A^c)P(A^c)}{P(B)}
-=\frac{0.10(0.30)}{0.45}\approx0.067.
+=\frac{0.10(0.30)}{0.45}\approx0.067
 $$
 
 If it has no locator, the probability that it is discovered is
@@ -208,7 +208,7 @@ $$
 P(A\mid B^c)
 =\frac{P(B^c\mid A)P(A)}{P(B^c)}
 =\frac{0.40(0.70)}{1-0.45}
-\approx0.509.
+\approx0.509
 $$
 
 ```{r aircraft-bayes}
@@ -245,13 +245,13 @@ $$
 is equivalent to the symmetric product rule
 
 $$
-P(A\cap B)=P(A)P(B).
+P(A\cap B)=P(A)P(B)
 $$
 
 Given another event or variable $Y$, conditional independence is expressed as
 
 $$
-P(A\cap B\mid Y)=P(A\mid Y)P(B\mid Y).
+P(A\cap B\mid Y)=P(A\mid Y)P(B\mid Y)
 $$
 
 Mutual exclusivity and independence describe different relationships. If
@@ -267,13 +267,13 @@ The complement of "at least one opens" is "none opens," so
 
 $$
 P(\text{at least one opens})=1-(1-0.96)^5
-=1-(0.04)^5\approx0.999999898.
+=1-(0.04)^5\approx0.999999898
 $$
 
 The complement of "at least one fails" is "all open," so
 
 $$
-P(\text{at least one fails})=1-(0.96)^5\approx0.1846.
+P(\text{at least one fails})=1-(0.96)^5\approx0.1846
 $$
 
 ```{r boiler-valves}

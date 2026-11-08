@@ -29,7 +29,7 @@ For an i.i.d. sample $X_1,\ldots,X_n$ from a population with mean $\mu$ and
 variance $\sigma^2$,
 
 $$
-\overline X=\frac1n\sum_{i=1}^nX_i.
+\overline X=\frac1n\sum_{i=1}^nX_i
 $$
 
 Different random samples produce different values of $\overline X$. Its
@@ -51,7 +51,7 @@ $$
 $$
 
 $$
-\sigma^2=5^2\left[\Gamma(2)-\Gamma(1.5)^2\right]\approx5.365.
+\sigma^2=5^2\left[\Gamma(2)-\Gamma(1.5)^2\right]\approx5.365
 $$
 
 ```{r weibull-population-moments}
@@ -71,7 +71,7 @@ Linearity of expectation gives
 
 $$
 E(\overline X)
-=\frac1n\sum_{i=1}^nE(X_i)=\mu.
+=\frac1n\sum_{i=1}^nE(X_i)=\mu
 $$
 
 Independence makes the variances add:
@@ -79,14 +79,14 @@ Independence makes the variances add:
 $$
 \operatorname{Var}(\overline X)
 =\frac1{n^2}\sum_{i=1}^n\operatorname{Var}(X_i)
-=\frac{\sigma^2}{n}.
+=\frac{\sigma^2}{n}
 $$
 
 The standard deviation of the sampling distribution is the **standard
 error**:
 
 $$
-\operatorname{SE}(\overline X)=\frac{\sigma}{\sqrt n}.
+\operatorname{SE}(\overline X)=\frac{\sigma}{\sqrt n}
 $$
 
 ```{r standard-error-by-sample-size}
@@ -103,7 +103,7 @@ data.frame(
 If every $X_i\sim N(\mu,\sigma^2)$ independently, then for every sample size
 
 $$
-\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right).
+\overline X\sim N\left(\mu,\frac{\sigma^2}{n}\right)
 $$
 
 ```{r exact-normal-sample-mean}
@@ -124,7 +124,7 @@ For i.i.d. observations with finite mean and variance, as $n$ increases,
 
 $$
 \frac{\overline X-\mu}{\sigma/\sqrt n}
-\overset{d}{\longrightarrow}N(0,1).
+\overset{d}{\longrightarrow}N(0,1)
 $$
 
 Equivalently, for sufficiently large $n$,
@@ -166,7 +166,7 @@ par(old_par)
 The population has mean 4.0 g and standard deviation 1.5 g. For $n=50$,
 
 $$
-\operatorname{SE}(\overline X)=\frac{1.5}{\sqrt{50}}\approx0.2121.
+\operatorname{SE}(\overline X)=\frac{1.5}{\sqrt{50}}\approx0.2121
 $$
 
 The CLT gives
@@ -175,7 +175,7 @@ $$
 P(3.5\leq\overline X\leq3.8)
 \approx
 \Phi\left(\frac{3.8-4}{1.5/\sqrt{50}}\right)
--\Phi\left(\frac{3.5-4}{1.5/\sqrt{50}}\right).
+-\Phi\left(\frac{3.5-4}{1.5/\sqrt{50}}\right)
 $$
 
 ```{r impurity-clt-example}

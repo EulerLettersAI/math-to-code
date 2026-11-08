@@ -54,7 +54,7 @@ The overall mean blood pressure for each medication combines its younger and
 older patients. Each age group contributes according to its patient count:
 
 $$
-\bar y=\frac{\sum_j n_j\bar y_j}{\sum_j n_j}.
+\bar y=\frac{\sum_j n_j\bar y_j}{\sum_j n_j}
 $$
 
 Here $j$ runs over the age groups within one medication, $n_j$ is the patient
@@ -68,7 +68,7 @@ $$
 \bar y_{\text{New}}
 =\frac{90\times125+10\times135}{90+10}
 =\frac{12600}{100}
-=126\text{ mmHg}.
+=126\text{ mmHg}
 $$
 
 For Standard, combine 20 younger patients with a mean of 130 mmHg and 80 older
@@ -78,7 +78,7 @@ $$
 \bar y_{\text{Standard}}
 =\frac{20\times130+80\times140}{20+80}
 =\frac{13800}{100}
-=138\text{ mmHg}.
+=138\text{ mmHg}
 $$
 
 These calculations produce the table below: `weighted_bp` is the numerator,
@@ -134,7 +134,7 @@ We can compare medications separately within each age group:
 
 $$
 \text{difference within an age group}
-=\bar y_{\text{New}}-\bar y_{\text{Standard}}.
+=\bar y_{\text{New}}-\bar y_{\text{Standard}}
 $$
 
 **Worked example — compare within each age group.** For younger patients,

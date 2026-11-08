@@ -29,13 +29,13 @@ For rate $\lambda>0$, $X\sim\operatorname{Exp}(\lambda)$ has density and CDF
 
 $$
 f(x)=\lambda e^{-\lambda x},\qquad
-F(x)=1-e^{-\lambda x},\qquad x\geq0.
+F(x)=1-e^{-\lambda x},\qquad x\geq0
 $$
 
 Its survival probability is
 
 $$
-P(X>x)=e^{-\lambda x}.
+P(X>x)=e^{-\lambda x}
 $$
 
 ```{r exponential-density-cdf}
@@ -55,7 +55,7 @@ The exponential moments are
 $$
 E(X)=\frac1\lambda,
 \qquad
-\operatorname{Var}(X)=\frac1{\lambda^2}.
+\operatorname{Var}(X)=\frac1{\lambda^2}
 $$
 
 ```{r exponential-moments}
@@ -69,13 +69,13 @@ For calls arriving at rate 3 per hour, the probability the next call arrives
 within an hour is
 
 $$
-P(X<1)=1-e^{-3}\approx0.9502.
+P(X<1)=1-e^{-3}\approx0.9502
 $$
 
 For a pipeline failure time with rate $0.5$ per year,
 
 $$
-P(X>2)=e^{-0.5(2)}=e^{-1}\approx0.3679.
+P(X>2)=e^{-0.5(2)}=e^{-1}\approx0.3679
 $$
 
 ```{r exponential-examples}
@@ -92,14 +92,14 @@ shape-rate parameterization,
 
 $$
 f(x)=\frac{\lambda^\alpha}{\Gamma(\alpha)}
-x^{\alpha-1}e^{-\lambda x},\qquad x\geq0.
+x^{\alpha-1}e^{-\lambda x},\qquad x\geq0
 $$
 
 With scale $\beta=1/\lambda$, the same density is
 
 $$
 f(x)=\frac{1}{\Gamma(\alpha)\beta^\alpha}
-x^{\alpha-1}e^{-x/\beta}.
+x^{\alpha-1}e^{-x/\beta}
 $$
 
 The moments are
@@ -107,7 +107,7 @@ The moments are
 $$
 E(X)=\frac\alpha\lambda=\alpha\beta,
 \qquad
-\operatorname{Var}(X)=\frac\alpha{\lambda^2}=\alpha\beta^2.
+\operatorname{Var}(X)=\frac\alpha{\lambda^2}=\alpha\beta^2
 $$
 
 ```{r gamma-parameterizations}
@@ -134,14 +134,14 @@ For integer shape,
 
 $$
 F(x)=1-e^{-\lambda x}
-\sum_{j=0}^{\alpha-1}\frac{(\lambda x)^j}{j!}.
+\sum_{j=0}^{\alpha-1}\frac{(\lambda x)^j}{j!}
 $$
 
 At $x=4$ hours,
 
 $$
 P(X<4)=1-e^{-2}\left(1+2+\frac{2^2}{2!}\right)
-\approx0.3233.
+\approx0.3233
 $$
 
 ```{r gamma-machine-example}

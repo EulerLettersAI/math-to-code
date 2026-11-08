@@ -29,13 +29,13 @@ examples. Simulations are labeled as extensions.
 A Bernoulli random variable records failure or success:
 
 $$
-X\in\{0,1\},\qquad P(X=1)=p,\qquad P(X=0)=1-p.
+X\in\{0,1\},\qquad P(X=1)=p,\qquad P(X=0)=1-p
 $$
 
 Its moments are
 
 $$
-E(X)=p,\qquad \operatorname{Var}(X)=p(1-p).
+E(X)=p,\qquad \operatorname{Var}(X)=p(1-p)
 $$
 
 ```{r bernoulli-pmf-and-moments}
@@ -66,7 +66,7 @@ $$
 has a binomial distribution, written $X\sim\operatorname{Bin}(n,p)$, with PMF
 
 $$
-P(X=k)=\binom nkp^k(1-p)^{n-k},\qquad k=0,1,\ldots,n.
+P(X=k)=\binom nkp^k(1-p)^{n-k},\qquad k=0,1,\ldots,n
 $$
 
 ```{r binomial-pmf}
@@ -82,7 +82,7 @@ sum(pmf)
 For five fair coin tosses, the probability of exactly three heads is
 
 $$
-P(X=3)=\binom53(0.5)^3(0.5)^2=0.3125.
+P(X=3)=\binom53(0.5)^3(0.5)^2=0.3125
 $$
 
 ```{r five-toss-example}
@@ -95,7 +95,7 @@ dbinom(3, size = 5, prob = 0.5)
 The binomial CDF adds the masses up to $k$:
 
 $$
-F(k)=P(X\leq k)=\sum_{j=0}^{k}\binom njp^j(1-p)^{n-j}.
+F(k)=P(X\leq k)=\sum_{j=0}^{k}\binom njp^j(1-p)^{n-j}
 $$
 
 ```{r binomial-cdf-and-quantile}
@@ -113,7 +113,7 @@ Because a binomial variable is a sum of independent Bernoulli variables,
 $$
 E(X)=np,\qquad
 \operatorname{Var}(X)=np(1-p),\qquad
-\operatorname{SD}(X)=\sqrt{np(1-p)}.
+\operatorname{SD}(X)=\sqrt{np(1-p)}
 $$
 
 In the deck's credit-card example, 10 customers independently pay by credit
@@ -121,7 +121,7 @@ card with probability $0.75$. Thus
 
 $$
 E(X)=7.5,\qquad \operatorname{Var}(X)=1.875,
-\qquad \operatorname{SD}(X)\approx1.37.
+\qquad \operatorname{SD}(X)\approx1.37
 $$
 
 The integer counts within one standard deviation of the mean are 7 and 8.

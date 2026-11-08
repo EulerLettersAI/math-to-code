@@ -54,19 +54,19 @@ grid()
 Inside the support,
 
 $$
-F(x)=P(X\leq x)=\frac{x-a}{b-a}.
+F(x)=P(X\leq x)=\frac{x-a}{b-a}
 $$
 
 For $a\leq c\leq d\leq b$,
 
 $$
-P(c\leq X\leq d)=\frac{d-c}{b-a}.
+P(c\leq X\leq d)=\frac{d-c}{b-a}
 $$
 
 Thus, for $X\sim U(2,6)$,
 
 $$
-P(3\leq X\leq5)=\frac{5-3}{6-2}=0.5.
+P(3\leq X\leq5)=\frac{5-3}{6-2}=0.5
 $$
 
 ```{r uniform-interval-probability}
@@ -85,7 +85,7 @@ The center and spread are
 
 $$
 E(X)=\frac{a+b}{2},\qquad
-\operatorname{Var}(X)=\frac{(b-a)^2}{12}.
+\operatorname{Var}(X)=\frac{(b-a)^2}{12}
 $$
 
 ```{r uniform-moments}
@@ -129,7 +129,7 @@ $$
 and a Monte Carlo estimator is
 
 $$
-\widehat\pi=4\left(\frac{\text{points inside the circle}}{n}\right).
+\widehat\pi=4\left(\frac{\text{points inside the circle}}{n}\right)
 $$
 
 ```{r monte-carlo-pi}

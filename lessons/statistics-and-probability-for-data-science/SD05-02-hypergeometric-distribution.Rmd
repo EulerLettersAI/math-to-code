@@ -37,7 +37,7 @@ $$
 where
 
 $$
-\max(0,n-N+M)\leq x\leq\min(n,M).
+\max(0,n-N+M)\leq x\leq\min(n,M)
 $$
 
 ```{r hypergeometric-pmf}
@@ -61,7 +61,7 @@ is the sample size. Those argument names differ from the mathematical symbols.
 Among $N=25$ animals, $M=5$ are tagged. If $n=10$ are recaptured, then
 
 $$
-P(X=2)=\frac{\binom52\binom{20}8}{\binom{25}{10}}\approx0.385.
+P(X=2)=\frac{\binom52\binom{20}8}{\binom{25}{10}}\approx0.385
 $$
 
 ```{r tagged-animal-example}
@@ -88,7 +88,7 @@ and
 
 $$
 \operatorname{Var}(X)=
-\frac{N-n}{N-1}\,n\frac MN\left(1-\frac MN\right).
+\frac{N-n}{N-1}\,n\frac MN\left(1-\frac MN\right)
 $$
 
 The factor $(N-n)/(N-1)$ is the **finite-population correction**. It reduces

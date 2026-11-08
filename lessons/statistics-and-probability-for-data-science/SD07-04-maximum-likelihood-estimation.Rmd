@@ -29,7 +29,7 @@ For an i.i.d. sample $x_1,\ldots,x_n$ from a PMF or PDF $f(x;\theta)$, the
 likelihood is
 
 $$
-L(\theta)=\prod_{i=1}^n f(x_i;\theta).
+L(\theta)=\prod_{i=1}^n f(x_i;\theta)
 $$
 
 An MLE $\widehat\theta$ maximizes $L(\theta)$. Because logarithms are strictly
@@ -37,7 +37,7 @@ increasing, it equivalently maximizes
 
 $$
 \ell(\theta)=\log L(\theta)
-=\sum_{i=1}^n\log f(x_i;\theta).
+=\sum_{i=1}^n\log f(x_i;\theta)
 $$
 
 The sum is easier to calculate and is numerically more stable than a product
@@ -48,7 +48,7 @@ of many small probabilities.
 For $X_i\sim\operatorname{Poisson}(\lambda)$,
 
 $$
-P(X_i=x_i;\lambda)=e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}.
+P(X_i=x_i;\lambda)=e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}
 $$
 
 Independence gives
@@ -57,7 +57,7 @@ $$
 L(\lambda)
 =\prod_{i=1}^n e^{-\lambda}\frac{\lambda^{x_i}}{x_i!}
 =\frac{e^{-n\lambda}\lambda^{\sum_i x_i}}
-{\prod_i x_i!}.
+{\prod_i x_i!}
 $$
 
 The log-likelihood is
@@ -65,7 +65,7 @@ The log-likelihood is
 $$
 \ell(\lambda)
 =-n\lambda+\left(\sum_i x_i\right)\log\lambda
--\sum_i\log(x_i!).
+-\sum_i\log(x_i!)
 $$
 
 Differentiating and setting the result to zero,
@@ -73,7 +73,7 @@ Differentiating and setting the result to zero,
 $$
 \ell'(\lambda)=-n+\frac{\sum_i x_i}{\lambda}=0
 \quad\Longrightarrow\quad
-\widehat\lambda=\frac1n\sum_i x_i=\bar x.
+\widehat\lambda=\frac1n\sum_i x_i=\bar x
 $$
 
 ```{r poisson-mle}
@@ -115,7 +115,7 @@ grid()
 For $X_i\sim\operatorname{Exp}(\lambda)$ with rate $\lambda$,
 
 $$
-f(x_i;\lambda)=\lambda e^{-\lambda x_i},\qquad x_i\geq0.
+f(x_i;\lambda)=\lambda e^{-\lambda x_i},\qquad x_i\geq0
 $$
 
 Thus
@@ -127,7 +127,7 @@ $$
 and
 
 $$
-\ell(\lambda)=n\log\lambda-\lambda\sum_i x_i.
+\ell(\lambda)=n\log\lambda-\lambda\sum_i x_i
 $$
 
 Solving the score equation,
@@ -135,7 +135,7 @@ Solving the score equation,
 $$
 \ell'(\lambda)=\frac n\lambda-\sum_i x_i=0
 \quad\Longrightarrow\quad
-\widehat\lambda=\frac n{\sum_i x_i}=\frac1{\bar x}.
+\widehat\lambda=\frac n{\sum_i x_i}=\frac1{\bar x}
 $$
 
 ```{r exponential-mle}
@@ -172,7 +172,7 @@ $$
 
 $$
 \ell''_{\text{Exponential}}(\lambda)
-=-\frac n{\lambda^2}<0.
+=-\frac n{\lambda^2}<0
 $$
 
 Therefore the stationary point is a maximum, provided the sample is not a

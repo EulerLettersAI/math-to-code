@@ -38,13 +38,13 @@ $$
 and
 
 $$
-F(x)=1-\exp\left[-\left(\frac{x}{\lambda}\right)^k\right].
+F(x)=1-\exp\left[-\left(\frac{x}{\lambda}\right)^k\right]
 $$
 
 Therefore the survival function is
 
 $$
-S(x)=P(X>x)=\exp\left[-\left(\frac{x}{\lambda}\right)^k\right].
+S(x)=P(X>x)=\exp\left[-\left(\frac{x}{\lambda}\right)^k\right]
 $$
 
 ```{r weibull-functions}
@@ -67,7 +67,7 @@ data.frame(
 For shape $k=2$ and scale $\lambda=100$,
 
 $$
-P(X<80)=1-\exp[-(80/100)^2]\approx0.4727.
+P(X<80)=1-\exp[-(80/100)^2]\approx0.4727
 $$
 
 ```{r weibull-component-example}
@@ -89,7 +89,7 @@ $$
 \operatorname{Var}(X)=\lambda^2\left[
 \Gamma\left(1+\frac2k\right)-
 \Gamma\left(1+\frac1k\right)^2
-\right].
+\right]
 $$
 
 ```{r weibull-moments}
@@ -110,7 +110,7 @@ The Weibull hazard function is
 
 $$
 h(x)=\frac{f(x)}{S(x)}
-=\frac{k}{\lambda}\left(\frac{x}{\lambda}\right)^{k-1}.
+=\frac{k}{\lambda}\left(\frac{x}{\lambda}\right)^{k-1}
 $$
 
 - $k<1$: decreasing hazard, often associated with early failures.

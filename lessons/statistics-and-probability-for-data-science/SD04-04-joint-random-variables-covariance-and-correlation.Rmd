@@ -30,7 +30,7 @@ extend the deck's concepts.
 For discrete random variables $X$ and $Y$, the **joint PMF** is
 
 $$
-p_{X,Y}(x,y)=P(X=x,Y=y).
+p_{X,Y}(x,y)=P(X=x,Y=y)
 $$
 
 A valid joint PMF satisfies
@@ -38,7 +38,7 @@ A valid joint PMF satisfies
 $$
 p_{X,Y}(x,y)\geq0,
 \qquad
-\sum_x\sum_y p_{X,Y}(x,y)=1.
+\sum_x\sum_y p_{X,Y}(x,y)=1
 $$
 
 Summing across the other variable produces a **marginal PMF**:
@@ -46,7 +46,7 @@ Summing across the other variable produces a **marginal PMF**:
 $$
 p_X(x)=\sum_y p_{X,Y}(x,y),
 \qquad
-p_Y(y)=\sum_x p_{X,Y}(x,y).
+p_Y(y)=\sum_x p_{X,Y}(x,y)
 $$
 
 ## Worked example: a joint probability table
@@ -62,7 +62,7 @@ The deck uses $X\in\{1,3\}$ and $Y\in\{2,4\}$ with joint probabilities
 For example,
 
 $$
-P(X=1,Y=2)=0.2.
+P(X=1,Y=2)=0.2
 $$
 
 The row and column sums give
@@ -70,7 +70,7 @@ The row and column sums give
 $$
 p_X(1)=0.5,\quad p_X(3)=0.5,
 \qquad
-p_Y(2)=0.3,\quad p_Y(4)=0.7.
+p_Y(2)=0.3,\quad p_Y(4)=0.7
 $$
 
 ```{r joint-pmf}
@@ -105,7 +105,7 @@ $$
 
 $$
 E(Y)=\sum_y y p_Y(y)
-=2(0.3)+4(0.7)=3.4.
+=2(0.3)+4(0.7)=3.4
 $$
 
 The product moment uses the joint distribution:
@@ -143,19 +143,19 @@ same sign or opposite signs:
 
 $$
 \operatorname{Cov}(X,Y)
-=E\bigl[(X-E(X))(Y-E(Y))\bigr].
+=E\bigl[(X-E(X))(Y-E(Y))\bigr]
 $$
 
 Expanding the product gives the computational identity
 
 $$
-\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y).
+\operatorname{Cov}(X,Y)=E(XY)-E(X)E(Y)
 $$
 
 For the joint table,
 
 $$
-\operatorname{Cov}(X,Y)=7-(2)(3.4)=0.2.
+\operatorname{Cov}(X,Y)=7-(2)(3.4)=0.2
 $$
 
 ```{r covariance-example}
@@ -178,7 +178,7 @@ $Y$ by $b$, then
 
 $$
 \operatorname{Cov}(aX+c,bY+d)
-=ab\operatorname{Cov}(X,Y).
+=ab\operatorname{Cov}(X,Y)
 $$
 
 ```{r covariance-units}
@@ -207,7 +207,7 @@ pair:
 
 $$
 p_{X,Y}(x,y)=p_X(x)p_Y(y)
-\quad\text{for every }x,y.
+\quad\text{for every }x,y
 $$
 
 The example is not independent. At $(1,2)$,
@@ -215,7 +215,7 @@ The example is not independent. At $(1,2)$,
 $$
 p_{X,Y}(1,2)=0.2
 \neq
-p_X(1)p_Y(2)=(0.5)(0.3)=0.15.
+p_X(1)p_Y(2)=(0.5)(0.3)=0.15
 $$
 
 ```{r independence-check}
@@ -243,7 +243,7 @@ $E(X)=0$ and $E(XY)=E(X^3)=0$, so
 
 $$
 \operatorname{Cov}(X,Y)
-=E(XY)-E(X)E(Y)=0.
+=E(XY)-E(X)E(Y)=0
 $$
 
 Nevertheless, $Y$ is completely determined by $X$, so the variables are not
@@ -252,7 +252,7 @@ independent. For instance,
 $$
 P(Y=0\mid X=0)=1
 \neq
-P(Y=0)=\frac13.
+P(Y=0)=\frac13
 $$
 
 ```{r uncorrelated-but-dependent}
@@ -287,13 +287,13 @@ $$
 =\operatorname{Corr}(X,Y)
 =\frac{\operatorname{Cov}(X,Y)}
 {\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}}
-=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}.
+=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}
 $$
 
 When both standard deviations are positive,
 
 $$
--1\leq\rho_{X,Y}\leq1.
+-1\leq\rho_{X,Y}\leq1
 $$
 
 For the joint table,
@@ -309,7 +309,7 @@ so
 $$
 \rho_{X,Y}
 =\frac{0.2}{\sqrt{(1)(0.84)}}
-\approx0.218.
+\approx0.218
 $$
 
 ```{r correlation-example}

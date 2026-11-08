@@ -29,7 +29,7 @@ For $n$ observations and $p$ numeric variables, a data matrix has entries
 
 $$
 X=(x_{ij})\in\mathbb{R}^{n\times p},\qquad
-x_{ij}=\text{value of variable }j\text{ for observation }i.
+x_{ij}=\text{value of variable }j\text{ for observation }i
 $$
 
 **Worked example — reading a matrix entry.** With the three numeric columns
@@ -72,7 +72,7 @@ ordinal categories have an order without necessarily equal spacing.
 
 $$
 \text{Term}\in\{1,2,3,\ldots\},\qquad
-\text{Grade}\in\{A\prec B\prec\cdots\prec G\}.
+\text{Grade}\in\{A\prec B\prec\cdots\prec G\}
 $$
 
 Here $\prec$ denotes category order, not a numerical gap. The statistical type
@@ -101,14 +101,14 @@ $\widehat p_c=n^{-1}\sum_i\mathbf{1}(x_i=c)$.
 summation means adding the four amounts and dividing by four:
 
 $$
-\bar x=\frac{7500+25000+14500+3000}{4}=12500.
+\bar x=\frac{7500+25000+14500+3000}{4}=12500
 $$
 
 For just the category "rent", the indicator $\mathbf{1}(x_i=c)$ is 1 for a
 matching record and 0 otherwise:
 
 $$
-\widehat p_{\text{rent}}=\frac{1+0+0+1}{4}=0.5.
+\widehat p_{\text{rent}}=\frac{1+0+0+1}{4}=0.5
 $$
 
 ```{r column-summaries}
@@ -125,7 +125,7 @@ For paired numeric variables, sample correlation is
 
 $$
 r=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}
-{\sqrt{\sum_i(x_i-\bar x)^2\sum_i(y_i-\bar y)^2}}.
+{\sqrt{\sum_i(x_i-\bar x)^2\sum_i(y_i-\bar y)^2}}
 $$
 
 **Worked example — one small set of paired values.** Suppose
@@ -135,7 +135,7 @@ The deviations are $(-1,0,1)$ and $(-1,1,0)$. Expanding each sum gives
 $$
 r=\frac{(-1)(-1)+(0)(1)+(1)(0)}
 {\sqrt{[(-1)^2+0^2+1^2][(-1)^2+1^2+0^2]}}
-=\frac{1}{\sqrt{2\times2}}=0.5.
+=\frac{1}{\sqrt{2\times2}}=0.5
 $$
 
 The numerator adds paired deviation products; the denominator uses the sum
@@ -146,14 +146,14 @@ temperature. The following fictional sales include small day-to-day changes
 $u$ and $v$ in addition to the temperature effect:
 
 $$
-X=20+3T+u,\qquad Y=10+4T+v.
+X=20+3T+u,\qquad Y=10+4T+v
 $$
 
 **Worked example — substitute one day's values.** For $T=20$, $u=2$, and
 $v=-4$:
 
 $$
-X=20+3(20)+2=82,\qquad Y=10+4(20)-4=86.
+X=20+3(20)+2=82,\qquad Y=10+4(20)-4=86
 $$
 
 A warmer day raises both predicted sales through $T$, even though neither

@@ -39,7 +39,7 @@ Let $Y$ be a class and $X$ be observed evidence.
 Bayes' theorem connects them:
 
 $$
-P(Y\mid X)=\frac{P(X\mid Y)P(Y)}{P(X)}.
+P(Y\mid X)=\frac{P(X\mid Y)P(Y)}{P(X)}
 $$
 
 For classification, $X$ is fixed after a new observation arrives. Therefore
@@ -52,7 +52,7 @@ For a binary class $Y\in\{0,1\}$, the **maximum-likelihood** rule chooses
 
 $$
 \widehat y_{\mathrm{ML}}
-=\underset{y\in\{0,1\}}{\arg\max}\;P(X\mid Y=y).
+=\underset{y\in\{0,1\}}{\arg\max}\;P(X\mid Y=y)
 $$
 
 It compares how likely the evidence is under each class and does not include
@@ -62,7 +62,7 @@ The **maximum-a-posteriori** rule chooses
 
 $$
 \widehat y_{\mathrm{MAP}}
-=\underset{y\in\{0,1\}}{\arg\max}\;P(Y=y\mid X).
+=\underset{y\in\{0,1\}}{\arg\max}\;P(Y=y\mid X)
 $$
 
 Using Bayes' theorem and removing the common positive denominator $P(X)$,
@@ -70,7 +70,7 @@ Using Bayes' theorem and removing the common positive denominator $P(X)$,
 $$
 \widehat y_{\mathrm{MAP}}
 =\underset{y\in\{0,1\}}{\arg\max}\;
-P(X\mid Y=y)P(Y=y).
+P(X\mid Y=y)P(Y=y)
 $$
 
 ML and MAP agree when the priors are equal. With unequal priors, MAP favors a
@@ -84,14 +84,14 @@ assumes the features are conditionally independent within each class:
 
 $$
 P(X_1=x_1,\ldots,X_p=x_p\mid Y=y)
-=\prod_{j=1}^{p}P(X_j=x_j\mid Y=y).
+=\prod_{j=1}^{p}P(X_j=x_j\mid Y=y)
 $$
 
 The resulting MAP score for class $y$ is
 
 $$
 \operatorname{score}(y)
-=P(Y=y)\prod_{j=1}^{p}P(X_j=x_j\mid Y=y).
+=P(Y=y)\prod_{j=1}^{p}P(X_j=x_j\mid Y=y)
 $$
 
 These scores are proportional to posterior probabilities. To obtain
@@ -131,7 +131,7 @@ Two of the five emails are Spam and three are NotSpam:
 $$
 P(Y=1)=\frac25=0.4,
 \qquad
-P(Y=0)=\frac35=0.6.
+P(Y=0)=\frac35=0.6
 $$
 
 ### Step 2: estimate feature likelihoods
@@ -141,7 +141,7 @@ Among the two Spam observations,
 $$
 P(O=1\mid Y=1)=\frac22=1,
 \qquad
-P(F=0\mid Y=1)=\frac12=0.5.
+P(F=0\mid Y=1)=\frac12=0.5
 $$
 
 Among the three NotSpam observations,
@@ -149,7 +149,7 @@ Among the three NotSpam observations,
 $$
 P(O=1\mid Y=0)=\frac13,
 \qquad
-P(F=0\mid Y=0)=\frac13.
+P(F=0\mid Y=0)=\frac13
 $$
 
 ```{r spam-estimates}
@@ -186,7 +186,7 @@ $$
 $$
 P(O=1,F=0\mid Y=0)
 =P(O=1\mid Y=0)P(F=0\mid Y=0)
-=\frac13\frac13=\frac19\approx0.111.
+=\frac13\frac13=\frac19\approx0.111
 $$
 
 Because $0.5>0.111$, the ML rule predicts Spam.
@@ -198,14 +198,14 @@ $$
 $$
 
 $$
-\operatorname{score}(0)=\frac19(0.6)\approx0.0667.
+\operatorname{score}(0)=\frac19(0.6)\approx0.0667
 $$
 
 MAP also predicts Spam. Normalizing the two scores gives
 
 $$
 P(Y=1\mid O=1,F=0)
-=\frac{0.20}{0.20+0.0667}=0.75.
+=\frac{0.20}{0.20+0.0667}=0.75
 $$
 
 ```{r ml-map-prediction}

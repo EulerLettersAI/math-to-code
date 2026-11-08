@@ -30,7 +30,7 @@ $X$ be the number of failures before the $r$th success. Then
 
 $$
 P(X=x)=\binom{x+r-1}{r-1}p^r(1-p)^x,
-\qquad x=0,1,2,\ldots.
+\qquad x=0,1,2,\ldots
 $$
 
 The last trial must be the $r$th success. Among the preceding $x+r-1$ trials,
@@ -58,7 +58,7 @@ with probability $p=0.20$. If exactly 15 couples are asked, there were 10
 failures before the fifth success:
 
 $$
-P(X=10)=\binom{14}{4}(0.2)^5(0.8)^{10}\approx0.034.
+P(X=10)=\binom{14}{4}(0.2)^5(0.8)^{10}\approx0.034
 $$
 
 ```{r pediatrician-example}
@@ -83,7 +83,7 @@ For this failures-before-successes convention,
 $$
 E(X)=\frac{r(1-p)}p,
 \qquad
-\operatorname{Var}(X)=\frac{r(1-p)}{p^2}.
+\operatorname{Var}(X)=\frac{r(1-p)}{p^2}
 $$
 
 If instead $T=X+r$ counts the **total number of trials** through the $r$th

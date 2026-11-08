@@ -184,6 +184,10 @@ website:
               href: lessons/tabular-dataset-comparison-metrics/8.0-privacy-metric-exact-match-rate.ipynb
             - text: "9. Privacy Metric: Distance-to-Closest-Record Membership-Inference AUC"
               href: lessons/tabular-dataset-comparison-metrics/9.0-privacy-metric-dcr-membership-inference-auc.ipynb
+        - section: "Refreshers"
+          contents:
+            - text: "2.1 Contingency Tables"
+              href: lessons/tabular-dataset-comparison-metrics/2.1-contingency-tables.ipynb
   page-footer:
     left: "© EulerLettersAI"
     center: '<div id="quarto-search" title="Search lessons"></div>'

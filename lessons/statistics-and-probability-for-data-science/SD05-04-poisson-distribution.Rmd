@@ -49,13 +49,13 @@ data.frame(x, formula_pmf, R_pmf)
 If a tile has an average of $\mu=2.4$ defects, then
 
 $$
-P(X=0)=e^{-2.4}\approx0.0907.
+P(X=0)=e^{-2.4}\approx0.0907
 $$
 
 The probability of at least four defects is easiest through the complement:
 
 $$
-P(X\geq4)=1-P(X\leq3)\approx0.2213.
+P(X\geq4)=1-P(X\leq3)\approx0.2213
 $$
 
 ```{r tile-defect-example}
@@ -76,7 +76,7 @@ The Poisson parameter controls both center and spread:
 $$
 E(X)=\mu,\qquad
 \operatorname{Var}(X)=\mu,\qquad
-\operatorname{SD}(X)=\sqrt{\mu}.
+\operatorname{SD}(X)=\sqrt{\mu}
 $$
 
 ```{r poisson-moments}
@@ -111,7 +111,7 @@ For $X\sim\operatorname{Bin}(n,p)$, if $n$ is large and $p$ is small while
 $np\to\mu$, then
 
 $$
-X\ \dot\sim\ \operatorname{Poisson}(\mu),\qquad \mu=np.
+X\ \dot\sim\ \operatorname{Poisson}(\mu),\qquad \mu=np
 $$
 
 The deck's practical rule is $n>50$ and $np<5$.

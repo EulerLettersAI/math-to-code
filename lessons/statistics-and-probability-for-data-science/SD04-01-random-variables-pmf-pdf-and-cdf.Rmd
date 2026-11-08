@@ -31,7 +31,7 @@ A **random variable** is a function from a sample space $S$ to the real
 numbers:
 
 $$
-X:S\longrightarrow\mathbb{R}.
+X:S\longrightarrow\mathbb{R}
 $$
 
 The randomness is in the outcome $\omega\in S$; once $\omega$ is known, the
@@ -41,7 +41,7 @@ Failure, one possible random variable is
 $$
 X(\text{Success})=1,
 \qquad
-X(\text{Failure})=0.
+X(\text{Failure})=0
 $$
 
 ```{r random-variable-map}
@@ -64,7 +64,7 @@ $$
 and the number tested is
 
 $$
-X(S)=1,\quad X(FS)=2,\quad X(FFS)=3,\quad\ldots.
+X(S)=1,\quad X(FS)=2,\quad X(FFS)=3,\quad\ldots
 $$
 
 ```{r battery-outcome-map}
@@ -92,7 +92,7 @@ interval can have positive probability:
 $$
 P(X=x)=0,
 \qquad
-P(a\leq X\leq b)>0\ \text{may hold}.
+P(a\leq X\leq b)>0\ \text{may hold}
 $$
 
 The following draws illustrate the different supports. The simulations are
@@ -117,7 +117,7 @@ is
 
 $$
 p(x)=P(X=x)
-=P\bigl(\{\omega\in S:X(\omega)=x\}\bigr).
+=P\bigl(\{\omega\in S:X(\omega)=x\}\bigr)
 $$
 
 A valid PMF satisfies
@@ -125,7 +125,7 @@ A valid PMF satisfies
 $$
 p(x)\geq0
 \quad\text{and}\quad
-\sum_x p(x)=1.
+\sum_x p(x)=1
 $$
 
 ### Worked example: defects in a selected box
@@ -138,7 +138,7 @@ p(0)=\frac36=0.5,
 \qquad
 p(1)=\frac16,
 \qquad
-p(2)=\frac26=\frac13.
+p(2)=\frac26=\frac13
 $$
 
 ```{r box-defects-pmf}
@@ -161,13 +161,13 @@ For a continuous random variable $X$, a **probability density function**
 $$
 f(x)\geq0,
 \qquad
-\int_{-\infty}^{\infty}f(x)\,dx=1.
+\int_{-\infty}^{\infty}f(x)\,dx=1
 $$
 
 Probabilities are areas under the density:
 
 $$
-P(a\leq X\leq b)=\int_a^b f(x)\,dx.
+P(a\leq X\leq b)=\int_a^b f(x)\,dx
 $$
 
 Unlike a PMF value, $f(x)$ is not the probability of the point $x$. A density
@@ -189,7 +189,7 @@ It is normalized because
 
 $$
 \int_0^\infty\frac{2}{(x+1)^3}\,dx
-=\left[-\frac{1}{(x+1)^2}\right]_0^\infty=1.
+=\left[-\frac{1}{(x+1)^2}\right]_0^\infty=1
 $$
 
 For example,
@@ -197,7 +197,7 @@ For example,
 $$
 P(1\leq X\leq3)
 =\int_1^3\frac{2}{(x+1)^3}\,dx
-=\frac{3}{16}=0.1875.
+=\frac{3}{16}=0.1875
 $$
 
 ```{r battery-failure-pdf}
@@ -234,7 +234,7 @@ The **cumulative distribution function** (CDF) works for every random
 variable:
 
 $$
-F(x)=P(X\leq x).
+F(x)=P(X\leq x)
 $$
 
 The standard definition includes equality. For a continuous random variable,
@@ -244,7 +244,7 @@ right-continuous, and satisfies
 $$
 \lim_{x\to-\infty}F(x)=0,
 \qquad
-\lim_{x\to\infty}F(x)=1.
+\lim_{x\to\infty}F(x)=1
 $$
 
 For a discrete random variable,
@@ -278,7 +278,7 @@ The cumulative probabilities are
 
 $$
 F(1)=0.05,\quad F(2)=0.15,\quad F(4)=0.50,
-\quad F(8)=0.90,\quad F(16)=1.
+\quad F(8)=0.90,\quad F(16)=1
 $$
 
 Between possible values, the CDF is constant. Thus
@@ -286,7 +286,7 @@ Between possible values, the CDF is constant. Thus
 $$
 F(2.7)=F(2)=0.15,
 \qquad
-F(7.999)=F(4)=0.50.
+F(7.999)=F(4)=0.50
 $$
 
 ```{r flash-drive-cdf}
@@ -324,7 +324,7 @@ number of the first success. Then
 
 $$
 P(X=x)=(1-p)^{x-1}p,
-\qquad x=1,2,3,\ldots.
+\qquad x=1,2,3,\ldots
 $$
 
 Summing the geometric series gives
@@ -374,7 +374,7 @@ For $0\leq x\leq1$,
 
 $$
 F(x)=\int_0^x\frac32(1-u^2)\,du
-=\frac32\left(x-\frac{x^3}{3}\right).
+=\frac32\left(x-\frac{x^3}{3}\right)
 $$
 
 Therefore the complete CDF is

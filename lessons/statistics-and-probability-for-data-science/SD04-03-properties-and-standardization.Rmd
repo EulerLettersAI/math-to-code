@@ -30,14 +30,14 @@ distributions keep the mathematical identities visible in the code.
 For constants $a$ and $b$,
 
 $$
-E(aX+b)=aE(X)+b.
+E(aX+b)=aE(X)+b
 $$
 
 More generally, expectation is additive whether or not the variables are
 independent:
 
 $$
-E(X+Y)=E(X)+E(Y).
+E(X+Y)=E(X)+E(Y)
 $$
 
 ### Worked example: transforming breakdown cost
@@ -51,7 +51,7 @@ Suppose $X$ is a breakdown cost with
 and a revised charge is $Y=1.15X+20$. Since $E(X)=230$,
 
 $$
-E(Y)=E(1.15X+20)=1.15(230)+20=284.5.
+E(Y)=E(1.15X+20)=1.15(230)+20=284.5
 $$
 
 ```{r expectation-linear-transformation}
@@ -75,7 +75,7 @@ Adding a constant changes location but not spread, while multiplying by $a$
 multiplies every deviation from the mean by $a$. Therefore
 
 $$
-\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X).
+\operatorname{Var}(aX+b)=a^2\operatorname{Var}(X)
 $$
 
 For the revised charge,
@@ -83,7 +83,7 @@ For the revised charge,
 $$
 \operatorname{Var}(Y)
 =(1.15)^2\operatorname{Var}(X)
-=(1.15)^2(17{,}100)=22{,}614.75.
+=(1.15)^2(17{,}100)=22{,}614.75
 $$
 
 ```{r variance-linear-transformation}
@@ -104,7 +104,7 @@ The sign of $a$ does not affect variance because $a$ is squared. The standard
 deviation follows
 
 $$
-\operatorname{SD}(aX+b)=|a|\operatorname{SD}(X).
+\operatorname{SD}(aX+b)=|a|\operatorname{SD}(X)
 $$
 
 ```{r standard-deviation-scaling}
@@ -128,14 +128,14 @@ together:
 $$
 \operatorname{Var}(X+Y)
 =\operatorname{Var}(X)+\operatorname{Var}(Y)
-+2\operatorname{Cov}(X,Y).
++2\operatorname{Cov}(X,Y)
 $$
 
 If $X$ and $Y$ are independent, their covariance is 0, so
 
 $$
 \operatorname{Var}(X+Y)
-=\operatorname{Var}(X)+\operatorname{Var}(Y).
+=\operatorname{Var}(X)+\operatorname{Var}(Y)
 $$
 
 ### Independent example: two fair dice
@@ -145,7 +145,7 @@ Let $X$ and $Y$ be the results of two independent fair dice. Each has
 $$
 E(X)=E(Y)=3.5,
 \qquad
-\operatorname{Var}(X)=\operatorname{Var}(Y)=\frac{35}{12}.
+\operatorname{Var}(X)=\operatorname{Var}(Y)=\frac{35}{12}
 $$
 
 Hence
@@ -153,7 +153,7 @@ Hence
 $$
 E(X+Y)=7,
 \qquad
-\operatorname{Var}(X+Y)=\frac{35}{6}.
+\operatorname{Var}(X+Y)=\frac{35}{6}
 $$
 
 ```{r independent-dice-sum}
@@ -184,7 +184,7 @@ c(
 Let $Y=X$. Then $X+Y=2X$, and
 
 $$
-\operatorname{Cov}(X,Y)=\operatorname{Var}(X).
+\operatorname{Cov}(X,Y)=\operatorname{Var}(X)
 $$
 
 The general rule gives
@@ -216,7 +216,7 @@ For constants $a_1,\ldots,a_n$ and $b$,
 
 $$
 E\left(b+\sum_{i=1}^n a_iX_i\right)
-=b+\sum_{i=1}^n a_iE(X_i).
+=b+\sum_{i=1}^n a_iE(X_i)
 $$
 
 The general variance formula is
@@ -224,7 +224,7 @@ The general variance formula is
 $$
 \operatorname{Var}\left(\sum_{i=1}^n a_iX_i\right)
 =\sum_{i=1}^n a_i^2\operatorname{Var}(X_i)
-+2\sum_{i<j}a_i a_j\operatorname{Cov}(X_i,X_j).
++2\sum_{i<j}a_i a_j\operatorname{Cov}(X_i,X_j)
 $$
 
 When all variables are mutually independent, every covariance term is 0.
@@ -233,7 +233,7 @@ For three independent fair dice and $T=X_1+X_2+X_3$,
 $$
 E(T)=3(3.5)=10.5,
 \qquad
-\operatorname{Var}(T)=3\left(\frac{35}{12}\right)=\frac{35}{4}.
+\operatorname{Var}(T)=3\left(\frac{35}{12}\right)=\frac{35}{4}
 $$
 
 ```{r three-independent-dice}
@@ -259,7 +259,7 @@ c(
 If $X$ has mean $\mu$ and positive standard deviation $\sigma$, define
 
 $$
-Z=\frac{X-\mu}{\sigma}.
+Z=\frac{X-\mu}{\sigma}
 $$
 
 By linearity of expectation,
@@ -268,7 +268,7 @@ $$
 E(Z)
 =E\left(\frac1\sigma X-\frac\mu\sigma\right)
 =\frac1\sigma E(X)-\frac\mu\sigma
-=0.
+=0
 $$
 
 By the variance transformation rule,
@@ -277,7 +277,7 @@ $$
 \operatorname{Var}(Z)
 =\operatorname{Var}\left(\frac1\sigma X-\frac\mu\sigma\right)
 =\frac1{\sigma^2}\operatorname{Var}(X)
-=1.
+=1
 $$
 
 Thus standardization changes the center and scale but preserves which
@@ -305,7 +305,7 @@ A z-score states how many standard deviations a value is above or below its
 distribution mean. For the $350 breakdown cost,
 
 $$
-z=\frac{350-230}{\sqrt{17{,}100}}\approx0.918.
+z=\frac{350-230}{\sqrt{17{,}100}}\approx0.918
 $$
 
 ```{r one-z-score}

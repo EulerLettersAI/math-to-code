@@ -30,7 +30,7 @@ If $X\sim N(\mu,\sigma^2)$, then
 $$
 f(x)=\frac{1}{\sigma\sqrt{2\pi}}
 \exp\left[-\frac{(x-\mu)^2}{2\sigma^2}\right],
-\qquad -\infty<x<\infty.
+\qquad -\infty<x<\infty
 $$
 
 Its mean is $\mu$ and its variance is $\sigma^2$.
@@ -56,14 +56,14 @@ $\Phi(z)=P(Z\leq z)$.
 Standardization converts a normal variable to the standard normal scale:
 
 $$
-Z=\frac{X-\mu}{\sigma}.
+Z=\frac{X-\mu}{\sigma}
 $$
 
 A z-score tells how many standard deviations a value lies above or below the
 mean. With exam mean 70, standard deviation 10, and score 85,
 
 $$
-z=\frac{85-70}{10}=1.5.
+z=\frac{85-70}{10}=1.5
 $$
 
 ```{r exam-z-score}
@@ -79,7 +79,7 @@ z
 For any cutoff $x$,
 
 $$
-P(X\leq x)=P\left(Z\leq\frac{x-\mu}{\sigma}\right).
+P(X\leq x)=P\left(Z\leq\frac{x-\mu}{\sigma}\right)
 $$
 
 In the deck, $X\sim N(100,15^2)$. For $x=120$,
@@ -122,7 +122,7 @@ The $p$th quantile satisfies $P(X\leq x_p)=p$ and is
 
 $$
 x_p=\mu+\sigma z_p,
-\qquad z_p=\Phi^{-1}(p).
+\qquad z_p=\Phi^{-1}(p)
 $$
 
 ```{r normal-quantiles}
@@ -139,14 +139,14 @@ data.frame(
 If $X\sim N(\mu,\sigma^2)$ and $Y=aX+b$, then
 
 $$
-Y\sim N(a\mu+b,a^2\sigma^2).
+Y\sim N(a\mu+b,a^2\sigma^2)
 $$
 
 If independent $X_1\sim N(\mu_1,\sigma_1^2)$ and
 $X_2\sim N(\mu_2,\sigma_2^2)$, then
 
 $$
-X_1+X_2\sim N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2).
+X_1+X_2\sim N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)
 $$
 
 ```{r normal-linear-combinations}
