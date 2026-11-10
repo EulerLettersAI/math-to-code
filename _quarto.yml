@@ -188,6 +188,8 @@ website:
           contents:
             - text: "2.1 Contingency Tables"
               href: lessons/tabular-dataset-comparison-metrics/2.1-contingency-tables.ipynb
+            - text: "7.1 AUROC for Binary Classification"
+              href: lessons/tabular-dataset-comparison-metrics/7.1-auroc-for-binary-classification.ipynb
   page-footer:
     left: "© EulerLettersAI"
     center: '<div id="quarto-search" title="Search lessons"></div>'

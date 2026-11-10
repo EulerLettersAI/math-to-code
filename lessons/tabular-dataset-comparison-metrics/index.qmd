@@ -116,6 +116,15 @@ Build and interpret the joint-count table for two categorical variables.
 
 **Companion to:** [2. Data Fidelity Metric: Correlation Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb), Section 2.
 :::
+
+::: {.lesson-card}
+### [7.1 AUROC for Binary Classification](7.1-auroc-for-binary-classification.ipynb)
+
+Use a four-row example to understand AUROC as the ranking of positive rows
+against negative rows.
+
+**Companion to:** [7. Utility Metric: Independent-Holdout AUROC Difference](7.0-utility-metric-independent-holdout-auroc-difference.ipynb), Section 2.
+:::
 :::
 
 ## Series roadmap
