@@ -162,7 +162,7 @@ website:
               href: lessons/tabular-dataset-comparison-metrics/1.0-generating-and-preparing-example-data.ipynb
         - section: "Data Fidelity Metrics"
           contents:
-            - text: "2. Data Fidelity Metric: Correlation-Matrix Difference"
+            - text: "2. Data Fidelity Metric: Correlation Matrix Difference"
               href: lessons/tabular-dataset-comparison-metrics/2.0-data-fidelity-metric-correlation-matrix-difference.ipynb
             - text: "3. Data Fidelity Metric: Average Empirical Hellinger Distance"
               href: lessons/tabular-dataset-comparison-metrics/3.0-data-fidelity-metric-average-empirical-hellinger-distance.ipynb
@@ -182,7 +182,7 @@ website:
           contents:
             - text: "8. Privacy Metric: Exact-Match Rate"
               href: lessons/tabular-dataset-comparison-metrics/8.0-privacy-metric-exact-match-rate.ipynb
-            - text: "9. Privacy Metric: Distance-to-Closest-Record Membership-Inference AUC"
+            - text: "9. Privacy Metric: Membership-Inference AUC"
               href: lessons/tabular-dataset-comparison-metrics/9.0-privacy-metric-dcr-membership-inference-auc.ipynb
         - section: "Refreshers"
           contents:

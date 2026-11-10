@@ -11,7 +11,7 @@ rows. Neither table is assumed to be real or synthetic.
 
 The introduction separates two views of the tables:
 
-- the original $X,Y$ and their missingness masks $M_X,M_Y$; and
+- the original $X,Y$ and their missingness masks $M^X,M^Y$; and
 - complete metric-ready representations $\widetilde X,\widetilde Y$ produced
   by one shared transformation.
 
@@ -33,11 +33,13 @@ construct their shared complete representation.
 :::
 
 ::: {.lesson-card}
-### [2. Data Fidelity Metric: Correlation-Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb)
+### [2. Data Fidelity Metric: Correlation Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb)
 
 Build the mixed association matrices of $\widetilde X$ and $\widetilde Y$ with
 Pearson correlation, $V^2$, and $\eta^2$, then compare them with the Frobenius
 norm used by SynthEval 1.6.2.
+
+**Symbol:** $\mathrm{Corr}_{\mathrm{fidelity}}$
 
 **Prerequisites:** [1. Generating and Preparing Example Data](1.0-generating-and-preparing-example-data.ipynb).
 :::
@@ -47,6 +49,8 @@ norm used by SynthEval 1.6.2.
 
 Align categorical supports and numerical histograms, calculate one Hellinger
 distance per column, and average them.
+
+**Symbol:** $\mathrm{Hel}_{\mathrm{fidelity}}$
 :::
 
 ::: {.lesson-card}
@@ -54,12 +58,16 @@ distance per column, and average them.
 
 Compare the Bernoulli observed/missing distribution of every incomplete
 column.
+
+**Symbol:** $\mathrm{Hel}_{\mathrm{miss}}^{\mathrm{marg}}$
 :::
 
 ::: {.lesson-card}
 ### [5. Missingness Fidelity Metric: Joint Missingness Hellinger Distance](5.0-missingness-fidelity-metric-joint-missingness-hellinger-distance.ipynb)
 
 Compare the empirical distribution of complete row-wise missingness patterns.
+
+**Symbol:** $\mathrm{Hel}_{\mathrm{miss}}^{\mathrm{joint}}$
 :::
 
 ::: {.lesson-card}
@@ -67,6 +75,8 @@ Compare the empirical distribution of complete row-wise missingness patterns.
 
 Use independent-holdout AUROC to test whether $X$ and $Y$ teach the same
 missingness–value dependence.
+
+**Symbol:** $\mathrm{Gap}_{\mathrm{miss}}$
 :::
 
 ::: {.lesson-card}
@@ -74,19 +84,25 @@ missingness–value dependence.
 
 Train the same model families on $X$ and $Y$, then score both sides on one
 untouched holdout.
+
+**Symbol:** $\mathrm{Diff}_{\mathrm{utility}}$
 :::
 
 ::: {.lesson-card}
 ### [8. Privacy Metric: Exact-Match Rate](8.0-privacy-metric-exact-match-rate.ipynb)
 
 Measure the share of released rows in $Y$ that exactly reproduce a row of $X$.
+
+**Symbol:** $\mathrm{Match}_{\mathrm{privacy}}$
 :::
 
 ::: {.lesson-card}
-### [9. Privacy Metric: Distance-to-Closest-Record Membership-Inference AUC](9.0-privacy-metric-dcr-membership-inference-auc.ipynb)
+### [9. Privacy Metric: Membership-Inference AUC](9.0-privacy-metric-dcr-membership-inference-auc.ipynb)
 
 Use closest-record distance to distinguish training members from independent
 non-members.
+
+**Symbol:** $\mathrm{MIA}_{\mathrm{privacy}}$
 :::
 :::
 
@@ -98,7 +114,7 @@ non-members.
 
 Build and interpret the joint-count table for two categorical variables.
 
-**Companion to:** [2. Data Fidelity Metric: Correlation-Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb), Section 2.
+**Companion to:** [2. Data Fidelity Metric: Correlation Matrix Difference](2.0-data-fidelity-metric-correlation-matrix-difference.ipynb), Section 2.
 :::
 :::
 
@@ -106,13 +122,12 @@ Build and interpret the joint-count table for two categorical variables.
 
 ### Complete metric-ready representations
 
-- **Data fidelity:** correlation-matrix difference and average empirical Hellinger
-  distance.
-- **Utility:** independent-holdout AUROC difference.
-- **Privacy:** exact-match rate and distance-to-closest-record
-  membership-inference AUC.
+- **Data fidelity:** Correlation Matrix Difference and Average Empirical Hellinger
+  Distance.
+- **Utility:** Independent-Holdout AUROC Difference.
+- **Privacy:** Exact-Match Rate and Membership-Inference AUC.
 
 ### Original incomplete tables
 
-- **Missingness fidelity:** marginal missingness Hellinger distance, joint
-  missingness Hellinger distance, and the missingness–value dependence gap.
+- **Missingness fidelity:** Marginal Missingness Hellinger Distance, Joint
+  Missingness Hellinger Distance, and Missingness–Value Dependence Gap.

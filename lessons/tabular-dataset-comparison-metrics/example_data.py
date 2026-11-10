@@ -26,14 +26,16 @@ class ExampleViews:
 
     X: pd.DataFrame
     Y: pd.DataFrame
-    H: pd.DataFrame
-    H_miss: pd.DataFrame
+    U: pd.DataFrame
+    V: pd.DataFrame
     M_X: pd.DataFrame
     M_Y: pd.DataFrame
+    M_U: pd.DataFrame
+    M_V: pd.DataFrame
     X_tilde: pd.DataFrame
     Y_tilde: pd.DataFrame
-    H_tilde: pd.DataFrame
-    H_miss_tilde: pd.DataFrame
+    U_tilde: pd.DataFrame
+    V_tilde: pd.DataFrame
     numeric_parameters: pd.DataFrame
     region_to_code: dict[str, int]
     region_mapping: pd.DataFrame
@@ -45,7 +47,7 @@ class DependenceExample:
 
     X: pd.DataFrame
     Y: pd.DataFrame
-    H_miss: pd.DataFrame
+    V: pd.DataFrame
 
 
 def make_example_tables() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -82,7 +84,7 @@ def make_example_tables() -> tuple[pd.DataFrame, pd.DataFrame]:
 def make_holdout_tables() -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return independent utility and missingness holdouts with the same schema."""
 
-    H = pd.DataFrame(
+    U = pd.DataFrame(
         {
             "age": pd.Series([27, 34, 42, 49, pd.NA, 55, 30, 63, 45, 38], dtype="Int64"),
             "income_k": pd.Series(
@@ -95,9 +97,9 @@ def make_holdout_tables() -> tuple[pd.DataFrame, pd.DataFrame]:
             "outcome": pd.Series([0, 0, 1, 1, 1, 1, 0, 1, 1, 0], dtype="Int64"),
         }
     )
-    H.index = [f"h{i}" for i in range(1, len(H) + 1)]
+    U.index = [f"u{i}" for i in range(1, len(U) + 1)]
 
-    H_miss = pd.DataFrame(
+    V = pd.DataFrame(
         {
             "age": pd.Series([26, 33, 41, pd.NA, 52, 59, 36, 47, 62, 29], dtype="Int64"),
             "income_k": pd.Series(
@@ -110,8 +112,8 @@ def make_holdout_tables() -> tuple[pd.DataFrame, pd.DataFrame]:
             "outcome": pd.Series([0, 0, 1, 1, 1, 1, 0, 1, 1, 0], dtype="Int64"),
         }
     )
-    H_miss.index = [f"m{i}" for i in range(1, len(H_miss) + 1)]
-    return H, H_miss
+    V.index = [f"v{i}" for i in range(1, len(V) + 1)]
+    return U, V
 
 
 def learn_shared_transformation(
@@ -175,25 +177,29 @@ def make_example_views() -> ExampleViews:
     """Construct every shared object used by the subsequent notebooks."""
 
     X, Y = make_example_tables()
-    H, H_miss = make_holdout_tables()
+    U, V = make_holdout_tables()
     M_X = X.isna().astype("int8")
     M_Y = Y.isna().astype("int8")
+    M_U = U.isna().astype("int8")
+    M_V = V.isna().astype("int8")
     numeric_parameters, region_to_code, region_mapping = learn_shared_transformation(X, Y)
     X_tilde = transform_to_metric_view(X, numeric_parameters, region_to_code)
     Y_tilde = transform_to_metric_view(Y, numeric_parameters, region_to_code)
-    H_tilde = transform_to_metric_view(H, numeric_parameters, region_to_code)
-    H_miss_tilde = transform_to_metric_view(H_miss, numeric_parameters, region_to_code)
+    U_tilde = transform_to_metric_view(U, numeric_parameters, region_to_code)
+    V_tilde = transform_to_metric_view(V, numeric_parameters, region_to_code)
     return ExampleViews(
         X=X,
         Y=Y,
-        H=H,
-        H_miss=H_miss,
+        U=U,
+        V=V,
         M_X=M_X,
         M_Y=M_Y,
+        M_U=M_U,
+        M_V=M_V,
         X_tilde=X_tilde,
         Y_tilde=Y_tilde,
-        H_tilde=H_tilde,
-        H_miss_tilde=H_miss_tilde,
+        U_tilde=U_tilde,
+        V_tilde=V_tilde,
         numeric_parameters=numeric_parameters,
         region_to_code=region_to_code,
         region_mapping=region_mapping,
@@ -236,5 +242,5 @@ def make_dependence_example(n_rows: int = 180) -> DependenceExample:
     return DependenceExample(
         X=_dependence_frame(n_rows, seed=101, dependent_missingness=True),
         Y=_dependence_frame(n_rows, seed=202, dependent_missingness=False),
-        H_miss=_dependence_frame(n_rows, seed=303, dependent_missingness=True),
+        V=_dependence_frame(n_rows, seed=303, dependent_missingness=True),
     )
